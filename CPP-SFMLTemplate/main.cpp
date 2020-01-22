@@ -20,7 +20,7 @@ bool canGo(int fieldType)
 	return false;
 }
 
-void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int mapSizeH, int fishyMap[40][50])
+void setOffsets(Vector2i &posBoat, int &startI, int &startJ, int mapSizeW, int mapSizeH, int fishyMap[40][50])
 {
 	bool keyUp = false, keyDown = false, keyLeft = false, keyRight = false;
 	
@@ -29,22 +29,22 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	if(Keyboard::isKeyPressed(Keyboard::Left)) keyLeft = true;
 	if(Keyboard::isKeyPressed(Keyboard::Right)) keyRight = true;
 	
-	if(!canGo(fishyMap[(int) posBoat.y + startI][(int) posBoat.x + startJ + 1]))
+	if(!canGo(fishyMap[posBoat.y + startI][posBoat.x + startJ + 1]))
 	{
 		keyRight = false;
 	}
 	
-	if(!canGo(fishyMap[(int) posBoat.y + startI][(int) posBoat.x + startJ - 1]))
+	if(!canGo(fishyMap[posBoat.y + startI][posBoat.x + startJ - 1]))
 	{
 		keyLeft = false;
 	}
 	
-	if(!canGo(fishyMap[(int) posBoat.y + startI + 1][(int) posBoat.x + startJ]))
+	if(!canGo(fishyMap[posBoat.y + startI + 1][posBoat.x + startJ]))
 	{
 		keyDown = false;
 	}
 	
-	if(!canGo(fishyMap[(int) posBoat.y + startI - 1][(int) posBoat.x + startJ]))
+	if(!canGo(fishyMap[posBoat.y + startI - 1][posBoat.x + startJ]))
 	{
 		keyUp = false;
 	}
@@ -124,8 +124,11 @@ int main()
 	ZeoFlow_SFML zeoFlow_SF;
 	int startI = 0;
 	int startJ = 23;
-	Vector2f posBoat(6, 3);
+	Vector2i posBoat(6, 3);
+	Vector2i mouseLocation(0, 0);
+	Vector2i editTerrain(0, 0);
 	Font font(zeoFlow_SF.loadFont("Assets/fonts/", "big_space", "otf"));
+	bool editMode = false;
   
 	ifstream mapRead("Assets/map/map.txt");
 	for(i = 0; i < mapSizeH; i++)
@@ -135,6 +138,8 @@ int main()
 			mapRead>>fishyMap[i][j];
 		}
 	}
+	mapRead.close();
+	ofstream mapNew("Assets/map/map.txt");
 	
 	Sprite grass = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_020", "png");
 
@@ -154,6 +159,8 @@ int main()
 	RectangleShape healthBarOutline;
 	healthBarOutline.setSize(Vector2f(64, 64));
 	healthBarOutline.setFillColor(Color(21, 21, 21, 200));
+	bool terrainType = false;
+	int terrainSelected = 0;
 
 	//the loop that draws the game
     while (window.isOpen())
@@ -164,6 +171,34 @@ int main()
 			if (event.type == Event::Closed || Keyboard::isKeyPressed(Keyboard::Escape))
 			{
                 window.close();
+			}
+			if(event.type == Event::KeyPressed)
+			{
+				if(Keyboard::isKeyPressed(Keyboard::E))
+				{
+					editMode = !editMode;
+				}
+			}
+			if(event.type == Event::MouseMoved)
+			{
+				mouseLocation = Mouse::getPosition(window);
+			}
+			if(event.type == Event::MouseButtonPressed)
+			{
+				if(Mouse::isButtonPressed(Mouse::Left) && mouseLocation.x >= 0 && mouseLocation.x <= 832 && mouseLocation.y >= 0 && mouseLocation.y <= 574)
+				{
+					if(editMode && !terrainType)
+					{
+						terrainType = true;
+						editTerrain.x = mouseLocation.y/64 + startI;
+						editTerrain.y = mouseLocation.x/64 + startJ;
+						cout<<editTerrain.x<<' '<<editTerrain.y<<'\n';
+					}
+					else if(terrainType)
+					{
+
+					}
+				}
 			}
 			setOffsets(posBoat, startI, startJ, mapSizeW, mapSizeH, fishyMap);
 		}
@@ -244,27 +279,82 @@ int main()
 					water_34.setPosition((j-startJ)*64, (i-startI)*64);
 					window.draw(water_34);
 				}
-				Text txtCarHP;
-				txtCarHP.setString(to_string(i) + ":" + to_string(j));
-				txtCarHP.setFont(font);
-				txtCarHP.setCharacterSize(15);
-				txtCarHP.setOutlineColor(Color::White);
-				txtCarHP.setOutlineThickness(1);
-				txtCarHP.setColor(Color::Black);
-				txtCarHP.setOrigin(txtCarHP.getGlobalBounds().width/2, txtCarHP.getGlobalBounds().height/2);
-				txtCarHP.setPosition((j-startJ)*64 + 32, (i-startI)*64 + 32);
-				window.draw(txtCarHP);
-				if(j == 50 || j == 51)
+				if(editMode)
 				{
-					cout<<startI<<' '<<startJ<<'\n';
+					Text txtCarHP;
+					txtCarHP.setString(to_string(i) + ":" + to_string(j));
+					txtCarHP.setFont(font);
+					txtCarHP.setCharacterSize(15);
+					txtCarHP.setOutlineColor(Color::White);
+					txtCarHP.setOutlineThickness(1);
+					txtCarHP.setColor(Color::Black);
+					txtCarHP.setOrigin(txtCarHP.getGlobalBounds().width/2, txtCarHP.getGlobalBounds().height/2);
+					txtCarHP.setPosition((j-startJ)*64 + 32, (i-startI)*64 + 32);
+					window.draw(txtCarHP);
 				}
 			}
 		}
 		healthBarOutline.setPosition(posBoat.x*64, posBoat.y*64);
 		window.draw(healthBarOutline);
+		if(editMode && !terrainType)
+		{
+			healthBarOutline.setPosition((mouseLocation.x/64) * 64, (mouseLocation.y/64) * 64);
+			window.draw(healthBarOutline);
+		}
+		else if(terrainType)
+		{
+			RectangleShape terrainHolder;
+			terrainHolder.setFillColor(Color(46, 46, 46, 200));
+			terrainHolder.setSize(Vector2f(600, 400));
+			terrainHolder.setOrigin(300, 200);
+			terrainHolder.setPosition(window.getSize().x/2, window.getSize().y/2);
+			window.draw(terrainHolder);
+
+			grass.setPosition(terrainHolder.getPosition().x - 90, terrainHolder.getPosition().y - 170);
+			window.draw(grass);
+
+			water_15.setPosition(terrainHolder.getPosition().x + 20, terrainHolder.getPosition().y - 170);
+			window.draw(water_15);
+
+			if(Mouse::isButtonPressed(Mouse::Left))
+			{
+				IntRect grassBtn(grass.getPosition().x - grass.getGlobalBounds().width / 2,
+					grass.getPosition().y, grass.getGlobalBounds().width * 2, grass.getGlobalBounds().height * 2);
+				if (grassBtn.contains(mouseLocation))
+				{
+					terrainSelected = 0;
+				}
+				IntRect waterBtn(water_15.getPosition().x - water_15.getGlobalBounds().width / 2,
+					water_15.getPosition().y, water_15.getGlobalBounds().width * 2, water_15.getGlobalBounds().height * 2);
+				if (waterBtn.contains(mouseLocation))
+				{
+					terrainSelected = 1;
+				}
+			}
+
+			if(terrainSelected == 0)
+			{
+				grass.setPosition(terrainHolder.getPosition().x - 220, terrainHolder.getPosition().y - 90);
+				window.draw(grass);
+			}
+			else if(terrainSelected == 1)
+			{
+				cout<<"water\n";
+			}
+
+		}
 
 		window.display();
 
+	}
+
+	for(i = 0; i < mapSizeH; i++)
+	{
+		for(j = 0; j < mapSizeW; j++)
+		{
+			mapNew<<fishyMap[i][j]<<' ';
+		}
+		mapNew<<'\n';
 	}
 
 	return 0;
