@@ -21,7 +21,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	
 	if (keyUp)
 	{
-		if(posBoat.y + startI > 4 && posBoat.y + startI <= mapSizeH - 3)
+		if(posBoat.y + startI > 4 && posBoat.y + startI <= mapSizeH - 5)
 		{
 			startI--;
 		}
@@ -37,7 +37,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	}
 	if (keyDown)
 	{
-		if(posBoat.y + startI >= 4 && posBoat.y + startI <= mapSizeH - 4)
+		if(posBoat.y + startI >= 4 && posBoat.y + startI <= mapSizeH - 6)
 		{
 			startI++;
 		}
@@ -45,7 +45,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 		{
 			posBoat.y++;
 		}
-		if(posBoat.y + startI > mapSizeH)
+		if(posBoat.y + startI > mapSizeH - 1)
 		{
 			posBoat.y -= 1;
 		}
@@ -53,7 +53,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	}
 	if (keyLeft)
 	{
-		if(posBoat.x + startJ >= 7 && posBoat.x + startJ <= mapSizeW - 5)
+		if(posBoat.x + startJ >= 7 && posBoat.x + startJ <= mapSizeW - 7)
 		{
 			startJ--;
 		}
@@ -69,7 +69,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	}
 	if (keyRight)
 	{
-		if(posBoat.x + startJ >= 6 && posBoat.x + startJ <= mapSizeW - 6)
+		if(posBoat.x + startJ >= 6 && posBoat.x + startJ <= mapSizeW - 8)
 		{
 			startJ++;
 		}
@@ -77,7 +77,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 		{
 			posBoat.x++;
 		}
-		if(posBoat.x + startJ >= mapSizeW + 2)
+		if(posBoat.x + startJ >= mapSizeW)
 		{
 			posBoat.x -= 1;
 		}
@@ -152,71 +152,6 @@ int main()
 				{
 					grass.setPosition((j-startJ)*64, (i-startI)*64);
 					window.draw(grass);
-				}
-				else if(fishyMap[i][j] == 11)
-				{
-					water_11.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_11);
-				}
-				else if(fishyMap[i][j] == 12)
-				{
-					water_12.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_12);
-				}
-				else if(fishyMap[i][j] == 13)
-				{
-					water_13.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_13);
-				}
-				else if(fishyMap[i][j] == 14)
-				{
-					water_14.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_14);
-				}
-				else if(fishyMap[i][j] == 15)
-				{
-					water_15.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_15);
-				}
-				else if(fishyMap[i][j] == 16)
-				{
-					water_16.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_16);
-				}
-				else if(fishyMap[i][j] == 17)
-				{
-					water_17.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_17);
-				}
-				else if(fishyMap[i][j] == 18)
-				{
-					water_18.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_18);
-				}
-				else if(fishyMap[i][j] == 19)
-				{
-					water_19.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_19);
-				}
-				else if(fishyMap[i][j] == 31)
-				{
-					water_31.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_31);
-				}
-				else if(fishyMap[i][j] == 32)
-				{
-					water_32.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_32);
-				}
-				else if(fishyMap[i][j] == 33)
-				{
-					water_33.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_33);
-				}
-				else if(fishyMap[i][j] == 34)
-				{
-					water_34.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_34);
 				}
 				Text txtCarHP;
 				txtCarHP.setString(to_string(i) + ":" + to_string(j));
