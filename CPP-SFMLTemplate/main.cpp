@@ -238,6 +238,10 @@ int main()
 				txtCarHP.setOrigin(txtCarHP.getGlobalBounds().width/2, txtCarHP.getGlobalBounds().height/2);
 				txtCarHP.setPosition((j-startJ)*64 + 32, (i-startI)*64 + 32);
 				window.draw(txtCarHP);
+				if(j == 50 || j == 51)
+				{
+					cout<<startI<<' '<<startJ<<'\n';
+				}
 			}
 		}
 		healthBarOutline.setPosition(posBoat.x*64, posBoat.y*64);
