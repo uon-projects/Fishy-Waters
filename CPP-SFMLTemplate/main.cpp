@@ -101,22 +101,12 @@ int main()
 	Font font(zeoFlow_SF.loadFont("Assets/fonts/", "big_space", "otf"));
   
 	ifstream mapRead("Assets/map/map.txt");
-	ofstream mapOut("Assets/map/mapOut.txt");
 	for(i = 0; i < mapSizeH; i++)
 	{
 		for(j = 0; j < mapSizeW; j++)
 		{
 			mapRead>>fishyMap[i][j];
 		}
-	}
-
-	for(i = 0; i < mapSizeH; i++)
-	{
-		for(j = 0; j < mapSizeW; j++)
-		{
-			mapOut<<fishyMap[i][j]<<' ';
-		}
-		mapOut<<endl;
 	}
 	
 	Sprite grass = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_020", "png");
