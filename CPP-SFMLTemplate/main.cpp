@@ -53,7 +53,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	}
 	if (keyLeft)
 	{
-		if(posBoat.x + startJ >= 7 && posBoat.x + startJ <= mapSizeW - 8)
+		if(posBoat.x + startJ >= 7 && posBoat.x + startJ <= mapSizeW - 7)
 		{
 			startJ--;
 		}
