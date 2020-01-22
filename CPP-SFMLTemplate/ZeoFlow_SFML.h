@@ -45,6 +45,9 @@ namespace zeoFlow
 	public:
 		sf::Sprite loadSpriteFromTexture(std::string, std::string, std::string);
 
+	public:
+		sf::Font loadFont(std::string, std::string, std::string);
+
 	};
 
 	sf::Sprite ZeoFlow_SFML::loadSpriteFromTexture(std::string assetPath, std::string assetName, std::string assetExtension)
@@ -56,6 +59,15 @@ namespace zeoFlow
 		zfTextures.push_front(zfTexture);
 		sf::Sprite zfSprite(zfTextures.front());
 		return zfSprite;
+	}
+
+	sf::Font ZeoFlow_SFML::loadFont(std::string assetPath, std::string assetName, std::string assetExtension)
+	{
+		sf::Font font;
+		if (!font.loadFromFile(assetPath + assetName + "." + assetExtension)) {
+				system("pause");
+		}
+		return font;
 	}
 
 }
