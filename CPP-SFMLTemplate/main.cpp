@@ -65,6 +65,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 		{
 			posBoat.x += 1;
 		}
+		cout<<posBoat.x<<' '<<startJ<<' '<<posBoat.x + startJ<<'\n';
 	}
 	if (keyRight)
 	{
@@ -80,6 +81,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 		{
 			posBoat.x -= 1;
 		}
+		cout<<posBoat.x<<' '<<startJ<<' '<<posBoat.x + startJ<<'\n';
 	}
 }
 
@@ -96,14 +98,25 @@ int main()
 	ZeoFlow_SFML zeoFlow_SF;
 	int startI = 0;
 	int startJ = 0;
+	Font font(zeoFlow_SF.loadFont("Assets/fonts/", "big_space", "otf"));
   
 	ifstream mapRead("Assets/map/map.txt");
+	ofstream mapOut("Assets/map/mapOut.txt");
 	for(i = 0; i < mapSizeH; i++)
 	{
 		for(j = 0; j < mapSizeW; j++)
 		{
 			mapRead>>fishyMap[i][j];
 		}
+	}
+
+	for(i = 0; i < mapSizeH; i++)
+	{
+		for(j = 0; j < mapSizeW; j++)
+		{
+			mapOut<<fishyMap[i][j]<<' ';
+		}
+		mapOut<<endl;
 	}
 	
 	Sprite grass = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_020", "png");
@@ -215,21 +228,20 @@ int main()
 					water_34.setPosition((j-startJ)*64, (i-startI)*64);
 					window.draw(water_34);
 				}
+				Text txtCarHP;
+				txtCarHP.setString(to_string(i) + ":" + to_string(j));
+				txtCarHP.setFont(font);
+				txtCarHP.setCharacterSize(15);
+				txtCarHP.setOutlineColor(Color::White);
+				txtCarHP.setOutlineThickness(1);
+				txtCarHP.setColor(Color::Black);
+				txtCarHP.setOrigin(txtCarHP.getGlobalBounds().width/2, txtCarHP.getGlobalBounds().height/2);
+				txtCarHP.setPosition((j-startJ)*64 + 32, (i-startI)*64 + 32);
+				window.draw(txtCarHP);
 			}
 		}
 		healthBarOutline.setPosition(posBoat.x*64, posBoat.y*64);
 		window.draw(healthBarOutline);
-
-		Text txtCarHP;
-		Font font;
-		txtCarHP.setString("test");
-		txtCarHP.setFont(font);
-		txtCarHP.setCharacterSize(15);
-		txtCarHP.setOutlineColor(Color::White);
-		txtCarHP.setOutlineThickness(1);
-		txtCarHP.setColor(Color::Black);
-		txtCarHP.setPosition(100, 100);
-		window.draw(txtCarHP);
 
 		window.display();
 
