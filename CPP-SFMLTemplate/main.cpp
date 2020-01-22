@@ -21,7 +21,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	
 	if (keyUp)
 	{
-		if(posBoat.y + startI > 4 && posBoat.y + startI <= mapSizeH - 3)
+		if(posBoat.y + startI > 4 && posBoat.y + startI <= mapSizeH - 5)
 		{
 			startI--;
 		}
@@ -37,7 +37,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	}
 	if (keyDown)
 	{
-		if(posBoat.y + startI >= 4 && posBoat.y + startI <= mapSizeH - 4)
+		if(posBoat.y + startI >= 4 && posBoat.y + startI <= mapSizeH - 6)
 		{
 			startI++;
 		}
@@ -45,7 +45,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 		{
 			posBoat.y++;
 		}
-		if(posBoat.y + startI > mapSizeH)
+		if(posBoat.y + startI > mapSizeH - 1)
 		{
 			posBoat.y -= 1;
 		}
@@ -53,7 +53,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	}
 	if (keyLeft)
 	{
-		if(posBoat.x + startJ >= 7 && posBoat.x + startJ <= mapSizeW - 5)
+		if(posBoat.x + startJ >= 7 && posBoat.x + startJ <= mapSizeW - 8)
 		{
 			startJ--;
 		}
@@ -69,7 +69,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	}
 	if (keyRight)
 	{
-		if(posBoat.x + startJ >= 6 && posBoat.x + startJ <= mapSizeW - 6)
+		if(posBoat.x + startJ >= 6 && posBoat.x + startJ <= mapSizeW - 8)
 		{
 			startJ++;
 		}
@@ -77,7 +77,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 		{
 			posBoat.x++;
 		}
-		if(posBoat.x + startJ >= mapSizeW + 2)
+		if(posBoat.x + startJ >= mapSizeW)
 		{
 			posBoat.x -= 1;
 		}
