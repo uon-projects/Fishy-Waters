@@ -21,7 +21,7 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	
 	if (keyUp)
 	{
-		if(posBoat.y + startI >= 4 && posBoat.y + startI <= mapSizeH - 3)
+		if(posBoat.y + startI > 4 && posBoat.y + startI <= mapSizeH - 3)
 		{
 			startI--;
 		}
@@ -31,13 +31,13 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 		}
 		if(posBoat.y + startI < 0)
 		{
-			posBoat.y -= 1;
+			posBoat.y += 1;
 		}
 		cout<<posBoat.y<<' '<<startI<<' '<<posBoat.y + startI<<'\n';
 	}
 	if (keyDown)
 	{
-		if(posBoat.y + startI >= 4 && posBoat.y + startI <= mapSizeH - 3)
+		if(posBoat.y + startI >= 4 && posBoat.y + startI <= mapSizeH - 4)
 		{
 			startI++;
 		}
@@ -45,9 +45,9 @@ void setOffsets(Vector2f &posBoat, int &startI, int &startJ, int mapSizeW, int m
 		{
 			posBoat.y++;
 		}
-		if(posBoat.y + startI < 0)
+		if(posBoat.y + startI > mapSizeH)
 		{
-			posBoat.y += 1;
+			posBoat.y -= 1;
 		}
 		cout<<posBoat.y<<' '<<startI<<' '<<posBoat.y + startI<<'\n';
 	}
@@ -219,6 +219,17 @@ int main()
 		}
 		healthBarOutline.setPosition(posBoat.x*64, posBoat.y*64);
 		window.draw(healthBarOutline);
+
+		Text txtCarHP;
+		Font font;
+		txtCarHP.setString("test");
+		txtCarHP.setFont(font);
+		txtCarHP.setCharacterSize(15);
+		txtCarHP.setOutlineColor(Color::White);
+		txtCarHP.setOutlineThickness(1);
+		txtCarHP.setColor(Color::Black);
+		txtCarHP.setPosition(100, 100);
+		window.draw(txtCarHP);
 
 		window.display();
 
