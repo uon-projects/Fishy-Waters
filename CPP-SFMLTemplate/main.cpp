@@ -190,7 +190,7 @@ int main()
 	healthBarOutline.setSize(Vector2f(64, 64));
 	healthBarOutline.setFillColor(Color(21, 21, 21, 200));
 	bool terrainType = false;
-	int terrainSelected = 0, lastTerrainType;
+	int terrainSelected = 0, lastTerrainType = -1;
 
 	//the loop that draws the game
     while (window.isOpen())
@@ -210,11 +210,19 @@ int main()
 					terrainType = false;
 					lastTerrainType = -1;
 				}
-				if(terrainType && editMode)
+				if((terrainType || lastTerrainType != -1) && editMode)
 				{
 					if(Keyboard::isKeyPressed(Keyboard::Return) && lastTerrainType != -1)
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = lastTerrainType;
+					}
+					if(Keyboard::isKeyPressed(Keyboard::Z))
+					{
+						lastTerrainType = fishyMap[editTerrain.x][editTerrain.y];
+					}
+					if(Keyboard::isKeyPressed(Keyboard::Q))
+					{
+						terrainType = !terrainType;
 					}
 					if(Keyboard::isKeyPressed(Keyboard::W))
 					{
@@ -242,7 +250,7 @@ int main()
 			{
 				if(Mouse::isButtonPressed(Mouse::Left) && mouseLocation.x >= 0 && mouseLocation.x <= 832 && mouseLocation.y >= 0 && mouseLocation.y <= 574)
 				{
-					if(!terrainType && editMode)
+					if(!terrainType && editMode && lastTerrainType == -1)
 					{
 						leftSideClicked = mouseLocation.x < window.getSize().x/2;
 						terrainType = true;
@@ -429,7 +437,7 @@ int main()
 					txtCarHP.setOrigin(txtCarHP.getGlobalBounds().width/2, txtCarHP.getGlobalBounds().height/2);
 					txtCarHP.setPosition((j-startJ)*64 + 32, (i-startI)*64 + 28);
 					window.draw(txtCarHP);
-					if(terrainType)
+					if(terrainType || lastTerrainType != -1)
 					{
 						RectangleShape mousePointer;
 						mousePointer.setOrigin(28, 28);
@@ -456,7 +464,7 @@ int main()
 			mousePointer.setPosition((mouseLocation.x/64) * 64 + 32, (mouseLocation.y/64) * 64 + 32);
 			window.draw(mousePointer);
 		}
-		else if(terrainType)
+		else if(terrainType || lastTerrainType != -1)
 		{
 			leftSideClicked = (editTerrain.y-startJ)*64 < window.getSize().x/2;
 			int rightSideAddition = 0;
