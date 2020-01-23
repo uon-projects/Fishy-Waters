@@ -415,7 +415,7 @@ int main()
 						RectangleShape mousePointer;
 						mousePointer.setOrigin(32, 32);
 						mousePointer.setSize(Vector2f(62, 62));
-						mousePointer.setFillColor(Color(255, 255, 255, 10));
+						mousePointer.setFillColor(Color(255, 255, 255, 0));
 						mousePointer.setOutlineColor(Color::Red);
 						mousePointer.setOutlineThickness(1);
 						mousePointer.setPosition((editTerrain.y-startJ)*64 + 32, (editTerrain.x-startI)*64 + 32);
@@ -439,7 +439,8 @@ int main()
 		}
 		else if(terrainType)
 		{
-			leftSideClicked = editTerrain.y < window.getSize().x/2;
+			cout<<(editTerrain.y-startJ)*64<<' '<<window.getSize().x/2<<'\n';
+			leftSideClicked = (editTerrain.y-startJ)*64 < window.getSize().x/2;
 			int rightSideAddition = 0;
 			if(leftSideClicked) rightSideAddition = 532;
 			RectangleShape terrainHolder;
