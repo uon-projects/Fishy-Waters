@@ -190,7 +190,7 @@ int main()
 	healthBarOutline.setSize(Vector2f(64, 64));
 	healthBarOutline.setFillColor(Color(21, 21, 21, 200));
 	bool terrainType = false;
-	int terrainSelected = 0;
+	int terrainSelected = 0, lastTerrainType;
 
 	//the loop that draws the game
     while (window.isOpen())
@@ -208,9 +208,14 @@ int main()
 				{
 					editMode = !editMode;
 					terrainType = false;
+					lastTerrainType = -1;
 				}
 				if(terrainType && editMode)
 				{
+					if(Keyboard::isKeyPressed(Keyboard::Return) && lastTerrainType != -1)
+					{
+						fishyMap[editTerrain.x][editTerrain.y] = lastTerrainType;
+					}
 					if(Keyboard::isKeyPressed(Keyboard::W))
 					{
 						editTerrain.x--;
@@ -260,6 +265,7 @@ int main()
 						if(spriteClicked(ed_grass, mouseLocation))
 						{
 							fishyMap[editTerrain.x][editTerrain.y] = 25;
+							lastTerrainType = 25;
 						}
 					}
 					else if(terrainSelected == 1)
@@ -267,54 +273,67 @@ int main()
 					if(spriteClicked(ed_water_11, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 11;
+						lastTerrainType = 11;
 					}
 					if(spriteClicked(ed_water_12, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 12;
+						lastTerrainType = 12;
 					}
 					if(spriteClicked(ed_water_13, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 13;
+						lastTerrainType = 13;
 					}
 					if(spriteClicked(ed_water_14, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 14;
+						lastTerrainType = 14;
 					}
 					if(spriteClicked(ed_water_15, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 15;
+						lastTerrainType = 15;
 					}
 					if(spriteClicked(ed_water_16, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 16;
+						lastTerrainType = 16;
 					}
 					if(spriteClicked(ed_water_17, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 17;
+						lastTerrainType = 17;
 					}
 					if(spriteClicked(ed_water_18, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 18;
+						lastTerrainType = 18;
 					}
 					if(spriteClicked(ed_water_19, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 19;
+						lastTerrainType = 19;
 					}
 					if(spriteClicked(ed_water_31, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 31;
+						lastTerrainType = 31;
 					}
 					if(spriteClicked(ed_water_32, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 32;
+						lastTerrainType = 32;
 					}
 					if(spriteClicked(ed_water_33, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 33;
+						lastTerrainType = 33;
 					}
 					if(spriteClicked(ed_water_34, mouseLocation))
 					{
 						fishyMap[editTerrain.x][editTerrain.y] = 34;
+						lastTerrainType = 34;
 					}
 					}
 				}
@@ -413,11 +432,11 @@ int main()
 					if(terrainType)
 					{
 						RectangleShape mousePointer;
-						mousePointer.setOrigin(32, 32);
-						mousePointer.setSize(Vector2f(62, 62));
+						mousePointer.setOrigin(28, 28);
+						mousePointer.setSize(Vector2f(56, 56));
 						mousePointer.setFillColor(Color(255, 255, 255, 0));
 						mousePointer.setOutlineColor(Color::Red);
-						mousePointer.setOutlineThickness(1);
+						mousePointer.setOutlineThickness(4);
 						mousePointer.setPosition((editTerrain.y-startJ)*64 + 32, (editTerrain.x-startI)*64 + 32);
 						window.draw(mousePointer);
 					}
@@ -439,7 +458,6 @@ int main()
 		}
 		else if(terrainType)
 		{
-			cout<<(editTerrain.y-startJ)*64<<' '<<window.getSize().x/2<<'\n';
 			leftSideClicked = (editTerrain.y-startJ)*64 < window.getSize().x/2;
 			int rightSideAddition = 0;
 			if(leftSideClicked) rightSideAddition = 532;
