@@ -114,8 +114,8 @@ void setOffsets(Vector2i &posBoat, int &startI, int &startJ, int mapSizeW, int m
 
 bool spriteClicked(Sprite sprite, Vector2i mouseLocation)
 {
-	IntRect water11Btn(sprite.getPosition().x - sprite.getGlobalBounds().width, sprite.getPosition().y - sprite.getGlobalBounds().height,
-						sprite.getGlobalBounds().width, sprite.getGlobalBounds().height);
+	IntRect water11Btn(sprite.getPosition().x, sprite.getPosition().y,
+						sprite.getGlobalBounds().width * 2, sprite.getGlobalBounds().height * 2);
 	if (water11Btn.contains(mouseLocation))
 	{
 		return true;
@@ -215,11 +215,11 @@ int main()
 			}
 			if(event.type == Event::MouseButtonPressed)
 			{
-				if(!terrainType && Mouse::isButtonPressed(Mouse::Left) && mouseLocation.x >= 0 && mouseLocation.x <= 832 && mouseLocation.y >= 0 && mouseLocation.y <= 574)
+				if(Mouse::isButtonPressed(Mouse::Left) && mouseLocation.x >= 0 && mouseLocation.x <= 832 && mouseLocation.y >= 0 && mouseLocation.y <= 574)
 				{
-					leftSideClicked = mouseLocation.x < window.getSize().x/2;
 					if(editMode)
 					{
+						leftSideClicked = mouseLocation.x < window.getSize().x/2;
 						terrainType = true;
 						editTerrain.x = mouseLocation.y/64 + startI;
 						editTerrain.y = mouseLocation.x/64 + startJ;
@@ -404,6 +404,17 @@ int main()
 					txtCarHP.setOrigin(txtCarHP.getGlobalBounds().width/2, txtCarHP.getGlobalBounds().height/2);
 					txtCarHP.setPosition((j-startJ)*64 + 32, (i-startI)*64 + 28);
 					window.draw(txtCarHP);
+					if(terrainType)
+					{
+						RectangleShape mousePointer;
+						mousePointer.setOrigin(32, 32);
+						mousePointer.setSize(Vector2f(62, 62));
+						mousePointer.setFillColor(Color(255, 255, 255, 10));
+						mousePointer.setOutlineColor(Color::Red);
+						mousePointer.setOutlineThickness(1);
+						mousePointer.setPosition((editTerrain.y-startJ)*64 + 32, (editTerrain.x-startI)*64 + 32);
+						window.draw(mousePointer);
+					}
 				}
 			}
 		}
