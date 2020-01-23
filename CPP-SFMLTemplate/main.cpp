@@ -9,11 +9,12 @@ using namespace sf;
 using namespace zeoFlow;
 
 RenderWindow window(VideoMode(832, 574), "Fishy Waters"); //the game screen
+bool editMode = false;
 
 bool canGo(int fieldType)
 {
 	if(fieldType == 11 || fieldType == 12 || fieldType == 13 || fieldType == 14 || fieldType == 15 || fieldType == 16 || fieldType == 17 ||
-		fieldType == 18 || fieldType == 19 || fieldType == 31 || fieldType == 32 || fieldType == 33 || fieldType == 34)
+		fieldType == 18 || fieldType == 19 || fieldType == 31 || fieldType == 32 || fieldType == 33 || fieldType == 34 || editMode)
 	{
 		return true;
 	}
@@ -111,6 +112,17 @@ void setOffsets(Vector2i &posBoat, int &startI, int &startJ, int mapSizeW, int m
 	}
 }
 
+bool spriteClicked(Sprite sprite, Vector2i mouseLocation)
+{
+	IntRect water11Btn(sprite.getPosition().x - sprite.getGlobalBounds().width, sprite.getPosition().y - sprite.getGlobalBounds().height,
+						sprite.getGlobalBounds().width, sprite.getGlobalBounds().height);
+	if (water11Btn.contains(mouseLocation))
+	{
+		return true;
+	}
+	return false;
+}
+
 int main()
 {
 	
@@ -128,7 +140,7 @@ int main()
 	Vector2i mouseLocation(0, 0);
 	Vector2i editTerrain(0, 0);
 	Font font(zeoFlow_SF.loadFont("Assets/fonts/", "big_space", "otf"));
-	bool editMode = false;
+	bool leftSideClicked = false;
   
 	ifstream mapRead("Assets/map/map.txt");
 	for(i = 0; i < mapSizeH; i++)
@@ -142,7 +154,6 @@ int main()
 	ofstream mapNew("Assets/map/map.txt");
 	
 	Sprite grass = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_020", "png");
-
 	Sprite water_11 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_011", "png");
 	Sprite water_12 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_012", "png");
 	Sprite water_13 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_013", "png");
@@ -156,6 +167,25 @@ int main()
 	Sprite water_32 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_015", "png");
 	Sprite water_33 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_032", "png");
 	Sprite water_34 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_033", "png");
+	
+	Sprite ct_grass = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_020", "png");
+	Sprite ct_water_15 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_030", "png");
+	Sprite ed_grass = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_020", "png");
+	Sprite ed_water_11 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_011", "png");
+	Sprite ed_water_12 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_012", "png");
+	Sprite ed_water_13 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_013", "png");
+	Sprite ed_water_14 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_029", "png");
+	Sprite ed_water_15 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_030", "png");
+	Sprite ed_water_16 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_031", "png");
+	Sprite ed_water_17 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_045", "png");
+	Sprite ed_water_18 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_046", "png");
+	Sprite ed_water_19 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_047", "png");
+	Sprite ed_water_31 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_014", "png");
+	Sprite ed_water_32 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_015", "png");
+	Sprite ed_water_33 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_032", "png");
+	Sprite ed_water_34 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_033", "png");
+
+
 	RectangleShape healthBarOutline;
 	healthBarOutline.setSize(Vector2f(64, 64));
 	healthBarOutline.setFillColor(Color(21, 21, 21, 200));
@@ -185,18 +215,101 @@ int main()
 			}
 			if(event.type == Event::MouseButtonPressed)
 			{
-				if(Mouse::isButtonPressed(Mouse::Left) && mouseLocation.x >= 0 && mouseLocation.x <= 832 && mouseLocation.y >= 0 && mouseLocation.y <= 574)
+				if(!terrainType && Mouse::isButtonPressed(Mouse::Left) && mouseLocation.x >= 0 && mouseLocation.x <= 832 && mouseLocation.y >= 0 && mouseLocation.y <= 574)
 				{
-					if(editMode && !terrainType)
+					leftSideClicked = mouseLocation.x < window.getSize().x/2;
+					if(editMode)
 					{
 						terrainType = true;
 						editTerrain.x = mouseLocation.y/64 + startI;
 						editTerrain.y = mouseLocation.x/64 + startJ;
-						cout<<editTerrain.x<<' '<<editTerrain.y<<'\n';
 					}
-					else if(terrainType)
+				}
+				if(Mouse::isButtonPressed(Mouse::Left))
+				{
+					if(spriteClicked(ct_grass, mouseLocation))
 					{
-
+						terrainSelected = 0;
+					}
+					if(spriteClicked(ct_water_15, mouseLocation))
+					{
+						terrainSelected = 1;
+					}
+					if(terrainSelected == 0)
+					{
+						if(spriteClicked(ed_grass, mouseLocation))
+						{
+							terrainType = false;
+							fishyMap[editTerrain.x][editTerrain.y] = 25;
+						}
+					}
+					else if(terrainSelected == 1)
+					{
+					if(spriteClicked(ed_water_11, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 11;
+					}
+					if(spriteClicked(ed_water_12, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 12;
+					}
+					if(spriteClicked(ed_water_13, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 13;
+					}
+					if(spriteClicked(ed_water_14, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 14;
+					}
+					if(spriteClicked(ed_water_15, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 15;
+					}
+					if(spriteClicked(ed_water_16, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 16;
+					}
+					if(spriteClicked(ed_water_17, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 17;
+					}
+					if(spriteClicked(ed_water_18, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 18;
+					}
+					if(spriteClicked(ed_water_19, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 19;
+					}
+					if(spriteClicked(ed_water_31, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 31;
+					}
+					if(spriteClicked(ed_water_32, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 32;
+					}
+					if(spriteClicked(ed_water_33, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 33;
+					}
+					if(spriteClicked(ed_water_34, mouseLocation))
+					{
+						terrainType = false;
+						fishyMap[editTerrain.x][editTerrain.y] = 34;
+					}
 					}
 				}
 			}
@@ -289,7 +402,7 @@ int main()
 					txtCarHP.setOutlineThickness(1);
 					txtCarHP.setColor(Color::Black);
 					txtCarHP.setOrigin(txtCarHP.getGlobalBounds().width/2, txtCarHP.getGlobalBounds().height/2);
-					txtCarHP.setPosition((j-startJ)*64 + 32, (i-startI)*64 + 32);
+					txtCarHP.setPosition((j-startJ)*64 + 32, (i-startI)*64 + 28);
 					window.draw(txtCarHP);
 				}
 			}
@@ -298,48 +411,66 @@ int main()
 		window.draw(healthBarOutline);
 		if(editMode && !terrainType)
 		{
-			healthBarOutline.setPosition((mouseLocation.x/64) * 64, (mouseLocation.y/64) * 64);
-			window.draw(healthBarOutline);
+			RectangleShape mousePointer;
+			mousePointer.setOrigin(32, 32);
+			mousePointer.setSize(Vector2f(62, 62));
+			mousePointer.setFillColor(Color(43, 43, 43, 150));
+			mousePointer.setOutlineColor(Color::White);
+			mousePointer.setOutlineThickness(1);
+			mousePointer.setPosition((mouseLocation.x/64) * 64 + 32, (mouseLocation.y/64) * 64 + 32);
+			window.draw(mousePointer);
 		}
 		else if(terrainType)
 		{
+			int rightSideAddition = 0;
+			if(leftSideClicked) rightSideAddition = 532;
 			RectangleShape terrainHolder;
 			terrainHolder.setFillColor(Color(46, 46, 46, 200));
-			terrainHolder.setSize(Vector2f(600, 400));
-			terrainHolder.setOrigin(300, 200);
-			terrainHolder.setPosition(window.getSize().x/2, window.getSize().y/2);
+			terrainHolder.setSize(Vector2f(300, 574));
+			terrainHolder.setPosition(0 + rightSideAddition, 0);
 			window.draw(terrainHolder);
 
-			grass.setPosition(terrainHolder.getPosition().x - 90, terrainHolder.getPosition().y - 170);
-			window.draw(grass);
+			ct_grass.setPosition(10 + rightSideAddition, 10);
+			window.draw(ct_grass);
 
-			water_15.setPosition(terrainHolder.getPosition().x + 20, terrainHolder.getPosition().y - 170);
-			window.draw(water_15);
-
-			if(Mouse::isButtonPressed(Mouse::Left))
-			{
-				IntRect grassBtn(grass.getPosition().x - grass.getGlobalBounds().width / 2,
-					grass.getPosition().y, grass.getGlobalBounds().width * 2, grass.getGlobalBounds().height * 2);
-				if (grassBtn.contains(mouseLocation))
-				{
-					terrainSelected = 0;
-				}
-				IntRect waterBtn(water_15.getPosition().x - water_15.getGlobalBounds().width / 2,
-					water_15.getPosition().y, water_15.getGlobalBounds().width * 2, water_15.getGlobalBounds().height * 2);
-				if (waterBtn.contains(mouseLocation))
-				{
-					terrainSelected = 1;
-				}
-			}
+			ct_water_15.setPosition(84 + rightSideAddition, 10);
+			window.draw(ct_water_15);
 
 			if(terrainSelected == 0)
 			{
-				grass.setPosition(terrainHolder.getPosition().x - 220, terrainHolder.getPosition().y - 90);
-				window.draw(grass);
+				ed_grass.setPosition(10 + rightSideAddition, 90);
+				window.draw(ed_grass);
 			}
 			else if(terrainSelected == 1)
 			{
-				cout<<"water\n";
+				ed_water_11.setPosition(10 + 70 * 0 + rightSideAddition, 90 + 70 * 0);
+				window.draw(ed_water_11);
+				ed_water_12.setPosition(10 + 70 * 1 + rightSideAddition, 90 + 70 * 0);
+				window.draw(ed_water_12);
+				ed_water_13.setPosition(10 + 70 * 2 + rightSideAddition, 90 + 70 * 0);
+				window.draw(ed_water_13);
+				ed_water_14.setPosition(10 + 70 * 0 + rightSideAddition, 90 + 70 * 1);
+				window.draw(ed_water_14);
+				ed_water_15.setPosition(10 + 70 * 1 + rightSideAddition, 90 + 70 * 1);
+				window.draw(ed_water_15);
+				ed_water_16.setPosition(10 + 70 * 2 + rightSideAddition, 90 + 70 * 1);
+				window.draw(ed_water_16);
+				ed_water_17.setPosition(10 + 70 * 0 + rightSideAddition, 90 + 70 * 2);
+				window.draw(ed_water_17);
+				ed_water_18.setPosition(10 + 70 * 1 + rightSideAddition, 90 + 70 * 2);
+				window.draw(ed_water_18);
+				ed_water_19.setPosition(10 + 70 * 2 + rightSideAddition, 90 + 70 * 2);
+				window.draw(ed_water_19);
+				
+				ed_water_31.setPosition(10 + 70 * 0 + rightSideAddition, 90 + 70 * 3);
+				window.draw(ed_water_31);
+				ed_water_32.setPosition(10 + 70 * 1 + rightSideAddition, 90 + 70 * 3);
+				window.draw(ed_water_32);
+				ed_water_33.setPosition(10 + 70 * 0 + rightSideAddition, 90 + 70 * 4);
+				window.draw(ed_water_33);
+				ed_water_34.setPosition(10 + 70 * 1 + rightSideAddition, 90 + 70 * 4);
+				window.draw(ed_water_34);
+
 			}
 
 		}
