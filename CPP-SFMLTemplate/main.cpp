@@ -63,7 +63,7 @@ void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[12
 	{
 		if(canGo(muddyMap[characterPos.y + offset.x - 1][characterPos.x + offset.y], objectsMap[characterPos.y + offset.x - 1][characterPos.x + offset.y]))
 		{
-			if(characterPos.y + offset.x >= 9 && characterPos.y + offset.x <= mapSizeH - 10)
+			if(characterPos.y + offset.x >= 10 && characterPos.y + offset.x <= mapSizeH - 10)
 			{
 				offset.x--;
 			}
@@ -81,7 +81,7 @@ void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[12
 	{
 		if(canGo(muddyMap[characterPos.y + offset.x + 1][characterPos.x + offset.y], objectsMap[characterPos.y + offset.x + 1][characterPos.x + offset.y]))
 		{
-			if(characterPos.y + offset.x >= 8 && characterPos.y + offset.x <= mapSizeH - 12)
+			if(characterPos.y + offset.x >= 9 && characterPos.y + offset.x <= mapSizeH - 11)
 			{
 				offset.x++;
 			}
@@ -409,10 +409,7 @@ int main()
 				objectsMap[i + 1][j + 1] = -1;
 				if(objectsMap[i][j] == -1)
 				{
-					cout<<objectTypeNew * -1<<' '<<i<<' '<<j<<' ';
-					//objectsMap[i][j] = objectTypeNew * -1;
 					objectsMap[i][j] = objectTypeNew * -1;
-					cout<<objectsMap[i][j]<<'\n';
 				}
 				else
 				{
@@ -967,7 +964,18 @@ int main()
 		}
 		character.setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
 		window.draw(character);
-		for(i = offset.x - 1; i < offset.x + screenH/tilesetSize; i++)
+		int limitX, limitY;
+		if(offset.x > 0 && offset.x < screenH)
+		{
+			i = offset.x - 1;
+			limitX = offset.x + screenH/tilesetSize;
+		}
+		else
+		{						
+			i = offset.x;
+			limitX = offset.x + screenH/tilesetSize - 1;
+		}
+		for(i; i < limitX; i++)
 		{
 			for(j = offset.y - 1; j < offset.y + screenW/tilesetSize; j++)
 			{
@@ -977,7 +985,7 @@ int main()
 					int objectTypeN = abs(objectsMap[i][j]);
 					if(objectTypeN > 10 && objectTypeN < 20)
 					{
-						getObjectByType(objectsMap[i][j], uvX);
+						getObjectByType(objectTypeN, uvX);
 						square_tilesets_transparent[uvX].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
 						window.draw(square_tilesets_transparent[uvX]);
 					}
@@ -986,10 +994,9 @@ int main()
 				{
 					int uvX;
 					int objectTypeN = abs(objectsMap[i][j]);
-					if(i==6 && j==4) cout<<objectsMap[i][j]<<' '<<objectTypeN<<'\n';
 					if(objectTypeN > 10 && objectTypeN < 20)
 					{
-						getObjectByType(objectsMap[i][j], uvX);
+						getObjectByType(objectTypeN, uvX);
 						square_tilests[uvX].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
 						window.draw(square_tilests[uvX]);
 					}
