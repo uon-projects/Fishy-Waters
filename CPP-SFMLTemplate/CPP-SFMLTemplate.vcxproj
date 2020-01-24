@@ -87,6 +87,10 @@
   <ItemGroup>
     <ClInclude Include="ZeoFlow_SFML.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets\map\map.txt" />
+    <Text Include="Assets\map\objects.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

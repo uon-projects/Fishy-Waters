@@ -8,119 +8,349 @@ using namespace std;
 using namespace sf;
 using namespace zeoFlow;
 
-RenderWindow window(VideoMode(832, 574), "Fishy Waters"); //the game screen
-bool editMode = false;
+const int screenW = 864, screenH = 608;
+RenderWindow window(VideoMode(screenW, screenH), "Fishy Waters"); //the game screen
 
-bool canGo(int fieldType)
+bool canGo(int fieldType, int objectType)
 {
-	if(fieldType == 11 || fieldType == 12 || fieldType == 13 || fieldType == 14 || fieldType == 15 || fieldType == 16 || fieldType == 17 ||
-		fieldType == 18 || fieldType == 19 || fieldType == 31 || fieldType == 32 || fieldType == 33 || fieldType == 34 || editMode)
+	if(objectType > 0 && fieldType < 120)
 	{
 		return true;
 	}
 	return false;
 }
 
-void setOffsets(Vector2i &posBoat, int &startI, int &startJ, int mapSizeW, int mapSizeH, int fishyMap[40][50])
+void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[120][200], int objectsMap[120][200], int mapSizeH, int mapSizeW)
 {
-	bool keyUp = false, keyDown = false, keyLeft = false, keyRight = false;
-	
-	if(Keyboard::isKeyPressed(Keyboard::Up)) keyUp = true;
-	if(Keyboard::isKeyPressed(Keyboard::Down)) keyDown = true;
-	if(Keyboard::isKeyPressed(Keyboard::Left)) keyLeft = true;
-	if(Keyboard::isKeyPressed(Keyboard::Right)) keyRight = true;
-	
-	if(!canGo(fishyMap[posBoat.y + startI][posBoat.x + startJ + 1]))
+
+	if(Keyboard::isKeyPressed(Keyboard::Left))
 	{
-		keyRight = false;
+		if(canGo(muddyMap[characterPos.y + offset.x][characterPos.x + offset.y - 1], objectsMap[characterPos.y + offset.x][characterPos.x + offset.y - 1]))
+		{
+			if(characterPos.x + offset.y >= 14 && characterPos.x + offset.y <= mapSizeW - 14)
+			{
+				offset.y--;
+			}
+			else
+			{
+				characterPos.x--;
+			}
+			if(characterPos.x + offset.y < 0)
+			{
+				characterPos.x++;
+			}
+		}
 	}
-	
-	if(!canGo(fishyMap[posBoat.y + startI][posBoat.x + startJ - 1]))
+	if(Keyboard::isKeyPressed(Keyboard::Right))
 	{
-		keyLeft = false;
+		if(canGo(muddyMap[characterPos.y + offset.x][characterPos.x + offset.y + 1], objectsMap[characterPos.y + offset.x][characterPos.x + offset.y + 1]))
+		{
+			if(characterPos.x + offset.y >= 13 && characterPos.x + offset.y <= mapSizeW - 15)
+			{
+				offset.y++;
+			}
+			else
+			{
+				characterPos.x++;
+			}
+			if(characterPos.x + offset.y >= mapSizeW)
+			{
+				characterPos.x--;
+			}
+		}
 	}
-	
-	if(!canGo(fishyMap[posBoat.y + startI + 1][posBoat.x + startJ]))
+	if(Keyboard::isKeyPressed(Keyboard::Up))
 	{
-		keyDown = false;
+		if(canGo(muddyMap[characterPos.y + offset.x - 1][characterPos.x + offset.y], objectsMap[characterPos.y + offset.x - 1][characterPos.x + offset.y]))
+		{
+			if(characterPos.y + offset.x >= 9 && characterPos.y + offset.x <= mapSizeH - 10)
+			{
+				offset.x--;
+			}
+			else
+			{
+				characterPos.y--;
+			}
+			if(characterPos.y + offset.x < 0)
+			{
+				characterPos.y++;
+			}
+		}
 	}
-	
-	if(!canGo(fishyMap[posBoat.y + startI - 1][posBoat.x + startJ]))
+	if(Keyboard::isKeyPressed(Keyboard::Down))
 	{
-		keyUp = false;
+		if(canGo(muddyMap[characterPos.y + offset.x + 1][characterPos.x + offset.y], objectsMap[characterPos.y + offset.x + 1][characterPos.x + offset.y]))
+		{
+			if(characterPos.y + offset.x >= 8 && characterPos.y + offset.x <= mapSizeH - 12)
+			{
+				offset.x++;
+			}
+			else
+			{
+				characterPos.y++;
+			}
+			if(characterPos.y + offset.x >= mapSizeH)
+			{
+				characterPos.y--;
+			}
+		}
 	}
 
-	if (keyUp)
-	{
-		if(posBoat.y + startI > 4 && posBoat.y + startI <= mapSizeH - 5)
-		{
-			startI--;
-		}
-		else
-		{
-			posBoat.y--;
-		}
-		if(posBoat.y + startI < 0)
-		{
-			posBoat.y += 1;
-		}
-	}
-	if (keyDown)
-	{
-		if(posBoat.y + startI >= 4 && posBoat.y + startI <= mapSizeH - 6)
-		{
-			startI++;
-		}
-		else
-		{
-			posBoat.y++;
-		}
-		if(posBoat.y + startI > mapSizeH - 1)
-		{
-			posBoat.y -= 1;
-		}
-	}
-	if (keyLeft)
-	{
-		if(posBoat.x + startJ >= 7 && posBoat.x + startJ <= mapSizeW - 7)
-		{
-			startJ--;
-		}
-		else
-		{
-			posBoat.x--;
-		}
-		if(posBoat.x + startJ < 0)
-		{
-			posBoat.x += 1;
-		}
-	}
-	if (keyRight)
-	{
-		if(posBoat.x + startJ >= 6 && posBoat.x + startJ <= mapSizeW - 8)
-		{
-			startJ++;
-		}
-		else
-		{
-			posBoat.x++;
-		}
-		if(posBoat.x + startJ >= mapSizeW)
-		{
-			posBoat.x -= 1;
-		}
-	}
 }
 
-bool spriteClicked(Sprite sprite, Vector2i mouseLocation)
+bool rectClicked(RectangleShape sprite, Vector2i mouseLocation)
 {
-	IntRect water11Btn(sprite.getPosition().x, sprite.getPosition().y,
-						sprite.getGlobalBounds().width * 2, sprite.getGlobalBounds().height * 2);
+	IntRect water11Btn(sprite.getPosition().x, sprite.getPosition().y, sprite.getGlobalBounds().width, sprite.getGlobalBounds().height);
 	if (water11Btn.contains(mouseLocation))
 	{
 		return true;
 	}
 	return false;
+}
+
+int getObjectType(int type, int x)
+{
+	//type 1 - 2x2
+	if(type == 1 && x == 0) {
+		return 11;
+	} else if(type == 1 && x == 1) {
+		return 12;
+	} else if(type == 1 && x == 2) {
+		return 13;
+	} else if(type == 1 && x == 3) {
+		return 14;
+	} else if(type == 1 && x == 4) {
+		return 15;
+	} else if(type == 1 && x == 5) {
+		return 16;
+	} else if(type == 1 && x == 6) {
+		return 17;
+	} else if(type == 1 && x == 7) {
+		return 18;
+	} else if(type == 1 && x == 8) {
+		return 19;
+	}
+}
+
+void getObjectByType(int type, int &x)
+{
+	if(type == 11) {
+		x = 0;
+	} else if(type == 12) {
+		x = 1;
+	} else if(type == 13) {
+		x = 2;
+	} else if(type == 14) {
+		x = 3;
+	} else if(type == 15) {
+		x = 4;
+	} else if(type == 16) {
+		x = 5;
+	} else if(type == 17) {
+		x = 6;
+	} else if(type == 18) {
+		x = 7;
+	} else if(type == 19) {
+		x = 8;
+	}
+}
+
+int getTerrainType(int type, int x, int y)
+{
+	//type 1 - grass
+	//type 2 - mud
+	//type 3 - water
+	if(type == 1 && x == 43 && y == 6) {
+		return 20;
+	} else if(type == 1 && x == 12 && y == 1) {
+		return 30;
+	} else if(type == 1 && x == 12 && y == 2) {
+		return 31;
+	} else if(type == 1 && x == 12 && y == 3) {
+		return 32;
+	} else if(type == 1 && x == 12 && y == 4) {
+		return 33;
+	} else if(type == 1 && x == 13 && y == 4) {
+		return 34;
+	} else if(type == 1 && x == 14 && y == 4) {
+		return 35;
+	} else if(type == 1 && x == 12 && y == 5) {
+		return 36;
+	} else if(type == 1 && x == 12 && y == 6) {
+		return 37;
+	} else if(type == 1 && x == 12 && y == 7) {
+		return 38;
+	} else if(type == 1 && x == 13 && y == 5) {
+		return 39;
+	} else if(type == 1 && x == 13 && y == 6) {
+		return 40;
+	} else if(type == 1 && x == 13 && y == 7) {
+		return 41;
+	} else if(type == 1 && x == 14 && y == 5) {
+		return 42;
+	} else if(type == 1 && x == 14 && y == 6) {
+		return 43;
+	} else if(type == 1 && x == 14 && y == 7) {
+		return 44;
+	} else if(type == 1 && x == 13 && y == 0) {
+		return 45;
+	} else if(type == 1 && x == 13 && y == 1) {
+		return 46;
+	} else if(type == 1 && x == 14 && y == 0) {
+		return 47;
+	} else if(type == 1 && x == 14 && y == 1) {
+		return 48;
+	} else if(type == 2 && x == 36 && y == 1) {
+		return 70;
+	} else if(type == 2 && x == 36 && y == 2) {
+		return 71;
+	} else if(type == 2 && x == 36 && y == 3) {
+		return 72;
+	} else if(type == 2 && x == 36 && y == 4) {
+		return 73;
+	} else if(type == 2 && x == 37 && y == 4) {
+		return 74;
+	} else if(type == 2 && x == 38 && y == 4) {
+		return 75;
+	} else if(type == 2 && x == 36 && y == 5) {
+		return 76;
+	} else if(type == 2 && x == 36 && y == 6) {
+		return 77;
+	} else if(type == 2 && x == 36 && y == 7) {
+		return 78;
+	} else if(type == 2 && x == 37 && y == 5) {
+		return 79;
+	} else if(type == 2 && x == 37 && y == 6) {
+		return 80;
+	} else if(type == 2 && x == 37 && y == 7) {
+		return 81;
+	} else if(type == 2 && x == 38 && y == 5) {
+		return 82;
+	} else if(type == 2 && x == 38 && y == 6) {
+		return 83;
+	} else if(type == 2 && x == 38 && y == 7) {
+		return 84;
+	} else if(type == 3 && x == 1 && y == 6) {
+		return 120;
+	}
+}
+
+void getTerrainByType(int type, int &x, int &y)
+{
+	if(type == 20) {
+		x = 43;
+		y = 6;
+	} else if(type == 30) {
+		x = 12;
+		y = 1;
+	} else if(type == 31) {
+		x = 12;
+		y = 2;
+	} else if(type == 32) {
+		x = 12;
+		y = 3;
+	} else if(type == 33) {
+		x = 12;
+		y = 4;
+	} else if(type == 34) {
+		x = 13;
+		y = 4;
+	} else if(type == 35) {
+		x = 14;
+		y = 4;
+	} else if(type == 36) {
+		x = 12;
+		y = 5;
+	} else if(type == 37) {
+		x = 12;
+		y = 6;
+	} else if(type == 38) {
+		x = 12;
+		y = 7;
+	} else if(type == 39) {
+		x = 13;
+		y = 5;
+	} else if(type == 40) {
+		x = 13;
+		y = 6;
+	} else if(type == 41) {
+		x = 13;
+		y = 7;
+	} else if(type == 42) {
+		x = 14;
+		y = 5;
+	} else if(type == 43) {
+		x = 14;
+		y = 6;
+	} else if(type == 44) {
+		x = 14;
+		y = 7;
+	} else if(type == 45) {
+		x = 13;
+		y = 0;
+	} else if(type == 46) {
+		x = 13;
+		y = 1;
+	} else if(type == 47) {
+		x = 14;
+		y = 0;
+	} else if(type == 48) {
+		x = 14;
+		y = 1;
+	} else if(type == 70) {
+		x = 36;
+		y = 1;
+	} else if(type == 71) {
+		x = 36;
+		y = 2;
+	} else if(type == 72) {
+		x = 36;
+		y = 3;
+	} else if(type == 73) {
+		x = 37;
+		y = 4;
+	} else if(type == 74) {
+		x = 38;
+		y = 4;
+	} else if(type == 75) {
+		x = 39;
+		y = 4;
+	} else if(type == 76) {
+		x = 36;
+		y = 5;
+	} else if(type == 77) {
+		x = 36;
+		y = 6;
+	} else if(type == 78) {
+		x = 36;
+		y = 7;
+	} else if(type == 79) {
+		x = 37;
+		y = 5;
+	} else if(type == 80) {
+		x = 37;
+		y = 6;
+	} else if(type == 81) {
+		x = 37;
+		y = 7;
+	} else if(type == 82) {
+		x = 38;
+		y = 5;
+	} else if(type == 83) {
+		x = 38;
+		y = 6;
+	} else if(type == 84) {
+		x = 38;
+		y = 7;
+	} else if(type == 120) {
+		x = 1;
+		y = 6;
+	}
+}
+
+void checkObjectDetails(Vector2i editLocation, int objectsMap[120][200])
+{
+
 }
 
 int main()
@@ -129,68 +359,256 @@ int main()
 	window.setFramerateLimit(60);
 
 	Event event;
-	int fishyMap[40][50];
-	int mapSizeW = 50;
-	int mapSizeH = 40;
-	int i, j;
 	ZeoFlow_SFML zeoFlow_SF;
-	int startI = 0;
-	int startJ = 23;
-	Vector2i posBoat(6, 3);
+	Font font(zeoFlow_SF.loadFont("Assets/fonts/", "font_5", "ttf"));
+	const int tilesetSize = 32;
+	const int mapSizeH = 120, mapSizeW = 200;
+	int muddyMap[mapSizeH][mapSizeW], objectsMap[mapSizeH][mapSizeW];
+	int i, j;
+
+	bool modeEdit = false;
+	bool modeShowInventory = false;
+	int lastTerrainUsed;
+	bool modeEditShowObjects = false;
+	int modeInvenotry = 0;
+	bool leftSideClicked;
+
+	Vector2i characterPos(4, 8);
+	Vector2i offset(0, 0);
 	Vector2i mouseLocation(0, 0);
-	Vector2i editTerrain(0, 0);
-	Font font(zeoFlow_SF.loadFont("Assets/fonts/", "big_space", "otf"));
-	bool leftSideClicked = false;
+	Vector2i editLocation(0, 0);
   
 	ifstream mapRead("Assets/map/map.txt");
 	for(i = 0; i < mapSizeH; i++)
 	{
 		for(j = 0; j < mapSizeW; j++)
 		{
-			mapRead>>fishyMap[i][j];
+			mapRead>>muddyMap[i][j];
 		}
 	}
 	mapRead.close();
-	ofstream mapNew("Assets/map/map.txt");
-	
-	Sprite grass = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_020", "png");
-	Sprite water_11 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_011", "png");
-	Sprite water_12 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_012", "png");
-	Sprite water_13 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_013", "png");
-	Sprite water_14 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_029", "png");
-	Sprite water_15 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_030", "png");
-	Sprite water_16 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_031", "png");
-	Sprite water_17 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_045", "png");
-	Sprite water_18 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_046", "png");
-	Sprite water_19 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_047", "png");
-	Sprite water_31 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_014", "png");
-	Sprite water_32 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_015", "png");
-	Sprite water_33 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_032", "png");
-	Sprite water_34 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_033", "png");
-	
-	Sprite ct_grass = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_020", "png");
-	Sprite ct_water_15 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_030", "png");
-	Sprite ed_grass = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_020", "png");
-	Sprite ed_water_11 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_011", "png");
-	Sprite ed_water_12 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_012", "png");
-	Sprite ed_water_13 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_013", "png");
-	Sprite ed_water_14 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_029", "png");
-	Sprite ed_water_15 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_030", "png");
-	Sprite ed_water_16 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_031", "png");
-	Sprite ed_water_17 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_045", "png");
-	Sprite ed_water_18 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_046", "png");
-	Sprite ed_water_19 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_047", "png");
-	Sprite ed_water_31 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_014", "png");
-	Sprite ed_water_32 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_015", "png");
-	Sprite ed_water_33 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_032", "png");
-	Sprite ed_water_34 = zeoFlow_SF.loadSpriteFromTexture("Assets/tilesets/", "tileset_033", "png");
+  
 
+	for(i = 0; i < mapSizeH; i++)
+	{
+		for(j = 0; j < mapSizeW; j++)
+		{
+			objectsMap[i][j] = 0;
+		}
+	}
+	ifstream objectsRead("Assets/map/objects.txt");
+	int objectTypeNew;
+	for(i = 0; i < mapSizeH; i++)
+	{
+		for(j = 0; j < mapSizeW; j++)
+		{
+			objectsRead>>objectTypeNew;
+			if(objectTypeNew > 10 && objectTypeNew <20)
+			{
+				objectsMap[i + 1][j] = -1;
+				objectsMap[i + 1][j + 1] = -1;
+				if(objectsMap[i][j] < 0)
+				{
+					cout<<objectsMap[i][j];
+					objectsMap[i][j] = -1 * objectTypeNew;
+				}
+				else
+				{
+					objectsMap[i][j] = objectTypeNew;
+				}
+				if(objectsMap[i][j + 1] >= 0) objectsMap[i][j + 1] = 10;
+			}
+			else
+			{
+				if(objectsMap[i][j] >= 0) objectsMap[i][j] = objectTypeNew;
+			}
+		}
+	}
+	objectsRead.close();
 
-	RectangleShape healthBarOutline;
-	healthBarOutline.setSize(Vector2f(64, 64));
-	healthBarOutline.setFillColor(Color(21, 21, 21, 200));
-	bool terrainType = false;
-	int terrainSelected = 0, lastTerrainType = -1;
+	Texture tilesetsTexture;
+	tilesetsTexture.loadFromFile("Assets/tilesets.png");
+	Vector2u textureSize = tilesetsTexture.getSize();
+	textureSize.x /= 8;
+	textureSize.y /= 133;
+
+	Texture tilesetsGrassTexture;
+	tilesetsGrassTexture.loadFromFile("Assets/tilesets_grass.png");
+	Vector2u textureGrassSize = tilesetsGrassTexture.getSize();
+	textureGrassSize.x /= 8;
+	textureGrassSize.y /= 66;
+
+	Texture tilesetsWaterTexture;
+	tilesetsWaterTexture.loadFromFile("Assets/tilesets_water.png");
+	Vector2u textureWaterSize = tilesetsWaterTexture.getSize();
+	textureWaterSize.x /= 8;
+	textureWaterSize.y /= 12;
+
+	RectangleShape mousePointer;
+	mousePointer.setOrigin(16, 16);
+	mousePointer.setSize(Vector2f(32, 32));
+	mousePointer.setFillColor(Color(43, 43, 43, 50));
+	mousePointer.setOutlineColor(Color::White);
+	mousePointer.setOutlineThickness(2);
+
+	RectangleShape terrainPointer;
+	terrainPointer.setOrigin(16, 16);
+	terrainPointer.setSize(Vector2f(32, 32));
+	terrainPointer.setFillColor(Color::Transparent);
+	terrainPointer.setOutlineColor(Color::White);
+	terrainPointer.setOutlineThickness(4);
+	
+	RectangleShape grass_tilesets[66][8];
+	RectangleShape grass_tilesets_edit[66][8];
+	for(i = 0; i<66; i++)
+	{
+		for(j = 0; j<8; j++)
+		{
+			grass_tilesets[i][j].setSize(Vector2f(tilesetSize, tilesetSize));
+			grass_tilesets[i][j].setTexture(&tilesetsGrassTexture);
+			grass_tilesets[i][j].setTextureRect(IntRect(textureGrassSize.x*j, textureGrassSize.y*i, textureGrassSize.x, textureGrassSize.y));
+			grass_tilesets_edit[i][j].setSize(Vector2f(tilesetSize, tilesetSize));
+			grass_tilesets_edit[i][j].setTexture(&tilesetsGrassTexture);
+			grass_tilesets_edit[i][j].setTextureRect(IntRect(textureGrassSize.x*j, textureGrassSize.y*i, textureGrassSize.x, textureGrassSize.y));
+		}
+	}
+	
+	RectangleShape water_tilests[12][8];
+	RectangleShape water_tilesets_edit[12][8];
+	for(i = 0; i<12; i++)
+	{
+		for(j = 0; j<8; j++)
+		{
+			water_tilests[i][j].setSize(Vector2f(tilesetSize, tilesetSize));
+			water_tilests[i][j].setTexture(&tilesetsWaterTexture);
+			water_tilests[i][j].setTextureRect(IntRect(textureWaterSize.x*j, textureWaterSize.y*i, textureWaterSize.x, textureWaterSize.y));
+			water_tilesets_edit[i][j].setSize(Vector2f(tilesetSize, tilesetSize));
+			water_tilesets_edit[i][j].setTexture(&tilesetsWaterTexture);
+			water_tilesets_edit[i][j].setTextureRect(IntRect(textureWaterSize.x*j, textureWaterSize.y*i, textureWaterSize.x, textureWaterSize.y));
+		}
+	}
+	
+	
+	RectangleShape square_tilests[10];
+	RectangleShape square_tilesets_edit[10];
+	RectangleShape square_tilesets_transparent[10];
+	
+	for(j = 0; j<4; j++)
+	{
+		square_tilests[j].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+		square_tilests[j].setTexture(&tilesetsTexture);
+		square_tilests[j].setTextureRect(IntRect(textureSize.x*(j*2), textureSize.y*1, textureSize.x * 2, textureSize.y * 2));
+		
+		square_tilesets_edit[j].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+		square_tilesets_edit[j].setTexture(&tilesetsTexture);
+		square_tilesets_edit[j].setTextureRect(IntRect(textureSize.x*(j*2), textureSize.y*1, textureSize.x * 2, textureSize.y * 2));
+
+		square_tilesets_transparent[j].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+		square_tilesets_transparent[j].setFillColor(Color(0, 0, 0, 80));
+		square_tilesets_transparent[j].setTexture(&tilesetsTexture);
+		square_tilesets_transparent[j].setTextureRect(IntRect(textureSize.x*(j*2), textureSize.y*1, textureSize.x * 2, textureSize.y * 2));
+	}
+
+	i = 28;
+	j = 6;
+	int no = 4;
+	square_tilests[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilests[no].setTexture(&tilesetsTexture);
+	square_tilests[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+		
+	square_tilesets_edit[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilesets_edit[no].setTexture(&tilesetsTexture);
+	square_tilesets_edit[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+
+	square_tilesets_transparent[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilesets_transparent[no].setFillColor(Color(0, 0, 0, 80));
+	square_tilesets_transparent[no].setTexture(&tilesetsTexture);
+	square_tilesets_transparent[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+
+	i = 30;
+	j = 6;
+	no = 5;
+	square_tilests[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilests[no].setTexture(&tilesetsTexture);
+	square_tilests[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+		
+	square_tilesets_edit[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilesets_edit[no].setTexture(&tilesetsTexture);
+	square_tilesets_edit[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+
+	square_tilesets_transparent[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilesets_transparent[no].setFillColor(Color(0, 0, 0, 80));
+	square_tilesets_transparent[no].setTexture(&tilesetsTexture);
+	square_tilesets_transparent[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+
+	i = 32;
+	j = 6;
+	no = 6;
+	square_tilests[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilests[no].setTexture(&tilesetsTexture);
+	square_tilests[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+		
+	square_tilesets_edit[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilesets_edit[no].setTexture(&tilesetsTexture);
+	square_tilesets_edit[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+
+	square_tilesets_transparent[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilesets_transparent[no].setFillColor(Color(0, 0, 0, 80));
+	square_tilesets_transparent[no].setTexture(&tilesetsTexture);
+	square_tilesets_transparent[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+
+	i = 34;
+	j = 6;
+	no = 7;
+	square_tilests[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilests[no].setTexture(&tilesetsTexture);
+	square_tilests[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+		
+	square_tilesets_edit[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilesets_edit[no].setTexture(&tilesetsTexture);
+	square_tilesets_edit[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+
+	square_tilesets_transparent[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilesets_transparent[no].setFillColor(Color(0, 0, 0, 80));
+	square_tilesets_transparent[no].setTexture(&tilesetsTexture);
+	square_tilesets_transparent[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+
+	i = 117;
+	j = 3;
+	no = 8;
+	square_tilests[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilests[no].setTexture(&tilesetsTexture);
+	square_tilests[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+		
+	square_tilesets_edit[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilesets_edit[no].setTexture(&tilesetsTexture);
+	square_tilesets_edit[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+
+	square_tilesets_transparent[no].setSize(Vector2f(tilesetSize * 2, tilesetSize * 2));
+	square_tilesets_transparent[no].setFillColor(Color(0, 0, 0, 80));
+	square_tilesets_transparent[no].setTexture(&tilesetsTexture);
+	square_tilesets_transparent[no].setTextureRect(IntRect(textureSize.x*j, textureSize.y*i, textureSize.x * 2, textureSize.y * 2));
+	
+
+	RectangleShape character;
+	character.setSize(Vector2f(tilesetSize, tilesetSize));
+	character.setFillColor(Color(21, 21, 21, 150));
+	
+	RectangleShape editModeHolder;
+	editModeHolder.setFillColor(Color(46, 46, 46, 240));
+	editModeHolder.setSize(Vector2f(400, 608));
+	
+	RectangleShape categoryGround(Vector2f(tilesetSize, tilesetSize));
+	categoryGround.setTexture(&tilesetsTexture);
+	categoryGround.setTextureRect(IntRect(textureSize.x*0, textureSize.y*0, textureSize.x, textureSize.y));
+	
+	RectangleShape categoryObject1(Vector2f(tilesetSize, tilesetSize));
+	categoryObject1.setTexture(&tilesetsTexture);
+	categoryObject1.setTextureRect(IntRect(textureSize.x*0, textureSize.y*5, textureSize.x, textureSize.y));
+	
+	RectangleShape categoryObject2(Vector2f(tilesetSize, tilesetSize));
+	categoryObject2.setTexture(&tilesetsTexture);
+	categoryObject2.setTextureRect(IntRect(textureSize.x*0, textureSize.y*5, textureSize.x, textureSize.y));
 
 	//the loop that draws the game
     while (window.isOpen())
@@ -202,335 +620,664 @@ int main()
 			{
                 window.close();
 			}
-			if(event.type == Event::KeyPressed)
-			{
-				if(Keyboard::isKeyPressed(Keyboard::E))
-				{
-					editMode = !editMode;
-					terrainType = false;
-					lastTerrainType = -1;
-				}
-				if((terrainType || lastTerrainType != -1) && editMode)
-				{
-					if(Keyboard::isKeyPressed(Keyboard::Return) && lastTerrainType != -1)
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = lastTerrainType;
-					}
-					if(Keyboard::isKeyPressed(Keyboard::Z))
-					{
-						lastTerrainType = fishyMap[editTerrain.x][editTerrain.y];
-					}
-					if(Keyboard::isKeyPressed(Keyboard::Q))
-					{
-						terrainType = !terrainType;
-					}
-					if(Keyboard::isKeyPressed(Keyboard::W))
-					{
-						editTerrain.x--;
-					}
-					if(Keyboard::isKeyPressed(Keyboard::S))
-					{
-						editTerrain.x++;
-					}
-					if(Keyboard::isKeyPressed(Keyboard::A))
-					{
-						editTerrain.y--;
-					}
-					if(Keyboard::isKeyPressed(Keyboard::D))
-					{
-						editTerrain.y++;
-					}
-				}
-			}
 			if(event.type == Event::MouseMoved)
 			{
 				mouseLocation = Mouse::getPosition(window);
 			}
-			if(event.type == Event::MouseButtonPressed)
+			if(event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::E))
 			{
-				if(Mouse::isButtonPressed(Mouse::Left) && mouseLocation.x >= 0 && mouseLocation.x <= 832 && mouseLocation.y >= 0 && mouseLocation.y <= 574)
+					modeEdit = !modeEdit;
+					modeShowInventory = true;
+					modeEditShowObjects = false;
+					lastTerrainUsed = -1;
+			}
+			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Q))
+			{
+				if(!modeEditShowObjects)
 				{
-					if(!terrainType && editMode && lastTerrainType == -1)
-					{
-						leftSideClicked = mouseLocation.x < window.getSize().x/2;
-						terrainType = true;
-						editTerrain.x = mouseLocation.y/64 + startI;
-						editTerrain.y = mouseLocation.x/64 + startJ;
-					}
+					lastTerrainUsed = muddyMap[editLocation.x][editLocation.y];
 				}
-				if(Mouse::isButtonPressed(Mouse::Left))
+			}
+			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Delete))
+			{
+				if(modeEditShowObjects)
 				{
-					if(spriteClicked(ct_grass, mouseLocation))
+					if(editLocation.x >= 0 && editLocation.x <= mapSizeW - 1 && editLocation.y >= 0 && editLocation.y <= mapSizeH - 1)
 					{
-						terrainSelected = 0;
-					}
-					if(spriteClicked(ct_water_15, mouseLocation))
+					objectsMap[editLocation.x][editLocation.y] = 10;
+		
+					ofstream objectsNew("Assets/map/objects.txt");
+					for(i = 0; i < mapSizeH; i++)
 					{
-						terrainSelected = 1;
-					}
-					if(terrainSelected == 0)
-					{
-						if(spriteClicked(ed_grass, mouseLocation))
+						for(j = 0; j < mapSizeW; j++)
 						{
-							fishyMap[editTerrain.x][editTerrain.y] = 25;
-							lastTerrainType = 25;
+							if(objectsMap[i][j] == -1) {
+								objectsNew<<10<<' ';
+							} else if(objectsMap[i][j]<0) {
+								objectsNew<<-1*objectsMap[i][j]<<' ';
+							} else {
+								objectsNew<<objectsMap[i][j]<<' ';
+							}
 						}
+						objectsNew<<'\n';
 					}
-					else if(terrainSelected == 1)
-					{
-					if(spriteClicked(ed_water_11, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 11;
-						lastTerrainType = 11;
-					}
-					if(spriteClicked(ed_water_12, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 12;
-						lastTerrainType = 12;
-					}
-					if(spriteClicked(ed_water_13, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 13;
-						lastTerrainType = 13;
-					}
-					if(spriteClicked(ed_water_14, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 14;
-						lastTerrainType = 14;
-					}
-					if(spriteClicked(ed_water_15, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 15;
-						lastTerrainType = 15;
-					}
-					if(spriteClicked(ed_water_16, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 16;
-						lastTerrainType = 16;
-					}
-					if(spriteClicked(ed_water_17, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 17;
-						lastTerrainType = 17;
-					}
-					if(spriteClicked(ed_water_18, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 18;
-						lastTerrainType = 18;
-					}
-					if(spriteClicked(ed_water_19, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 19;
-						lastTerrainType = 19;
-					}
-					if(spriteClicked(ed_water_31, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 31;
-						lastTerrainType = 31;
-					}
-					if(spriteClicked(ed_water_32, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 32;
-						lastTerrainType = 32;
-					}
-					if(spriteClicked(ed_water_33, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 33;
-						lastTerrainType = 33;
-					}
-					if(spriteClicked(ed_water_34, mouseLocation))
-					{
-						fishyMap[editTerrain.x][editTerrain.y] = 34;
-						lastTerrainType = 34;
-					}
+					objectsNew.close();
 					}
 				}
 			}
-			setOffsets(posBoat, startI, startJ, mapSizeW, mapSizeH, fishyMap);
-		}
-
-
-		window.clear();
-		for(i = startI; i < startI + 9; i++)
-		{
-			for(j = startJ; j < startJ + 13; j++)
+			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Return))
 			{
-				if(fishyMap[i][j] == 25)
+				if(!modeEditShowObjects)
 				{
-					grass.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(grass);
-				}
-				else if(fishyMap[i][j] == 11)
-				{
-					water_11.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_11);
-				}
-				else if(fishyMap[i][j] == 12)
-				{
-					water_12.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_12);
-				}
-				else if(fishyMap[i][j] == 13)
-				{
-					water_13.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_13);
-				}
-				else if(fishyMap[i][j] == 14)
-				{
-					water_14.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_14);
-				}
-				else if(fishyMap[i][j] == 15)
-				{
-					water_15.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_15);
-				}
-				else if(fishyMap[i][j] == 16)
-				{
-					water_16.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_16);
-				}
-				else if(fishyMap[i][j] == 17)
-				{
-					water_17.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_17);
-				}
-				else if(fishyMap[i][j] == 18)
-				{
-					water_18.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_18);
-				}
-				else if(fishyMap[i][j] == 19)
-				{
-					water_19.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_19);
-				}
-				else if(fishyMap[i][j] == 31)
-				{
-					water_31.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_31);
-				}
-				else if(fishyMap[i][j] == 32)
-				{
-					water_32.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_32);
-				}
-				else if(fishyMap[i][j] == 33)
-				{
-					water_33.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_33);
-				}
-				else if(fishyMap[i][j] == 34)
-				{
-					water_34.setPosition((j-startJ)*64, (i-startI)*64);
-					window.draw(water_34);
-				}
-				if(editMode)
-				{
-					Text txtCarHP;
-					txtCarHP.setString(to_string(i) + ":" + to_string(j));
-					txtCarHP.setFont(font);
-					txtCarHP.setCharacterSize(15);
-					txtCarHP.setOutlineColor(Color::White);
-					txtCarHP.setOutlineThickness(1);
-					txtCarHP.setColor(Color::Black);
-					txtCarHP.setOrigin(txtCarHP.getGlobalBounds().width/2, txtCarHP.getGlobalBounds().height/2);
-					txtCarHP.setPosition((j-startJ)*64 + 32, (i-startI)*64 + 28);
-					window.draw(txtCarHP);
-					if(terrainType || lastTerrainType != -1)
+					muddyMap[editLocation.x][editLocation.y] = lastTerrainUsed;
+		
+					ofstream mapNew("Assets/map/map.txt");
+					for(i = 0; i < mapSizeH; i++)
 					{
-						RectangleShape mousePointer;
-						mousePointer.setOrigin(28, 28);
-						mousePointer.setSize(Vector2f(56, 56));
-						mousePointer.setFillColor(Color(255, 255, 255, 0));
-						mousePointer.setOutlineColor(Color::Red);
-						mousePointer.setOutlineThickness(4);
-						mousePointer.setPosition((editTerrain.y-startJ)*64 + 32, (editTerrain.x-startI)*64 + 32);
-						window.draw(mousePointer);
+						for(j = 0; j < mapSizeW; j++)
+						{
+							mapNew<<muddyMap[i][j]<<' ';
+						}
+						mapNew<<'\n';
+					}
+					mapNew.close();
+				}
+				else
+				{
+					if(editLocation.x >= 0 && editLocation.x <= mapSizeW - 1 && editLocation.y >= 0 && editLocation.y <= mapSizeH - 1)
+					{
+					objectsMap[editLocation.x][editLocation.y] = lastTerrainUsed;
+		
+					ofstream objectsNew("Assets/map/objects.txt");
+					for(i = 0; i < mapSizeH; i++)
+					{
+						for(j = 0; j < mapSizeW; j++)
+						{
+							if(objectsMap[i][j] == -1) {
+								objectsNew<<10<<' ';
+							} else if(objectsMap[i][j]<0) {
+								objectsNew<<-1*objectsMap[i][j]<<' ';
+							} else {
+								objectsNew<<objectsMap[i][j]<<' ';
+							}
+						}
+						objectsNew<<'\n';
+					}
+					objectsNew.close();
 					}
 				}
 			}
+			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::A))
+			{
+				editLocation.y--;
+				if(modeInvenotry == 1)
+				{
+					checkObjectDetails(editLocation, objectsMap);
+				}
+			}
+			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::D))
+			{
+				editLocation.y++;
+				if(modeInvenotry == 1)
+				{
+					checkObjectDetails(editLocation, objectsMap);
+				}
+			}
+			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::W))
+			{
+				editLocation.x--;
+				if(modeInvenotry == 1)
+				{
+					checkObjectDetails(editLocation, objectsMap);
+				}
+			}
+			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::S))
+			{
+				editLocation.x++;
+				if(modeInvenotry == 1)
+				{
+					checkObjectDetails(editLocation, objectsMap);
+				}
+			}
+			if(event.type == Event::MouseButtonPressed && Mouse::isButtonPressed(Mouse::Left))
+			{
+				if(modeEdit && modeShowInventory && rectClicked(categoryGround, mouseLocation))
+				{
+					modeInvenotry = 0;
+					modeEditShowObjects = false;
+				} else if(modeEdit && modeShowInventory && rectClicked(categoryObject1, mouseLocation))
+				{
+					modeInvenotry = 1;
+					modeEditShowObjects = true;
+				} else if(modeEdit && modeShowInventory && rectClicked(categoryObject2, mouseLocation))
+				{
+					modeInvenotry = 2;
+					modeEditShowObjects = true;
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[43][6], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 43, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][1], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 12, 1);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][2], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 12, 2);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][3], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 12, 3);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][4], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 12, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][4], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 13, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][4], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 14, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][5], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 12, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][6], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 12, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][7], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 12, 7);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][5], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 13, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][6], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 13, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][7], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 13, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][5], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 14, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][6], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 14, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][7], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 14, 7);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][0], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 13, 0);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][1], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 13, 1);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][0], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 14, 0);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][1], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(1, 14, 1);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][1], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 36, 1);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][2], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 36, 2);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][3], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 36, 3);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][4], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 36, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][4], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 37, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][4], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 38, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][5], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 36, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][6], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 36, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][7], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 36, 7);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][5], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 37, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][6], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 37, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][7], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 37, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][5], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 38, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][6], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 38, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][7], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(2, 38, 7);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][6], mouseLocation))
+				{
+					lastTerrainUsed = getTerrainType(3, 1, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[0], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(1, 0);
+				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[1], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(1, 1);
+				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[2], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(1, 2);
+				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[3], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(1, 3);
+				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[4], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(1, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[5], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(1, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[6], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(1, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[7], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(1, 7);
+				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[8], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(1, 8);
+				} else if(modeEdit && modeShowInventory && editModeHolder.getGlobalBounds().left <= mouseLocation.x && editModeHolder.getGlobalBounds().left + editModeHolder.getGlobalBounds().width >= mouseLocation.x)
+				{
+					//prevent mistaken clicks on terrain under edit holder
+				}
+				else if(mouseLocation.x >= 0 && mouseLocation.x <= 832 && mouseLocation.y >= 0 && mouseLocation.y <= 574)
+				{
+					if(modeEdit)
+					{
+						editLocation.x = mouseLocation.y/tilesetSize + offset.x;
+						editLocation.y = mouseLocation.x/tilesetSize + offset.y;
+						modeShowInventory = true;
+					}
+				}
+			}
+			setGameViewOffset(characterPos, offset, muddyMap, objectsMap, mapSizeH, mapSizeW);
 		}
-		healthBarOutline.setPosition(posBoat.x*64, posBoat.y*64);
-		window.draw(healthBarOutline);
-		if(editMode && !terrainType)
+
+		window.clear(Color::Red);
+		for(i = offset.x; i < offset.x + screenH/tilesetSize; i++)
 		{
-			RectangleShape mousePointer;
-			mousePointer.setOrigin(32, 32);
-			mousePointer.setSize(Vector2f(62, 62));
-			mousePointer.setFillColor(Color(43, 43, 43, 150));
-			mousePointer.setOutlineColor(Color::White);
-			mousePointer.setOutlineThickness(1);
-			mousePointer.setPosition((mouseLocation.x/64) * 64 + 32, (mouseLocation.y/64) * 64 + 32);
+			for(j = offset.y; j < offset.y + screenW/tilesetSize; j++)
+			{
+				int uvX, uvY;
+				if(muddyMap[i][j] >= 20 && muddyMap[i][j] < 70)
+				{
+					getTerrainByType(muddyMap[i][j], uvX, uvY);
+					grass_tilesets[uvX][uvY].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
+					window.draw(grass_tilesets[uvX][uvY]);
+				}
+				else if(muddyMap[i][j] >= 70 && muddyMap[i][j] < 120)
+				{
+					getTerrainByType(muddyMap[i][j], uvX, uvY);
+					grass_tilesets[uvX][uvY].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
+					window.draw(grass_tilesets[uvX][uvY]);
+				}
+				else if(muddyMap[i][j] >= 120 && muddyMap[i][j] < 150)
+				{
+					getTerrainByType(muddyMap[i][j], uvX, uvY);
+					water_tilests[uvX][uvY].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
+					window.draw(water_tilests[uvX][uvY]);
+				}
+			}
+		}
+		if(modeEdit && modeShowInventory && !modeEditShowObjects)
+		{
+			if(lastTerrainUsed != -1)
+			{
+				int uvX, uvY;
+				if(lastTerrainUsed >= 20 && lastTerrainUsed < 70)
+				{
+					getTerrainByType(lastTerrainUsed, uvX, uvY);
+					grass_tilesets[uvX][uvY].setPosition((editLocation.y-offset.y)*tilesetSize, (editLocation.x-offset.x)*tilesetSize);
+					window.draw(grass_tilesets[uvX][uvY]);
+				}
+				else if(lastTerrainUsed >= 70 && lastTerrainUsed < 120)
+				{
+					getTerrainByType(lastTerrainUsed, uvX, uvY);
+					grass_tilesets[uvX][uvY].setPosition((editLocation.y-offset.y)*tilesetSize, (editLocation.x-offset.x)*tilesetSize);
+					window.draw(grass_tilesets[uvX][uvY]);
+				}
+				else if(lastTerrainUsed >= 120 && lastTerrainUsed < 150)
+				{
+					getTerrainByType(lastTerrainUsed, uvX, uvY);
+					water_tilests[uvX][uvY].setPosition((editLocation.y-offset.y)*tilesetSize, (editLocation.x-offset.x)*tilesetSize);
+					window.draw(water_tilests[uvX][uvY]);
+				}
+			}
+
+			terrainPointer.setPosition((editLocation.y-offset.y)*tilesetSize + 16, (editLocation.x-offset.x)*tilesetSize + 16);
+			window.draw(terrainPointer);
+
+			mousePointer.setPosition((mouseLocation.x/tilesetSize) * tilesetSize + 16, (mouseLocation.y/tilesetSize) * tilesetSize + 16);
 			window.draw(mousePointer);
+
 		}
-		else if(terrainType || lastTerrainType != -1)
+		character.setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
+		window.draw(character);
+		for(i = offset.x - 1; i < offset.x + screenH/tilesetSize; i++)
 		{
-			leftSideClicked = (editTerrain.y-startJ)*64 < window.getSize().x/2;
+			for(j = offset.y - 1; j < offset.y + screenW/tilesetSize; j++)
+			{
+				if(modeEdit && !modeEditShowObjects)
+				{
+					int uvX;
+					int objectTypeN = abs(objectsMap[i][j]);
+					if(objectTypeN > 10 && objectTypeN < 20)
+					{
+						getObjectByType(objectsMap[i][j], uvX);
+						square_tilesets_transparent[uvX].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
+						window.draw(square_tilesets_transparent[uvX]);
+					}
+				}
+				else
+				{
+					int uvX;
+					int objectTypeN = abs(objectsMap[i][j]);
+					if(objectTypeN > 10 && objectTypeN < 20)
+					{
+						getObjectByType(objectsMap[i][j], uvX);
+						square_tilests[uvX].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
+						window.draw(square_tilests[uvX]);
+					}
+				}
+			}
+
+		}
+		
+		if(modeEdit && modeShowInventory && modeEditShowObjects)
+		{
+			if(lastTerrainUsed != -1)
+			{
+				int uvX;
+				if(lastTerrainUsed > 10 && lastTerrainUsed < 20)
+				{
+					getObjectByType(lastTerrainUsed, uvX);
+					square_tilests[uvX].setPosition((editLocation.y-offset.y)*tilesetSize, (editLocation.x-offset.x)*tilesetSize);
+					window.draw(square_tilests[uvX]);
+				}
+			}
+
+			terrainPointer.setPosition((editLocation.y-offset.y)*tilesetSize + 16, (editLocation.x-offset.x)*tilesetSize + 16);
+			window.draw(terrainPointer);
+
+			mousePointer.setPosition((mouseLocation.x/tilesetSize) * tilesetSize + 16, (mouseLocation.y/tilesetSize) * tilesetSize + 16);
+			window.draw(mousePointer);
+
+		}
+		if(modeEdit)
+		{
+			if((editLocation.y-offset.y)*tilesetSize>=0)
+			{
+				leftSideClicked = (editLocation.y-offset.y)*tilesetSize < window.getSize().x/2;
+			}
 			int rightSideAddition = 0;
-			if(leftSideClicked) rightSideAddition = 532;
-			RectangleShape terrainHolder;
-			terrainHolder.setFillColor(Color(46, 46, 46, 200));
-			terrainHolder.setSize(Vector2f(300, 574));
-			terrainHolder.setPosition(0 + rightSideAddition, 0);
-			window.draw(terrainHolder);
+			if(leftSideClicked) rightSideAddition = 464;
 
-			ct_grass.setPosition(10 + rightSideAddition, 10);
-			window.draw(ct_grass);
+			editModeHolder.setPosition(0 + rightSideAddition, 0);
+			window.draw(editModeHolder);
 
-			ct_water_15.setPosition(84 + rightSideAddition, 10);
-			window.draw(ct_water_15);
+			categoryGround.setPosition(30 + rightSideAddition, 30);
+			window.draw(categoryGround);
 
-			if(terrainSelected == 0)
+			categoryObject1.setPosition(30 + 35*1 + rightSideAddition, 30);
+			window.draw(categoryObject1);
+
+			categoryObject2.setPosition(30 + 35*2 + rightSideAddition, 30);
+			window.draw(categoryObject2);
+
+			if(modeInvenotry == 0)
 			{
-				ed_grass.setPosition(10 + rightSideAddition, 90);
-				window.draw(ed_grass);
+				grass_tilesets_edit[43][6].setPosition(20 + 35*0 + rightSideAddition, 80);
+				window.draw(grass_tilesets_edit[43][6]);
+
+				grass_tilesets_edit[12][1].setPosition(20 + 35*1 + rightSideAddition, 80);
+				window.draw(grass_tilesets_edit[12][1]);
+
+				grass_tilesets_edit[12][2].setPosition(20 + 35*2 + rightSideAddition, 80);
+				window.draw(grass_tilesets_edit[12][2]);
+
+				grass_tilesets_edit[12][3].setPosition(20 + 35*3 + rightSideAddition, 80);
+				window.draw(grass_tilesets_edit[12][3]);
+
+				grass_tilesets_edit[12][4].setPosition(20 + 35*4 + rightSideAddition, 80);
+				window.draw(grass_tilesets_edit[12][4]);
+
+				grass_tilesets_edit[13][4].setPosition(20 + 35*5 + rightSideAddition, 80);
+				window.draw(grass_tilesets_edit[13][4]);
+
+				grass_tilesets_edit[14][4].setPosition(20 + 35*6 + rightSideAddition, 80);
+				window.draw(grass_tilesets_edit[14][4]);
+
+				grass_tilesets_edit[12][5].setPosition(20 + 35*7 + rightSideAddition, 80);
+				window.draw(grass_tilesets_edit[12][5]);
+
+				grass_tilesets_edit[12][6].setPosition(20 + 35*8 + rightSideAddition, 80);
+				window.draw(grass_tilesets_edit[12][6]);
+
+				grass_tilesets_edit[12][7].setPosition(20 + 35*9 + rightSideAddition, 80);
+				window.draw(grass_tilesets_edit[12][7]);
+
+				grass_tilesets_edit[13][5].setPosition(20 + 35*0 + rightSideAddition, 80 + 35*1);
+				window.draw(grass_tilesets_edit[13][5]);
+
+				grass_tilesets_edit[13][6].setPosition(20 + 35*1 + rightSideAddition, 80 + 35*1);
+				window.draw(grass_tilesets_edit[13][6]);
+
+				grass_tilesets_edit[13][7].setPosition(20 + 35*2 + rightSideAddition, 80 + 35*1);
+				window.draw(grass_tilesets_edit[13][7]);
+
+				grass_tilesets_edit[14][5].setPosition(20 + 35*3 + rightSideAddition, 80 + 35*1);
+				window.draw(grass_tilesets_edit[14][5]);
+
+				grass_tilesets_edit[14][6].setPosition(20 + 35*4 + rightSideAddition, 80 + 35*1);
+				window.draw(grass_tilesets_edit[14][6]);
+
+				grass_tilesets_edit[14][7].setPosition(20 + 35*5 + rightSideAddition, 80 + 35*1);
+				window.draw(grass_tilesets_edit[14][7]);
+
+				grass_tilesets_edit[13][0].setPosition(20 + 35*6 + rightSideAddition, 80 + 35*1);
+				window.draw(grass_tilesets_edit[13][0]);
+
+				grass_tilesets_edit[13][1].setPosition(20 + 35*7 + rightSideAddition, 80 + 35*1);
+				window.draw(grass_tilesets_edit[13][1]);
+
+				grass_tilesets_edit[14][0].setPosition(20 + 35*8 + rightSideAddition, 80 + 35*1);
+				window.draw(grass_tilesets_edit[14][0]);
+
+				grass_tilesets_edit[14][1].setPosition(20 + 35*9 + rightSideAddition, 80 + 35*1);
+				window.draw(grass_tilesets_edit[14][1]);
+
+				grass_tilesets_edit[36][1].setPosition(20 + 35*0 + rightSideAddition, 80 + 35*2);
+				window.draw(grass_tilesets_edit[36][1]);
+
+				grass_tilesets_edit[36][2].setPosition(20 + 35*1 + rightSideAddition, 80 + 35*2);
+				window.draw(grass_tilesets_edit[36][2]);
+
+				grass_tilesets_edit[36][3].setPosition(20 + 35*2 + rightSideAddition, 80 + 35*2);
+				window.draw(grass_tilesets_edit[36][3]);
+
+				grass_tilesets_edit[36][4].setPosition(20 + 35*3 + rightSideAddition, 80 + 35*2);
+				window.draw(grass_tilesets_edit[36][4]);
+
+				grass_tilesets_edit[37][4].setPosition(20 + 35*4 + rightSideAddition, 80 + 35*2);
+				window.draw(grass_tilesets_edit[37][4]);
+
+				grass_tilesets_edit[38][4].setPosition(20 + 35*5 + rightSideAddition, 80 + 35*2);
+				window.draw(grass_tilesets_edit[38][4]);
+
+				grass_tilesets_edit[36][5].setPosition(20 + 35*6 + rightSideAddition, 80 + 35*2);
+				window.draw(grass_tilesets_edit[36][5]);
+
+				grass_tilesets_edit[36][6].setPosition(20 + 35*7 + rightSideAddition, 80 + 35*2);
+				window.draw(grass_tilesets_edit[36][6]);
+
+				grass_tilesets_edit[36][7].setPosition(20 + 35*8 + rightSideAddition, 80 + 35*2);
+				window.draw(grass_tilesets_edit[36][7]);
+
+				grass_tilesets_edit[37][5].setPosition(20 + 35*9 + rightSideAddition, 80 + 35*2);
+				window.draw(grass_tilesets_edit[37][5]);
+
+				grass_tilesets_edit[37][6].setPosition(20 + 35*0 + rightSideAddition, 80 + 35*3);
+				window.draw(grass_tilesets_edit[37][6]);
+
+				grass_tilesets_edit[37][7].setPosition(20 + 35*1 + rightSideAddition, 80 + 35*3);
+				window.draw(grass_tilesets_edit[37][7]);
+
+				grass_tilesets_edit[38][5].setPosition(20 + 35*2 + rightSideAddition, 80 + 35*3);
+				window.draw(grass_tilesets_edit[38][5]);
+
+				grass_tilesets_edit[38][6].setPosition(20 + 35*3 + rightSideAddition, 80 + 35*3);
+				window.draw(grass_tilesets_edit[38][6]);
+
+				grass_tilesets_edit[38][7].setPosition(20 + 35*4 + rightSideAddition, 80 + 35*3);
+				window.draw(grass_tilesets_edit[38][7]);
+
+				water_tilesets_edit[1][6].setPosition(20 + 35*5 + rightSideAddition, 80 + 35*3);
+				window.draw(water_tilesets_edit[1][6]);
+
 			}
-			else if(terrainSelected == 1)
+			else if(modeInvenotry == 1)
 			{
-				ed_water_11.setPosition(10 + 70 * 0 + rightSideAddition, 90 + 70 * 0);
-				window.draw(ed_water_11);
-				ed_water_12.setPosition(10 + 70 * 1 + rightSideAddition, 90 + 70 * 0);
-				window.draw(ed_water_12);
-				ed_water_13.setPosition(10 + 70 * 2 + rightSideAddition, 90 + 70 * 0);
-				window.draw(ed_water_13);
-				ed_water_14.setPosition(10 + 70 * 0 + rightSideAddition, 90 + 70 * 1);
-				window.draw(ed_water_14);
-				ed_water_15.setPosition(10 + 70 * 1 + rightSideAddition, 90 + 70 * 1);
-				window.draw(ed_water_15);
-				ed_water_16.setPosition(10 + 70 * 2 + rightSideAddition, 90 + 70 * 1);
-				window.draw(ed_water_16);
-				ed_water_17.setPosition(10 + 70 * 0 + rightSideAddition, 90 + 70 * 2);
-				window.draw(ed_water_17);
-				ed_water_18.setPosition(10 + 70 * 1 + rightSideAddition, 90 + 70 * 2);
-				window.draw(ed_water_18);
-				ed_water_19.setPosition(10 + 70 * 2 + rightSideAddition, 90 + 70 * 2);
-				window.draw(ed_water_19);
+				square_tilesets_edit[0].setPosition(20 + 35*0 + rightSideAddition, 80 + 35*0);
+				window.draw(square_tilesets_edit[0]);
 				
-				ed_water_31.setPosition(10 + 70 * 0 + rightSideAddition, 90 + 70 * 3);
-				window.draw(ed_water_31);
-				ed_water_32.setPosition(10 + 70 * 1 + rightSideAddition, 90 + 70 * 3);
-				window.draw(ed_water_32);
-				ed_water_33.setPosition(10 + 70 * 0 + rightSideAddition, 90 + 70 * 4);
-				window.draw(ed_water_33);
-				ed_water_34.setPosition(10 + 70 * 1 + rightSideAddition, 90 + 70 * 4);
-				window.draw(ed_water_34);
+				square_tilesets_edit[1].setPosition(20 + 35*2 + rightSideAddition, 80 + 35*0);
+				window.draw(square_tilesets_edit[1]);
+				
+				square_tilesets_edit[2].setPosition(20 + 35*4 + rightSideAddition, 80 + 35*0);
+				window.draw(square_tilesets_edit[2]);
 
+				square_tilesets_edit[3].setPosition(20 + 35*6 + rightSideAddition, 80 + 35*0);
+				window.draw(square_tilesets_edit[3]);
+				
+				square_tilesets_edit[4].setPosition(20 + 35*8 + rightSideAddition, 80 + 35*0);
+				window.draw(square_tilesets_edit[4]);
+
+				square_tilesets_edit[5].setPosition(20 + 35*0 + rightSideAddition, 80 + 35*2);
+				window.draw(square_tilesets_edit[5]);
+				
+				square_tilesets_edit[6].setPosition(20 + 35*2 + rightSideAddition, 80 + 35*2);
+				window.draw(square_tilesets_edit[6]);
+				
+				square_tilesets_edit[7].setPosition(20 + 35*4 + rightSideAddition, 80 + 35*2);
+				window.draw(square_tilesets_edit[7]);
+
+				square_tilesets_edit[8].setPosition(20 + 35*6 + rightSideAddition, 80 + 35*2);
+				window.draw(square_tilesets_edit[8]);
 			}
+			else if(modeInvenotry == 2)
+			{
+				water_tilesets_edit[0][1].setPosition(20 + 35*0 + rightSideAddition, 80 + 35*0);
+				window.draw(water_tilesets_edit[0][1]);
 
+				water_tilesets_edit[0][2].setPosition(20 + 35*1 + rightSideAddition, 80 + 35*0);
+				window.draw(water_tilesets_edit[0][2]);
+
+				water_tilesets_edit[0][3].setPosition(20 + 35*2 + rightSideAddition, 80 + 35*0);
+				window.draw(water_tilesets_edit[0][3]);
+
+				water_tilesets_edit[0][4].setPosition(20 + 35*3 + rightSideAddition, 80 + 35*0);
+				window.draw(water_tilesets_edit[0][4]);
+
+				water_tilesets_edit[1][4].setPosition(20 + 35*4 + rightSideAddition, 80 + 35*0);
+				window.draw(water_tilesets_edit[1][4]);
+
+				water_tilesets_edit[2][4].setPosition(20 + 35*5 + rightSideAddition, 80 + 35*0);
+				window.draw(water_tilesets_edit[2][4]);
+
+				water_tilesets_edit[0][5].setPosition(20 + 35*6 + rightSideAddition, 80 + 35*0);
+				window.draw(water_tilesets_edit[0][5]);
+
+				water_tilesets_edit[0][6].setPosition(20 + 35*7 + rightSideAddition, 80 + 35*0);
+				window.draw(water_tilesets_edit[0][6]);
+
+				water_tilesets_edit[0][7].setPosition(20 + 35*8 + rightSideAddition, 80 + 35*0);
+				window.draw(water_tilesets_edit[0][7]);
+
+				water_tilesets_edit[1][5].setPosition(20 + 35*9 + rightSideAddition, 80 + 35*0);
+				window.draw(water_tilesets_edit[1][5]);
+
+				water_tilesets_edit[1][6].setPosition(20 + 35*0 + rightSideAddition, 80 + 35*1);
+				window.draw(water_tilesets_edit[1][6]);
+
+				water_tilesets_edit[1][7].setPosition(20 + 35*1 + rightSideAddition, 80 + 35*1);
+				window.draw(water_tilesets_edit[1][7]);
+
+				water_tilesets_edit[2][5].setPosition(20 + 35*2 + rightSideAddition, 80 + 35*1);
+				window.draw(water_tilesets_edit[2][5]);
+
+				water_tilesets_edit[2][6].setPosition(20 + 35*3 + rightSideAddition, 80 + 35*1);
+				window.draw(water_tilesets_edit[2][6]);
+
+				water_tilesets_edit[2][7].setPosition(20 + 35*4 + rightSideAddition, 80 + 35*1);
+				window.draw(water_tilesets_edit[2][7]);
+
+				water_tilesets_edit[0][0].setPosition(20 + 35*5 + rightSideAddition, 80 + 35*1);
+				window.draw(water_tilesets_edit[0][0]);
+
+				water_tilesets_edit[6][1].setPosition(20 + 35*6 + rightSideAddition, 80 + 35*1);
+				window.draw(water_tilesets_edit[6][1]);
+
+				water_tilesets_edit[6][2].setPosition(20 + 35*7 + rightSideAddition, 80 + 35*1);
+				window.draw(water_tilesets_edit[6][2]);
+
+				water_tilesets_edit[6][3].setPosition(20 + 35*8 + rightSideAddition, 80 + 35*1);
+				window.draw(water_tilesets_edit[6][3]);
+
+				water_tilesets_edit[6][4].setPosition(20 + 35*9 + rightSideAddition, 80 + 35*1);
+				window.draw(water_tilesets_edit[6][4]);
+
+				water_tilesets_edit[7][4].setPosition(20 + 35*0 + rightSideAddition, 80 + 35*2);
+				window.draw(water_tilesets_edit[7][4]);
+
+				water_tilesets_edit[8][4].setPosition(20 + 35*1 + rightSideAddition, 80 + 35*2);
+				window.draw(water_tilesets_edit[8][4]);
+
+				water_tilesets_edit[6][5].setPosition(20 + 35*2 + rightSideAddition, 80 + 35*2);
+				window.draw(water_tilesets_edit[6][5]);
+
+				water_tilesets_edit[6][6].setPosition(20 + 35*3 + rightSideAddition, 80 + 35*2);
+				window.draw(water_tilesets_edit[6][6]);
+
+				water_tilesets_edit[6][7].setPosition(20 + 35*4 + rightSideAddition, 80 + 35*2);
+				window.draw(water_tilesets_edit[6][7]);
+
+				water_tilesets_edit[7][5].setPosition(20 + 35*5 + rightSideAddition, 80 + 35*2);
+				window.draw(water_tilesets_edit[7][5]);
+
+				water_tilesets_edit[7][6].setPosition(20 + 35*6 + rightSideAddition, 80 + 35*2);
+				window.draw(water_tilesets_edit[7][6]);
+
+				water_tilesets_edit[7][7].setPosition(20 + 35*7 + rightSideAddition, 80 + 35*2);
+				window.draw(water_tilesets_edit[7][7]);
+
+				water_tilesets_edit[8][5].setPosition(20 + 35*8 + rightSideAddition, 80 + 35*2);
+				window.draw(water_tilesets_edit[8][5]);
+
+				water_tilesets_edit[8][6].setPosition(20 + 35*9 + rightSideAddition, 80 + 35*2);
+				window.draw(water_tilesets_edit[8][6]);
+
+				water_tilesets_edit[8][7].setPosition(20 + 35*0 + rightSideAddition, 80 + 35*3);
+				window.draw(water_tilesets_edit[8][7]);
+
+				water_tilesets_edit[6][0].setPosition(20 + 35*1 + rightSideAddition, 80 + 35*3);
+				window.draw(water_tilesets_edit[6][0]);
+			}
 		}
 
 		window.display();
 
-	}
-
-	for(i = 0; i < mapSizeH; i++)
-	{
-		for(j = 0; j < mapSizeW; j++)
-		{
-			mapNew<<fishyMap[i][j]<<' ';
-		}
-		mapNew<<'\n';
 	}
 
 	return 0;

@@ -24,4 +24,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets\map\map.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Assets\map\objects.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
