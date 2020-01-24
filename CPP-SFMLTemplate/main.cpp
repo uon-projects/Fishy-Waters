@@ -108,9 +108,10 @@ bool rectClicked(RectangleShape sprite, Vector2i mouseLocation)
 	return false;
 }
 
-int getObjectType(int type, int x)
+int getObjectType(int type, int x, int y)
 {
 	//type 1 - 2x2
+	//type 2 - 1x1
 	if(type == 1 && x == 0) {
 		return 11;
 	} else if(type == 1 && x == 1) {
@@ -132,7 +133,7 @@ int getObjectType(int type, int x)
 	}
 }
 
-void getObjectByType(int type, int &x)
+void getObjectByType(int type, int &x, int y)
 {
 	if(type == 11) {
 		x = 0;
@@ -346,11 +347,6 @@ void getTerrainByType(int type, int &x, int &y)
 		x = 1;
 		y = 6;
 	}
-}
-
-void checkObjectDetails(Vector2i editLocation, int objectsMap[120][200])
-{
-
 }
 
 int main()
@@ -709,34 +705,18 @@ int main()
 			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::A))
 			{
 				editLocation.y--;
-				if(modeInvenotry == 1)
-				{
-					checkObjectDetails(editLocation, objectsMap);
-				}
 			}
 			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::D))
 			{
 				editLocation.y++;
-				if(modeInvenotry == 1)
-				{
-					checkObjectDetails(editLocation, objectsMap);
-				}
 			}
 			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::W))
 			{
 				editLocation.x--;
-				if(modeInvenotry == 1)
-				{
-					checkObjectDetails(editLocation, objectsMap);
-				}
 			}
 			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::S))
 			{
 				editLocation.x++;
-				if(modeInvenotry == 1)
-				{
-					checkObjectDetails(editLocation, objectsMap);
-				}
 			}
 			if(event.type == Event::MouseButtonPressed && Mouse::isButtonPressed(Mouse::Left))
 			{
@@ -862,31 +842,127 @@ int main()
 					lastTerrainUsed = getTerrainType(3, 1, 6);
 				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[0], mouseLocation))
 				{
-					lastTerrainUsed = getObjectType(1, 0);
+					lastTerrainUsed = getObjectType(1, 0, 0);
 				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[1], mouseLocation))
 				{
-					lastTerrainUsed = getObjectType(1, 1);
+					lastTerrainUsed = getObjectType(1, 1, 0);
 				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[2], mouseLocation))
 				{
-					lastTerrainUsed = getObjectType(1, 2);
+					lastTerrainUsed = getObjectType(1, 2, 0);
 				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[3], mouseLocation))
 				{
-					lastTerrainUsed = getObjectType(1, 3);
+					lastTerrainUsed = getObjectType(1, 3, 0);
 				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[4], mouseLocation))
 				{
-					lastTerrainUsed = getObjectType(1, 4);
+					lastTerrainUsed = getObjectType(1, 4, 0);
 				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[5], mouseLocation))
 				{
-					lastTerrainUsed = getObjectType(1, 5);
+					lastTerrainUsed = getObjectType(1, 5, 0);
 				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[6], mouseLocation))
 				{
-					lastTerrainUsed = getObjectType(1, 6);
+					lastTerrainUsed = getObjectType(1, 6, 0);
 				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[7], mouseLocation))
 				{
-					lastTerrainUsed = getObjectType(1, 7);
+					lastTerrainUsed = getObjectType(1, 7, 0);
 				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[8], mouseLocation))
 				{
-					lastTerrainUsed = getObjectType(1, 8);
+					lastTerrainUsed = getObjectType(1, 8, 0);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][1], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 0, 1);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][2], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 0, 2);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][3], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 0, 3);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][4], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 0, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][4], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 1, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][4], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 2, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][5], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 0, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][6], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 0, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][7], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 0, 7);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][5], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 1, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][6], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 1, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][7], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 1, 7);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][5], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 2, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][6], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 2, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][7], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 2, 7);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][0], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 0, 0);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][1], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 6, 1);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][2], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 6, 2);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][3], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 6, 3);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][4], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 6, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][4], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 7, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][4], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 8, 4);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][5], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 6, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][6], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 6, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][7], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 6, 7);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][5], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 7, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][6], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 7, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][7], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 7, 7);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][5], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 8, 5);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][6], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 8, 6);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][7], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 8, 7);
+				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][0], mouseLocation))
+				{
+					lastTerrainUsed = getObjectType(2, 6, 0);
 				} else if(modeEdit && modeShowInventory && editModeHolder.getGlobalBounds().left <= mouseLocation.x && editModeHolder.getGlobalBounds().left + editModeHolder.getGlobalBounds().width >= mouseLocation.x)
 				{
 					//prevent mistaken clicks on terrain under edit holder
@@ -985,7 +1061,7 @@ int main()
 					int objectTypeN = abs(objectsMap[i][j]);
 					if(objectTypeN > 10 && objectTypeN < 20)
 					{
-						getObjectByType(objectTypeN, uvX);
+						getObjectByType(objectTypeN, uvX, 0);
 						square_tilesets_transparent[uvX].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
 						window.draw(square_tilesets_transparent[uvX]);
 					}
@@ -996,7 +1072,7 @@ int main()
 					int objectTypeN = abs(objectsMap[i][j]);
 					if(objectTypeN > 10 && objectTypeN < 20)
 					{
-						getObjectByType(objectTypeN, uvX);
+						getObjectByType(objectTypeN, uvX, 0);
 						square_tilests[uvX].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
 						window.draw(square_tilests[uvX]);
 					}
@@ -1012,7 +1088,7 @@ int main()
 				int uvX;
 				if(lastTerrainUsed > 10 && lastTerrainUsed < 20)
 				{
-					getObjectByType(lastTerrainUsed, uvX);
+					getObjectByType(lastTerrainUsed, uvX, 0);
 					square_tilests[uvX].setPosition((editLocation.y-offset.y)*tilesetSize, (editLocation.x-offset.x)*tilesetSize);
 					window.draw(square_tilests[uvX]);
 				}
