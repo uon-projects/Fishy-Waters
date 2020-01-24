@@ -130,10 +130,74 @@ int getObjectType(int type, int x, int y)
 		return 18;
 	} else if(type == 1 && x == 8) {
 		return 19;
+	} else if(type == 2 && x == 0 && y == 1) {
+		return 70;
+	} else if(type == 2 && x == 0 && y == 2) {
+		return 71;
+	} else if(type == 2 && x == 0 && y == 3) {
+		return 72;
+	} else if(type == 2 && x == 0 && y == 4) {
+		return 73;
+	} else if(type == 2 && x == 1 && y == 4) {
+		return 74;
+	} else if(type == 2 && x == 2 && y == 4) {
+		return 75;
+	} else if(type == 2 && x == 0 && y == 5) {
+		return 76;
+	} else if(type == 2 && x == 0 && y == 6) {
+		return 77;
+	} else if(type == 2 && x == 0 && y == 7) {
+		return 78;
+	} else if(type == 2 && x == 1 && y == 5) {
+		return 79;
+	} else if(type == 2 && x == 1 && y == 6) {
+		return 80;
+	} else if(type == 2 && x == 1 && y == 7) {
+		return 81;
+	} else if(type == 2 && x == 2 && y == 5) {
+		return 82;
+	} else if(type == 2 && x == 2 && y == 6) {
+		return 83;
+	} else if(type == 2 && x == 2 && y == 7) {
+		return 84;
+	} else if(type == 2 && x == 0 && y == 0) {
+		return 85;
+	} else if(type == 2 && x == 6 && y == 1) {
+		return 86;
+	} else if(type == 2 && x == 6 && y == 2) {
+		return 87;
+	} else if(type == 2 && x == 6 && y == 3) {
+		return 88;
+	} else if(type == 2 && x == 6 && y == 4) {
+		return 89;
+	} else if(type == 2 && x == 7 && y == 4) {
+		return 90;
+	} else if(type == 2 && x == 8 && y == 4) {
+		return 91;
+	} else if(type == 2 && x == 6 && y == 5) {
+		return 92;
+	} else if(type == 2 && x == 6 && y == 6) {
+		return 93;
+	} else if(type == 2 && x == 6 && y == 7) {
+		return 94;
+	} else if(type == 2 && x == 7 && y == 5) {
+		return 95;
+	} else if(type == 2 && x == 7 && y == 6) {
+		return 96;
+	} else if(type == 2 && x == 7 && y == 7) {
+		return 97;
+	} else if(type == 2 && x == 8 && y == 5) {
+		return 98;
+	} else if(type == 2 && x == 8 && y == 6) {
+		return 99;
+	} else if(type == 2 && x == 8 && y == 7) {
+		return 100;
+	} else if(type == 2 && x == 6 && y == 0) {
+		return 101;
 	}
 }
 
-void getObjectByType(int type, int &x, int y)
+void getObjectByType(int type, int &x, int &y)
 {
 	if(type == 11) {
 		x = 0;
@@ -153,6 +217,102 @@ void getObjectByType(int type, int &x, int y)
 		x = 7;
 	} else if(type == 19) {
 		x = 8;
+	} else if(type == 70) {
+		x = 0;
+		y = 1;
+	} else if(type == 71) {
+		x = 0;
+		y = 2;
+	} else if(type == 72) {
+		x = 0;
+		y = 3;
+	} else if(type == 73) {
+		x = 0;
+		y = 4;
+	} else if(type == 74) {
+		x = 1;
+		y = 4;
+	} else if(type == 75) {
+		x = 2;
+		y = 4;
+	} else if(type == 76) {
+		x = 0;
+		y = 5;
+	} else if(type == 77) {
+		x = 0;
+		y = 6;
+	} else if(type == 78) {
+		x = 0;
+		y = 7;
+	} else if(type == 79) {
+		x = 1;
+		y = 5;
+	} else if(type == 80) {
+		x = 1;
+		y = 6;
+	} else if(type == 81) {
+		x = 1;
+		y = 7;
+	} else if(type == 82) {
+		x = 2;
+		y = 5;
+	} else if(type == 83) {
+		x = 2;
+		y = 6;
+	} else if(type == 84) {
+		x = 2;
+		y = 7;
+	} else if(type == 85) {
+		x = 0;
+		y = 0;
+	} else if(type == 86) {
+		x = 6;
+		y = 1;
+	} else if(type == 87) {
+		x = 6;
+		y = 2;
+	} else if(type == 88) {
+		x = 6;
+		y = 3;
+	} else if(type == 89) {
+		x = 6;
+		y = 4;
+	} else if(type == 90) {
+		x = 7;
+		y = 4;
+	} else if(type == 91) {
+		x = 8;
+		y = 4;
+	} else if(type == 92) {
+		x = 6;
+		y = 5;
+	} else if(type == 93) {
+		x = 6;
+		y = 6;
+	} else if(type == 94) {
+		x = 6;
+		y = 7;
+	} else if(type == 95) {
+		x = 7;
+		y = 5;
+	} else if(type == 96) {
+		x = 7;
+		y = 6;
+	} else if(type == 97) {
+		x = 7;
+		y = 7;
+	} else if(type == 98) {
+		x = 8;
+		y = 5;
+	} else if(type == 99) {
+		x = 8;
+		y = 6;
+	} else if(type == 100) {
+		x = 8;
+		y = 7;
+	} else if(type == 101) {
+		x = 6;
+		y = 0;
 	}
 }
 
@@ -399,7 +559,7 @@ int main()
 		for(j = 0; j < mapSizeW; j++)
 		{
 			objectsRead>>objectTypeNew;
-			if(objectTypeNew > 10 && objectTypeNew <20)
+			if(objectTypeNew > 10 && objectTypeNew <70)
 			{
 				objectsMap[i + 1][j] = -1;
 				objectsMap[i + 1][j + 1] = -1;
@@ -470,6 +630,7 @@ int main()
 	
 	RectangleShape water_tilests[12][8];
 	RectangleShape water_tilesets_edit[12][8];
+	RectangleShape water_tilesets_transparent[12][8];
 	for(i = 0; i<12; i++)
 	{
 		for(j = 0; j<8; j++)
@@ -480,6 +641,10 @@ int main()
 			water_tilesets_edit[i][j].setSize(Vector2f(tilesetSize, tilesetSize));
 			water_tilesets_edit[i][j].setTexture(&tilesetsWaterTexture);
 			water_tilesets_edit[i][j].setTextureRect(IntRect(textureWaterSize.x*j, textureWaterSize.y*i, textureWaterSize.x, textureWaterSize.y));
+			water_tilesets_transparent[i][j].setSize(Vector2f(tilesetSize, tilesetSize));
+			water_tilesets_transparent[i][j].setTexture(&tilesetsWaterTexture);
+			water_tilesets_transparent[i][j].setFillColor(Color(0, 0, 0, 80));
+			water_tilesets_transparent[i][j].setTextureRect(IntRect(textureWaterSize.x*j, textureWaterSize.y*i, textureWaterSize.x, textureWaterSize.y));
 		}
 	}
 	
@@ -724,243 +889,247 @@ int main()
 				{
 					modeInvenotry = 0;
 					modeEditShowObjects = false;
+					lastTerrainUsed = -1;
 				} else if(modeEdit && modeShowInventory && rectClicked(categoryObject1, mouseLocation))
 				{
 					modeInvenotry = 1;
 					modeEditShowObjects = true;
+					lastTerrainUsed = -1;
 				} else if(modeEdit && modeShowInventory && rectClicked(categoryObject2, mouseLocation))
 				{
 					modeInvenotry = 2;
 					modeEditShowObjects = true;
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[43][6], mouseLocation))
+					lastTerrainUsed = -1;
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[43][6], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 43, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][1], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][1], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 12, 1);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][2], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][2], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 12, 2);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][3], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][3], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 12, 3);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][4], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][4], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 12, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][4], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][4], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 13, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][4], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][4], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 14, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][5], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][5], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 12, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][6], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][6], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 12, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][7], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][7], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 12, 7);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][5], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][5], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 13, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][6], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][6], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 13, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][7], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][7], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 13, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][5], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][5], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 14, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][6], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][6], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 14, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][7], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][7], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 14, 7);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][0], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][0], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 13, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][1], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][1], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 13, 1);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][0], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][0], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 14, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][1], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][1], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(1, 14, 1);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][1], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][1], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 36, 1);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][2], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][2], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 36, 2);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][3], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][3], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 36, 3);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][4], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][4], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 36, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][4], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][4], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 37, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][4], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][4], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 38, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][5], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][5], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 36, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][6], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][6], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 36, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][7], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][7], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 36, 7);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][5], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][5], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 37, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][6], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][6], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 37, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][7], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][7], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 37, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][5], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][5], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 38, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][6], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][6], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 38, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][7], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][7], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(2, 38, 7);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][6], mouseLocation))
+				} else if(modeInvenotry == 0 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][6], mouseLocation))
 				{
 					lastTerrainUsed = getTerrainType(3, 1, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[0], mouseLocation))
+				} else if(modeInvenotry == 1 && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[0], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(1, 0, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[1], mouseLocation))
+				} else if(modeInvenotry == 1 && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[1], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(1, 1, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[2], mouseLocation))
+				} else if(modeInvenotry == 1 && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[2], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(1, 2, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[3], mouseLocation))
+				} else if(modeInvenotry == 1 && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[3], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(1, 3, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[4], mouseLocation))
+				} else if(modeInvenotry == 1 && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[4], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(1, 4, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[5], mouseLocation))
+				} else if(modeInvenotry == 1 && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[5], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(1, 5, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[6], mouseLocation))
+				} else if(modeInvenotry == 1 && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[6], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(1, 6, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[7], mouseLocation))
+				} else if(modeInvenotry == 1 && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[7], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(1, 7, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[8], mouseLocation))
+				} else if(modeInvenotry == 1 && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[8], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(1, 8, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][1], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][1], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 0, 1);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][2], mouseLocation))
+					cout<<lastTerrainUsed;
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][2], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 0, 2);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][3], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][3], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 0, 3);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][4], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][4], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 0, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][4], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][4], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 1, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][4], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][4], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 2, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][5], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][5], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 0, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][6], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][6], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 0, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][7], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][7], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 0, 7);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][5], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][5], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 1, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][6], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][6], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 1, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][7], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][7], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 1, 7);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][5], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][5], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 2, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][6], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][6], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 2, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][7], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][7], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 2, 7);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][0], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][0], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 0, 0);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][1], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][1], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 6, 1);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][2], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][2], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 6, 2);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][3], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][3], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 6, 3);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][4], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][4], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 6, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][4], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][4], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 7, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][4], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][4], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 8, 4);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][5], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][5], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 6, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][6], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][6], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 6, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][7], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][7], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 6, 7);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][5], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][5], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 7, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][6], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][6], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 7, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][7], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][7], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 7, 7);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][5], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][5], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 8, 5);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][6], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][6], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 8, 6);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][7], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][7], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 8, 7);
-				} else if(modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][0], mouseLocation))
+				} else if(modeInvenotry == 2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][0], mouseLocation))
 				{
 					lastTerrainUsed = getObjectType(2, 6, 0);
 				} else if(modeEdit && modeShowInventory && editModeHolder.getGlobalBounds().left <= mouseLocation.x && editModeHolder.getGlobalBounds().left + editModeHolder.getGlobalBounds().width >= mouseLocation.x)
@@ -1044,12 +1213,12 @@ int main()
 		if(offset.x > 0 && offset.x < screenH)
 		{
 			i = offset.x - 1;
-			limitX = offset.x + screenH/tilesetSize;
+			limitX = offset.x + screenH/tilesetSize + 1;
 		}
 		else
 		{						
 			i = offset.x;
-			limitX = offset.x + screenH/tilesetSize - 1;
+			limitX = offset.x + screenH/tilesetSize;
 		}
 		for(i; i < limitX; i++)
 		{
@@ -1057,24 +1226,36 @@ int main()
 			{
 				if(modeEdit && !modeEditShowObjects)
 				{
-					int uvX;
+					int uvX, uvY;
 					int objectTypeN = abs(objectsMap[i][j]);
-					if(objectTypeN > 10 && objectTypeN < 20)
+					if(objectTypeN > 10 && objectTypeN < 70)
 					{
-						getObjectByType(objectTypeN, uvX, 0);
+						getObjectByType(objectTypeN, uvX, uvY);
 						square_tilesets_transparent[uvX].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
 						window.draw(square_tilesets_transparent[uvX]);
+					}
+					else if(objectTypeN >= 70 && objectTypeN < 130)
+					{
+						getObjectByType(objectTypeN, uvX, uvY);
+						water_tilesets_transparent[uvX][uvY].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
+						window.draw(water_tilesets_transparent[uvX][uvY]);
 					}
 				}
 				else
 				{
-					int uvX;
+					int uvX, uvY;
 					int objectTypeN = abs(objectsMap[i][j]);
-					if(objectTypeN > 10 && objectTypeN < 20)
+					if(objectTypeN > 10 && objectTypeN < 70)
 					{
-						getObjectByType(objectTypeN, uvX, 0);
+						getObjectByType(objectTypeN, uvX, uvY);
 						square_tilests[uvX].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
 						window.draw(square_tilests[uvX]);
+					}
+					else if(objectTypeN >= 70 && objectTypeN < 130)
+					{
+						getObjectByType(objectTypeN, uvX, uvY);
+						water_tilests[uvX][uvY].setPosition((j-offset.y)*tilesetSize, (i-offset.x)*tilesetSize);
+						window.draw(water_tilests[uvX][uvY]);
 					}
 				}
 			}
@@ -1085,12 +1266,18 @@ int main()
 		{
 			if(lastTerrainUsed != -1)
 			{
-				int uvX;
-				if(lastTerrainUsed > 10 && lastTerrainUsed < 20)
+				int uvX, uvY;
+				if(lastTerrainUsed > 10 && lastTerrainUsed < 70)
 				{
-					getObjectByType(lastTerrainUsed, uvX, 0);
+					getObjectByType(lastTerrainUsed, uvX, uvY);
 					square_tilests[uvX].setPosition((editLocation.y-offset.y)*tilesetSize, (editLocation.x-offset.x)*tilesetSize);
 					window.draw(square_tilests[uvX]);
+				}
+				else if(lastTerrainUsed >= 70 && lastTerrainUsed < 130)
+				{
+					getObjectByType(lastTerrainUsed, uvX, uvY);
+					water_tilests[uvX][uvY].setPosition((editLocation.y-offset.y)*tilesetSize, (editLocation.x-offset.x)*tilesetSize);
+					window.draw(water_tilests[uvX][uvY]);
 				}
 			}
 
