@@ -9,7 +9,7 @@ using namespace sf;
 using namespace zeoFlow;
 
 const int screenW = 864, screenH = 608;
-RenderWindow window(VideoMode(screenW, screenH), "Fishy Waters"); //the game screen
+RenderWindow window(VideoMode(screenW, screenH), "Muddy Grounds"); //the game screen
 
 bool canGo(int fieldType, int objectType)
 {
@@ -407,10 +407,12 @@ int main()
 			{
 				objectsMap[i + 1][j] = -1;
 				objectsMap[i + 1][j + 1] = -1;
-				if(objectsMap[i][j] < 0)
+				if(objectsMap[i][j] == -1)
 				{
-					cout<<objectsMap[i][j];
-					objectsMap[i][j] = -1 * objectTypeNew;
+					cout<<objectTypeNew * -1<<' '<<i<<' '<<j<<' ';
+					//objectsMap[i][j] = objectTypeNew * -1;
+					objectsMap[i][j] = objectTypeNew * -1;
+					cout<<objectsMap[i][j]<<'\n';
 				}
 				else
 				{
@@ -984,6 +986,7 @@ int main()
 				{
 					int uvX;
 					int objectTypeN = abs(objectsMap[i][j]);
+					if(i==6 && j==4) cout<<objectsMap[i][j]<<' '<<objectTypeN<<'\n';
 					if(objectTypeN > 10 && objectTypeN < 20)
 					{
 						getObjectByType(objectsMap[i][j], uvX);
