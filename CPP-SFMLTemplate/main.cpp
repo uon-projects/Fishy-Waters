@@ -9,11 +9,18 @@ using namespace sf;
 using namespace zeoFlow;
 
 const int screenW = 864, screenH = 608;
+int level;
+bool modeEdit = false;
 RenderWindow window(VideoMode(screenW, screenH), "Muddy Grounds"); //the game screen
 
 bool canGo(int fieldType, int fieldType2, int objectType)
 {
-	if(objectType >= 10 && objectType < 70 && fieldType < 120 && !(fieldType2>=70 && fieldType2<=85))
+	cout<<fieldType<<' '<<fieldType2<<' '<<objectType<<'\n';
+	if(modeEdit)
+	{
+		return true;
+	}
+	else if(objectType >= 10 && objectType < 70 && fieldType < 120 && !(fieldType2>=70 && fieldType2<=85))
 	{
 		return true;
 	}
@@ -28,11 +35,11 @@ bool canGo(int fieldType, int fieldType2, int objectType)
 	return false;
 }
 
-void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[120][200], int muddyMap2[120][200], int objectsMap[120][200], int mapSizeH, int mapSizeW)
+void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[120][200], int muddyMap2[120][200], int objectsMap[120][200], int mapSizeH, int mapSizeW, int &characterFace)
 {
-
 	if(Keyboard::isKeyPressed(Keyboard::Left))
 	{
+		characterFace = 1;
 		if(canGo(muddyMap[characterPos.y + offset.x][characterPos.x + offset.y - 1],
 			muddyMap2[characterPos.y + offset.x][characterPos.x + offset.y - 1],
 			objectsMap[characterPos.y + offset.x][characterPos.x + offset.y - 1]))
@@ -53,6 +60,7 @@ void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[12
 	}
 	if(Keyboard::isKeyPressed(Keyboard::Right))
 	{
+		characterFace = 2;
 		if(canGo(muddyMap[characterPos.y + offset.x][characterPos.x + offset.y + 1],
 			muddyMap2[characterPos.y + offset.x][characterPos.x + offset.y + 1],
 			objectsMap[characterPos.y + offset.x][characterPos.x + offset.y + 1]))
@@ -73,6 +81,7 @@ void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[12
 	}
 	if(Keyboard::isKeyPressed(Keyboard::Up))
 	{
+		characterFace = 3;
 		if(canGo(muddyMap[characterPos.y + offset.x - 1][characterPos.x + offset.y],
 			muddyMap2[characterPos.y + offset.x - 1][characterPos.x + offset.y],
 			objectsMap[characterPos.y + offset.x - 1][characterPos.x + offset.y]))
@@ -93,6 +102,7 @@ void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[12
 	}
 	if(Keyboard::isKeyPressed(Keyboard::Down))
 	{
+		characterFace = 0;
 		if(canGo(muddyMap[characterPos.y + offset.x + 1][characterPos.x + offset.y],
 			muddyMap2[characterPos.y + offset.x + 1][characterPos.x + offset.y],
 			objectsMap[characterPos.y + offset.x + 1][characterPos.x + offset.y]))
@@ -772,6 +782,28 @@ void storeObjectsMap(int objectsMap[120][200], int mapSizeH, int mapSizeW)
 	objectsNew.close();
 }
 
+void loadStats(Vector2i &characterPos, Vector2i &offset)
+{
+	ifstream statsRead("Assets/stats.txt");
+	statsRead>>characterPos.x;
+	statsRead>>characterPos.y;
+	statsRead>>offset.x;
+	statsRead>>offset.y;
+	statsRead>>level;
+	statsRead.close();
+}
+
+void storeStats(Vector2i &characterPos, Vector2i offset)
+{
+	ofstream statsNew("Assets/stats.txt");
+	statsNew<<characterPos.x<<' ';
+	statsNew<<characterPos.y<<' ';
+	statsNew<<offset.x<<' ';
+	statsNew<<offset.y<<' ';
+	statsNew<<level<<' ';
+	statsNew.close();
+}
+
 int main()
 {
 	
@@ -785,7 +817,6 @@ int main()
 	int muddyMap[mapSizeH][mapSizeW], muddyMap2[mapSizeH][mapSizeW], objectsMap[mapSizeH][mapSizeW];
 	int i, j;
 
-	bool modeEdit = false;
 	bool modeShowInventory = false;
 	int lastTerrainUsed;
 	bool modeEditShowObjects = false;
@@ -795,14 +826,23 @@ int main()
 	const int INVENTORY_CATEGORY_OBJECTS = 2;
 	bool leftSideClicked;
 
-	Vector2i characterPos(0, 9);
-	Vector2i offset(0, 0);
+	Vector2i characterPos, offset;
 	Vector2i mouseLocation(0, 0);
 	Vector2i editLocation(0, 0);
+
+	int bridgePerLvlOff = 5;
+	int bridgeByLvl[10][4] = {
+		9, 18, 1, 0,
+		9, 19, 1, 0,
+		9, 20, 1, 0,
+		22, 10, 2, 1,
+		23, 10, 2, 1
+	};
   
 	loadMap(muddyMap, mapSizeH, mapSizeW);
 	loadMap2(muddyMap2, mapSizeH, mapSizeW);
 	loadObjectsMap(objectsMap, mapSizeH, mapSizeW);
+	loadStats(characterPos, offset);
 
 	Texture tilesetsTexture;
 	tilesetsTexture.loadFromFile("Assets/tilesets.png");
@@ -827,6 +867,25 @@ int main()
 	Vector2u textureBridgeSize = tilesetsBridgeTexture.getSize();
 	textureBridgeSize.x /= 6;
 	textureBridgeSize.y /= 3;
+
+	Texture tilesetsCharacterTexture;
+	tilesetsCharacterTexture.loadFromFile("Assets/npc/character_tilesets.png");
+	Vector2u textureCharacterSize = tilesetsCharacterTexture.getSize();
+	textureCharacterSize.x /= 3;
+	textureCharacterSize.y /= 4;
+
+	RectangleShape character_tilesets[6][3];
+	int characterFace = 1;
+	for(i = 0; i<6; i++)
+	{
+		for(j = 0; j<3; j++)
+		{
+			character_tilesets[i][j].setOrigin(0, 16);
+			character_tilesets[i][j].setSize(Vector2f(tilesetSize, tilesetSize));
+			character_tilesets[i][j].setTexture(&tilesetsCharacterTexture);
+			character_tilesets[i][j].setTextureRect(IntRect(textureCharacterSize.x*j, textureCharacterSize.y*i, textureCharacterSize.x, textureCharacterSize.y));
+		}
+	}
 
 	RectangleShape mousePointer;
 	mousePointer.setOrigin(16, 16);
@@ -1049,6 +1108,7 @@ int main()
 					modeEdit = !modeEdit;
 					modeShowInventory = true;
 					modeEditShowObjects = false;
+					modeInventory = INVENTORY_CATEGORY_GROUND;
 					lastTerrainUsed = -1;
 			}
 			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Q))
@@ -1456,9 +1516,11 @@ int main()
 						editLocation.y = mouseLocation.x/tilesetSize + offset.y;
 						modeShowInventory = true;
 					}
+					cout<<mouseLocation.y/tilesetSize + offset.x<<' '<<mouseLocation.x/tilesetSize + offset.y<<'\n';
 				}
 			}
-			setGameViewOffset(characterPos, offset, muddyMap, muddyMap2, objectsMap, mapSizeH, mapSizeW);
+			setGameViewOffset(characterPos, offset, muddyMap, muddyMap2, objectsMap, mapSizeH, mapSizeW, characterFace);
+			storeStats(characterPos, offset);
 		}
 
 		window.clear(Color::Red);
@@ -1558,11 +1620,16 @@ int main()
 		}
 		if(objectsMap[characterPos.y + offset.x][characterPos.x + offset.y] != 9)
 		{
-			character.setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
-			window.draw(character);
+			character_tilesets[characterFace][0].setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
+			//window.draw(character_tilesets[characterFace][0]);
 		}
 		for(i; i < limitX; i++)
 		{
+			if(characterPos.y == i - offset.x)
+			{
+				character_tilesets[characterFace][0].setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
+				window.draw(character_tilesets[characterFace][0]);
+			}
 			for(j = offset.y - 1; j < offset.y + screenW/tilesetSize; j++)
 			{
 				if(modeEdit && modeInventory < 2)
@@ -1614,10 +1681,44 @@ int main()
 			}
 
 		}
+		for(i = 0; i<bridgePerLvlOff; i++)
+		{
+			if(bridgeByLvl[i][2] <= level)
+			{
+				if(bridgeByLvl[i][3] == 0)
+				{
+					objectsMap[bridgeByLvl[i][0]][bridgeByLvl[i][1]] = 151;
+					objectsMap[bridgeByLvl[i][0] + 1][bridgeByLvl[i][1]] = 9;
+					objectsMap[bridgeByLvl[i][0] + 2][bridgeByLvl[i][1]] = 8;
+				}
+				else if(bridgeByLvl[i][3] == 1)
+				{
+					objectsMap[bridgeByLvl[i][0]][bridgeByLvl[i][1]] = 154;
+					objectsMap[bridgeByLvl[i][0]][bridgeByLvl[i][1] + 1] = 9;
+					objectsMap[bridgeByLvl[i][0]][bridgeByLvl[i][1] + 2] = 8;
+				}
+			}
+			else
+			{
+				if(bridgeByLvl[i][3] == 0)
+				{
+					objectsMap[bridgeByLvl[i][0]][bridgeByLvl[i][1]] = 10;
+					objectsMap[bridgeByLvl[i][0] + 1][bridgeByLvl[i][1]] = 10;
+					objectsMap[bridgeByLvl[i][0] + 2][bridgeByLvl[i][1]] = 10;
+				}
+				else if(bridgeByLvl[i][3] == 1)
+				{
+					objectsMap[bridgeByLvl[i][0]][bridgeByLvl[i][1]] = 10;
+					objectsMap[bridgeByLvl[i][0]][bridgeByLvl[i][1] + 1] = 10;
+					objectsMap[bridgeByLvl[i][0]][bridgeByLvl[i][1] + 2] = 10;
+				}
+			}
+		}
+
 		if(objectsMap[characterPos.y + offset.x][characterPos.x + offset.y] == 9)
 		{
-			character.setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
-			window.draw(character);
+			character_tilesets[characterFace][0].setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
+			window.draw(character_tilesets[characterFace][0]);
 		}
 		
 		if(modeEdit && modeShowInventory && modeEditShowObjects)
