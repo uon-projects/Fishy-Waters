@@ -89,7 +89,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\map\map.txt" />
+    <Text Include="Assets\map\map2.txt" />
     <Text Include="Assets\map\objects.txt" />
+    <Text Include="Assets\stats.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
