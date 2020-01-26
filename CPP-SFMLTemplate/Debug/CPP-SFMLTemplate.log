@@ -1,162 +1,179 @@
-﻿Build started 25/01/2020 03:10:00.
+﻿Build started 26/01/2020 17:03:56.
      1>Project "C:\Users\grigo\Desktop\BSc Games Programming\Year 1\Muddy-Grounds\CPP-SFMLTemplate\CPP-SFMLTemplate.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\SFML v2.4.0 (Win32 - Visual Studio 2012)\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\SFML v2.4.0 (Win32 - Visual Studio 2012)\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt MapEditor.cpp main.cpp
          main.cpp
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(129): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(129): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(884): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(910): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(913): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(926): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(929): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(932): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(942): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(946): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(950): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(957): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(961): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(965): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1073): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1080): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1084): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1088): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1535): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1541): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1547): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\zeoflow_sfml.h(79): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\zeoflow_sfml.h(79): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(735): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(761): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(764): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(777): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(780): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(783): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(793): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(797): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(801): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(808): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(812): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(816): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(924): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(931): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(935): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(939): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(945): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1362): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1365): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1387): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1390): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1412): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1415): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1437): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1440): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1480): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1486): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1492): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1505): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1511): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1517): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1522): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1525): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1560): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1566): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1572): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1577): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1580): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1569): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1591): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
      1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1595): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1604): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1623): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1630): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1642): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1648): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1654): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1665): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1671): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1677): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1720): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1732): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1738): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1744): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1749): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1752): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1761): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1766): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1769): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1772): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1775): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1780): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1783): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1786): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1789): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1792): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1795): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1798): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1801): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1804): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1807): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1810): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1813): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1816): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1819): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1822): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1825): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1828): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1831): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1834): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1837): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1840): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1843): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1846): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1849): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1852): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1855): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1858): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1861): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1864): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1867): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1870): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1873): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1876): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1879): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1882): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1885): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1888): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1891): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1894): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1897): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1900): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1903): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1906): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1909): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1912): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1915): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1918): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1921): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1924): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1927): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1933): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1936): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1939): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1942): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1945): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1948): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1951): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1954): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1957): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1960): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1963): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1966): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1969): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1972): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1975): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1980): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1983): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1986): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1989): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1992): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1995): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1998): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2001): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2004): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2007): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2010): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2013): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2016): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2019): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2022): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2025): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2028): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2031): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2034): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2037): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2040): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2043): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2046): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2049): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2052): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2055): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2058): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2061): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2064): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2067): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2070): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2073): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2076): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2079): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1610): warning C4101: 'limitY' : unreferenced local variable
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(245): warning C4715: 'getObjectType' : not all control paths return a value
-     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(502): warning C4715: 'getTerrainType' : not all control paths return a value
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1599): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1622): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1628): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1634): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1645): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1651): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1657): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1702): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1706): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1710): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1723): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1729): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1735): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1740): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1743): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1751): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1756): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1759): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1762): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1765): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1770): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1773): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1776): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1779): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1782): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1785): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1788): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1791): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1794): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1797): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1800): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1803): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1806): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1809): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1812): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1815): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1818): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1821): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1824): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1827): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1830): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1833): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1836): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1839): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1842): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1845): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1848): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1851): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1854): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1857): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1860): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1863): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1866): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1869): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1872): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1875): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1878): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1881): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1884): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1887): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1890): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1893): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1896): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1899): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1902): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1905): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1908): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1911): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1914): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1917): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1923): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1926): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1929): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1932): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1935): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1938): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1941): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1944): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1947): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1950): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1953): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1956): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1959): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1962): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1965): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1970): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1973): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1976): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1979): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1982): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1985): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1988): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1991): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1994): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(1997): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2000): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2003): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2006): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2009): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2012): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2015): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2018): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2021): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2024): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2027): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2030): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2033): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2036): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2039): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2042): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2045): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2048): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2051): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2054): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2057): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2060): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2063): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2066): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(2069): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         MapEditor.cpp
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\mapeditor.cpp(22): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\mapeditor.cpp(22): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
+         Generating Code...
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(241): warning C4715: 'getObjectType' : not all control paths return a value
+     1>c:\users\grigo\desktop\bsc games programming\year 1\muddy-grounds\cpp-sfmltemplate\main.cpp(498): warning C4715: 'getTerrainType' : not all control paths return a value
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\grigo\Desktop\BSc Games Programming\Year 1\Muddy-Grounds\Debug\CPP-SFMLTemplate.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML v2.4.0 (Win32 - Visual Studio 2012)\lib" "sfml-system-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" "sfml-window-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\grigo\Desktop\BSc Games Programming\Year 1\Muddy-Grounds\Debug\CPP-SFMLTemplate.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\grigo\Desktop\BSc Games Programming\Year 1\Muddy-Grounds\Debug\CPP-SFMLTemplate.lib" /MACHINE:X86 Debug\main.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\grigo\Desktop\BSc Games Programming\Year 1\Muddy-Grounds\Debug\CPP-SFMLTemplate.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML v2.4.0 (Win32 - Visual Studio 2012)\lib" "sfml-system-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" "sfml-window-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\grigo\Desktop\BSc Games Programming\Year 1\Muddy-Grounds\Debug\CPP-SFMLTemplate.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\grigo\Desktop\BSc Games Programming\Year 1\Muddy-Grounds\Debug\CPP-SFMLTemplate.lib" /MACHINE:X86 Debug\FileSync.obj
+         Debug\main.obj
+         Debug\MapEditor.obj
          CPP-SFMLTemplate.vcxproj -> C:\Users\grigo\Desktop\BSc Games Programming\Year 1\Muddy-Grounds\Debug\CPP-SFMLTemplate.exe
      1>Done Building Project "C:\Users\grigo\Desktop\BSc Games Programming\Year 1\Muddy-Grounds\CPP-SFMLTemplate\CPP-SFMLTemplate.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:06.66
+Time Elapsed 00:00:07.82
