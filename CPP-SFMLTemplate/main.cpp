@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include "ZeoFlow_SFML.h"
+#include "MapEditor.h"
+#include "FileSync.h"
 
 //Compiler Directives
 using namespace std;
@@ -15,7 +17,6 @@ RenderWindow window(VideoMode(screenW, screenH), "Muddy Grounds"); //the game sc
 
 bool canGo(int fieldType, int fieldType2, int objectType)
 {
-	cout<<fieldType<<' '<<fieldType2<<' '<<objectType<<'\n';
 	if(modeEdit)
 	{
 		return true;
@@ -35,6 +36,7 @@ bool canGo(int fieldType, int fieldType2, int objectType)
 	return false;
 }
 
+int animation = 0;
 void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[120][200], int muddyMap2[120][200], int objectsMap[120][200], int mapSizeH, int mapSizeW, int &characterFace)
 {
 	if(Keyboard::isKeyPressed(Keyboard::Left))
@@ -44,9 +46,10 @@ void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[12
 			muddyMap2[characterPos.y + offset.x][characterPos.x + offset.y - 1],
 			objectsMap[characterPos.y + offset.x][characterPos.x + offset.y - 1]))
 		{
+			animation = 1;
 			if(characterPos.x + offset.y >= 14 && characterPos.x + offset.y <= mapSizeW - 14)
 			{
-				offset.y--;
+				//offset.y--;
 			}
 			else
 			{
@@ -58,16 +61,17 @@ void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[12
 			}
 		}
 	}
-	if(Keyboard::isKeyPressed(Keyboard::Right))
+	else if(Keyboard::isKeyPressed(Keyboard::Right))
 	{
 		characterFace = 2;
 		if(canGo(muddyMap[characterPos.y + offset.x][characterPos.x + offset.y + 1],
 			muddyMap2[characterPos.y + offset.x][characterPos.x + offset.y + 1],
 			objectsMap[characterPos.y + offset.x][characterPos.x + offset.y + 1]))
 		{
+			animation = 2;
 			if(characterPos.x + offset.y >= 13 && characterPos.x + offset.y <= mapSizeW - 15)
 			{
-				offset.y++;
+				//offset.y++;
 			}
 			else
 			{
@@ -79,16 +83,17 @@ void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[12
 			}
 		}
 	}
-	if(Keyboard::isKeyPressed(Keyboard::Up))
+	else if(Keyboard::isKeyPressed(Keyboard::Up))
 	{
 		characterFace = 3;
 		if(canGo(muddyMap[characterPos.y + offset.x - 1][characterPos.x + offset.y],
 			muddyMap2[characterPos.y + offset.x - 1][characterPos.x + offset.y],
 			objectsMap[characterPos.y + offset.x - 1][characterPos.x + offset.y]))
 		{
+			animation = 3;
 			if(characterPos.y + offset.x >= 10 && characterPos.y + offset.x <= mapSizeH - 10)
 			{
-				offset.x--;
+				//offset.x--;
 			}
 			else
 			{
@@ -100,16 +105,17 @@ void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[12
 			}
 		}
 	}
-	if(Keyboard::isKeyPressed(Keyboard::Down))
+	else if(Keyboard::isKeyPressed(Keyboard::Down))
 	{
 		characterFace = 0;
 		if(canGo(muddyMap[characterPos.y + offset.x + 1][characterPos.x + offset.y],
 			muddyMap2[characterPos.y + offset.x + 1][characterPos.x + offset.y],
 			objectsMap[characterPos.y + offset.x + 1][characterPos.x + offset.y]))
 		{
+			animation = 4;
 			if(characterPos.y + offset.x >= 9 && characterPos.y + offset.x <= mapSizeH - 11)
 			{
-				offset.x++;
+				//offset.x++;
 			}
 			else
 			{
@@ -122,16 +128,6 @@ void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[12
 		}
 	}
 
-}
-
-bool rectClicked(RectangleShape sprite, Vector2i mouseLocation)
-{
-	IntRect water11Btn(sprite.getPosition().x, sprite.getPosition().y, sprite.getGlobalBounds().width, sprite.getGlobalBounds().height);
-	if (water11Btn.contains(mouseLocation))
-	{
-		return true;
-	}
-	return false;
 }
 
 int getObjectType(int type, int x, int y)
@@ -656,154 +652,6 @@ void getTerrainByType(int type, int &x, int &y)
 	}
 }
 
-void loadMap(int muddyMap[120][200], int mapSizeH, int mapSizeW)
-{
-	ifstream mapRead("Assets/map/map.txt");
-	for(int i = 0; i < mapSizeH; i++)
-	{
-		for(int j = 0; j < mapSizeW; j++)
-		{
-			mapRead>>muddyMap[i][j];
-		}
-	}
-	mapRead.close();
-}
-
-void storeMap(int muddyMap[120][200], int mapSizeH, int mapSizeW)
-{		
-	ofstream mapNew("Assets/map/map.txt");
-	for(int i = 0; i < mapSizeH; i++)
-	{
-		for(int j = 0; j < mapSizeW; j++)
-		{
-			mapNew<<muddyMap[i][j]<<' ';
-		}
-		mapNew<<'\n';
-	}
-	mapNew.close();
-}
-
-void loadMap2(int muddyMap2[120][200], int mapSizeH, int mapSizeW)
-{
-	ifstream map2Read("Assets/map/map2.txt");
-	for(int i = 0; i < mapSizeH; i++)
-	{
-		for(int j = 0; j < mapSizeW; j++)
-		{
-			map2Read>>muddyMap2[i][j];
-		}
-	}
-	map2Read.close();
-}
-
-void storeMap2(int muddyMap2[120][200], int mapSizeH, int mapSizeW)
-{		
-	ofstream map2New("Assets/map/map2.txt");
-	for(int i = 0; i < mapSizeH; i++)
-	{
-		for(int j = 0; j < mapSizeW; j++)
-		{
-			map2New<<muddyMap2[i][j]<<' ';
-		}
-		map2New<<'\n';
-	}
-	map2New.close();
-}
-
-void loadObjectsMap(int objectsMap[120][200], int mapSizeH, int mapSizeW)
-{
-	int i, j;
-	for(i = 0; i < mapSizeH; i++)
-	{
-		for(j = 0; j < mapSizeW; j++)
-		{
-			objectsMap[i][j] = 0;
-		}
-	}
-	ifstream objectsRead("Assets/map/objects.txt");
-	int objectTypeNew;
-	for(i = 0; i < mapSizeH; i++)
-	{
-		for(j = 0; j < mapSizeW; j++)
-		{
-			objectsRead>>objectTypeNew;
-			if(objectTypeNew > 10 && objectTypeNew <70)
-			{
-				objectsMap[i + 1][j] = -1;
-				objectsMap[i + 1][j + 1] = -1;
-				if(objectsMap[i][j] == -1)
-				{
-					objectsMap[i][j] = objectTypeNew * -1;
-				}
-				else
-				{
-					objectsMap[i][j] = objectTypeNew;
-				}
-				if(objectsMap[i][j + 1] >= 0) objectsMap[i][j + 1] = 10;
-			}
-			else if(objectTypeNew >= 150 && objectTypeNew <= 152)
-			{
-				objectsMap[i][j] = objectTypeNew;
-				objectsMap[i + 1][j] = 9;
-				objectsMap[i + 2][j] = 8;
-			}
-			else if(objectTypeNew >= 153 && objectTypeNew <= 155)
-			{
-				objectsMap[i][j] = objectTypeNew;
-				objectsMap[i][j + 1] = 9;
-				objectsMap[i][j + 2] = 8;
-			}
-			else
-			{
-				if(objectsMap[i][j] >= 0 && objectsMap[i][j] != 9 && objectsMap[i][j] != 8) objectsMap[i][j] = objectTypeNew;
-			}
-		}
-	}
-	objectsRead.close();
-}
-
-void storeObjectsMap(int objectsMap[120][200], int mapSizeH, int mapSizeW)
-{
-	ofstream objectsNew("Assets/map/objects.txt");
-	for(int i = 0; i < mapSizeH; i++)
-	{
-		for(int j = 0; j < mapSizeW; j++)
-		{
-			if(objectsMap[i][j] == -1 || objectsMap[i][j] == 8 || objectsMap[i][j] == 9) {
-				objectsNew<<10<<' ';
-			} else if(objectsMap[i][j]<0) {
-				objectsNew<<-1*objectsMap[i][j]<<' ';
-			} else {
-				objectsNew<<objectsMap[i][j]<<' ';
-			}
-		}
-		objectsNew<<'\n';
-	}
-	objectsNew.close();
-}
-
-void loadStats(Vector2i &characterPos, Vector2i &offset)
-{
-	ifstream statsRead("Assets/stats.txt");
-	statsRead>>characterPos.x;
-	statsRead>>characterPos.y;
-	statsRead>>offset.x;
-	statsRead>>offset.y;
-	statsRead>>level;
-	statsRead.close();
-}
-
-void storeStats(Vector2i &characterPos, Vector2i offset)
-{
-	ofstream statsNew("Assets/stats.txt");
-	statsNew<<characterPos.x<<' ';
-	statsNew<<characterPos.y<<' ';
-	statsNew<<offset.x<<' ';
-	statsNew<<offset.y<<' ';
-	statsNew<<level<<' ';
-	statsNew.close();
-}
-
 int main()
 {
 	
@@ -811,6 +659,9 @@ int main()
 
 	Event event;
 	ZeoFlow_SFML zeoFlow_SF;
+	FileSync fileSync;
+	MapEditor mapEditor;
+
 	Font font(zeoFlow_SF.loadFont("Assets/fonts/", "font_5", "ttf"));
 	const int tilesetSize = 32;
 	const int mapSizeH = 120, mapSizeW = 200;
@@ -839,10 +690,10 @@ int main()
 		23, 10, 2, 1
 	};
   
-	loadMap(muddyMap, mapSizeH, mapSizeW);
-	loadMap2(muddyMap2, mapSizeH, mapSizeW);
-	loadObjectsMap(objectsMap, mapSizeH, mapSizeW);
-	loadStats(characterPos, offset);
+	fileSync.loadMap(muddyMap, mapSizeH, mapSizeW);
+	fileSync.loadMap2(muddyMap2, mapSizeH, mapSizeW);
+	fileSync.loadObjectsMap(objectsMap, mapSizeH, mapSizeW);
+	fileSync.loadStats(characterPos, offset, level);
 
 	Texture tilesetsTexture;
 	tilesetsTexture.loadFromFile("Assets/tilesets.png");
@@ -1089,9 +940,15 @@ int main()
 	categoryGround2.setTexture(&tilesetsTexture);
 	categoryGround2.setTextureRect(IntRect(textureSize.x*0, textureSize.y*5, textureSize.x, textureSize.y));
 
+	Clock clock;
+	View view;
+	view.reset(FloatRect(0, 0, screenW, screenH));
+	view.setViewport(FloatRect(0, 0, 1.0f, 1.0f));
+
 	//the loop that draws the game
     while (window.isOpen())
-    {
+    { 
+		window.setView(window.getDefaultView());
 		//the loop that checks for different inputs
         while (window.pollEvent(event))
         {
@@ -1111,422 +968,169 @@ int main()
 					modeInventory = INVENTORY_CATEGORY_GROUND;
 					lastTerrainUsed = -1;
 			}
-			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Q))
-			{
-				if(!modeEditShowObjects)
-				{
-					lastTerrainUsed = muddyMap[editLocation.x][editLocation.y];
-				}
-			}
-			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Delete))
-			{
-				if(modeInventory == INVENTORY_CATEGORY_GROUND)
-				{
-					if(editLocation.x >= 0 && editLocation.x <= mapSizeW - 1 && editLocation.y >= 0 && editLocation.y <= mapSizeH - 1)
-					{
-						muddyMap[editLocation.x][editLocation.y] = 20;
-						storeMap(muddyMap, mapSizeH, mapSizeW);
-					}
-				}
-				else if(modeInventory == INVENTORY_CATEGORY_GROUND2)
-				{
-					if(editLocation.x >= 0 && editLocation.x <= mapSizeW - 1 && editLocation.y >= 0 && editLocation.y <= mapSizeH - 1)
-					{
-						muddyMap2[editLocation.x][editLocation.y] = 0;
-						storeMap2(muddyMap2, mapSizeH, mapSizeW);
-					}
-				}
-				else
-				{
-					if(editLocation.x >= 0 && editLocation.x <= mapSizeW - 1 && editLocation.y >= 0 && editLocation.y <= mapSizeH - 1)
-					{
-						objectsMap[editLocation.x][editLocation.y] = 10;
-						storeObjectsMap(objectsMap, mapSizeH, mapSizeW);
-						loadObjectsMap(objectsMap, mapSizeH, mapSizeW);			
-					}
-				}
-			}
-			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Return))
-			{
-				if(modeInventory == INVENTORY_CATEGORY_GROUND)
-				{
-					muddyMap[editLocation.x][editLocation.y] = lastTerrainUsed;
-					storeMap(muddyMap, mapSizeH, mapSizeW);
-				}
-				else if(modeInventory == INVENTORY_CATEGORY_GROUND2)
-				{
-					muddyMap2[editLocation.x][editLocation.y] = lastTerrainUsed;
-					storeMap2(muddyMap2, mapSizeH, mapSizeW);
-				}
-				else
-				{
-					if(editLocation.x >= 0 && editLocation.x <= mapSizeW - 1 && editLocation.y >= 0 && editLocation.y <= mapSizeH - 1)
-					{
-						objectsMap[editLocation.x][editLocation.y] = lastTerrainUsed;
-						storeObjectsMap(objectsMap, mapSizeH, mapSizeW);
-						loadObjectsMap(objectsMap, mapSizeH, mapSizeW);
-					}
-				}
-			}
-			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::A))
-			{
-				editLocation.y--;
-			}
-			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::D))
-			{
-				editLocation.y++;
-			}
-			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::W))
-			{
-				editLocation.x--;
-			}
-			else if((lastTerrainUsed != -1 || modeShowInventory) && modeEdit && event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::S))
-			{
-				editLocation.x++;
+			else if(mapEditor.keyPressed(lastTerrainUsed, modeShowInventory, modeEditShowObjects, modeEdit, modeInventory, event, editLocation, muddyMap, muddyMap2, objectsMap, mapSizeH, mapSizeW)) {
+				//null constructor
 			}
 			if(event.type == Event::MouseButtonPressed && Mouse::isButtonPressed(Mouse::Left))
 			{
-				if(modeEdit && modeShowInventory && rectClicked(categoryGround, mouseLocation))
+				if(mapEditor.mousePressed(modeEdit, modeShowInventory, modeEditShowObjects, lastTerrainUsed, modeInventory, mouseLocation, editLocation, offset, tilesetSize, editModeHolder, grass_tilesets_edit, water_tilesets_edit, bridge_tilesets_edit, square_tilesets_edit))
 				{
-					modeInventory = 0;
-					modeEditShowObjects = false;
-					lastTerrainUsed = -1;
-				} else if(modeEdit && modeShowInventory && rectClicked(categoryGround2, mouseLocation))
-				{
-					modeInventory = 1;
-					modeEditShowObjects = true;
-					lastTerrainUsed = -1;
-				} else if(modeEdit && modeShowInventory && rectClicked(categoryObject1, mouseLocation))
-				{
-					modeInventory = 2;
-					modeEditShowObjects = true;
-					lastTerrainUsed = -1;
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[43][6], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 43, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[15][4], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 15, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[15][5], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 15, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[16][4], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 16, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[16][5], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 16, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][0], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 12, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][1], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 12, 1);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][2], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 12, 2);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][3], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 12, 3);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][4], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 12, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][4], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 13, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][4], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 14, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][5], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 12, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][6], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 12, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[12][7], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 12, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][5], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 13, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][6], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 13, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][7], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 13, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][5], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 14, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][6], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 14, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][7], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 14, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][0], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 13, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[13][1], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 13, 1);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][0], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 14, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[14][1], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(1, 14, 1);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][0], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 36, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][0], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 37, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][1], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 37, 1);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][0], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 38, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[39][4], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 39, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[39][5], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 39, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[40][4], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 40, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[40][5], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 40, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][1], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 38, 1);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][1], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 36, 1);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][2], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 36, 2);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][3], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 36, 3);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][4], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 36, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][4], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 37, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][4], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 38, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][5], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 36, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][6], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 36, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[36][7], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 36, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][5], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 37, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][6], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 37, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[37][7], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 37, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][5], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 38, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][6], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 38, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(grass_tilesets_edit[38][7], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(2, 38, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][6], mouseLocation))
-				{
-					lastTerrainUsed = getTerrainType(3, 1, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[0], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(1, 0, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[1], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(1, 1, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[2], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(1, 2, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[3], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(1, 3, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[4], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(1, 4, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[5], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(1, 5, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[6], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(1, 6, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[7], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(1, 7, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(square_tilesets_edit[8], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(1, 8, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(bridge_tilesets_edit[0][0], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(3, 0, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(bridge_tilesets_edit[0][1], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(3, 0, 1);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(bridge_tilesets_edit[0][2], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(3, 0, 2);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(bridge_tilesets_edit[1][0], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(3, 1, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(bridge_tilesets_edit[1][1], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(3, 1, 1);
-				} else if(modeInventory == INVENTORY_CATEGORY_OBJECTS && modeEdit && modeShowInventory && rectClicked(bridge_tilesets_edit[1][2], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(3, 1, 2);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][1], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 0, 1);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][2], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 0, 2);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][3], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 0, 3);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][4], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 0, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][4], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 1, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][4], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 2, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][5], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 0, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][6], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 0, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][7], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 0, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][5], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 1, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][6], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 1, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[1][7], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 1, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][5], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 2, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][6], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 2, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[2][7], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 2, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[0][0], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 0, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][1], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 6, 1);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][2], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 6, 2);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][3], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 6, 3);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][4], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 6, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][4], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 7, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][4], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 8, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][5], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 6, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][6], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 6, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][7], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 6, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][5], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 7, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][6], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 7, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[7][7], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 7, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][5], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 8, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][6], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 8, 6);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[8][7], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 8, 7);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[6][0], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 6, 0);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[3][4], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 3, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[3][5], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 3, 5);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[4][4], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 4, 4);
-				} else if(modeInventory == INVENTORY_CATEGORY_GROUND2 && modeEdit && modeShowInventory && rectClicked(water_tilesets_edit[4][5], mouseLocation))
-				{
-					lastTerrainUsed = getObjectType(2, 4, 5);
-				} else if(modeEdit && modeShowInventory && editModeHolder.getGlobalBounds().left <= mouseLocation.x && editModeHolder.getGlobalBounds().left + editModeHolder.getGlobalBounds().width >= mouseLocation.x)
-				{
-					//prevent mistaken clicks on terrain under edit holder
-				}
-				else if(mouseLocation.x >= 0 && mouseLocation.x <= 832 && mouseLocation.y >= 0 && mouseLocation.y <= 574)
-				{
-					if(modeEdit)
-					{
-						editLocation.x = mouseLocation.y/tilesetSize + offset.x;
-						editLocation.y = mouseLocation.x/tilesetSize + offset.y;
-						modeShowInventory = true;
-					}
-					cout<<mouseLocation.y/tilesetSize + offset.x<<' '<<mouseLocation.x/tilesetSize + offset.y<<'\n';
+
 				}
 			}
+			if(event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Left) && animation && animation != 1)
+			{
+				offset.y--;
+			}
+			else if(event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Right) && animation && animation != 2)
+			{
+				offset.y++;
+			}
+			else if(event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Up) && animation && animation != 3)
+			{
+				offset.x--;
+			}
+			else if(event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Down) && animation && animation != 4)
+			{
+				offset.x++;
+			}
 			setGameViewOffset(characterPos, offset, muddyMap, muddyMap2, objectsMap, mapSizeH, mapSizeW, characterFace);
-			storeStats(characterPos, offset);
+			fileSync.storeStats(characterPos, offset, level);
 		}
 
-		window.clear(Color::Red);
-		for(i = offset.x; i < offset.x + screenH/tilesetSize; i++)
+		if(animation)
 		{
-			for(j = offset.y; j < offset.y + screenW/tilesetSize; j++)
+			if(animation == 1 && (characterPos.x + offset.y < 13 || characterPos.x + offset.y > mapSizeW - 15))
+			{
+				character_tilesets[characterFace][0].move(-2, 0);
+				if(((int) character_tilesets[characterFace][0].getPosition().x) % tilesetSize==0)
+				{
+					animation = 0;
+				}
+			}
+			else if(animation == 1 && (characterPos.x + offset.y > 13 && characterPos.x + offset.y < mapSizeW - 15))
+			{
+				character_tilesets[characterFace][0].move(-2, 0);
+				if(((int) character_tilesets[characterFace][0].getPosition().x) % tilesetSize==0)
+				{
+					animation = 0;
+					offset.y--;
+				}
+				else
+				{
+					view.reset(FloatRect(0, 0, screenW, screenH));
+					int centerY = characterPos.y*tilesetSize + tilesetSize/2;
+					if(offset.x == 0 || offset.x == 101) centerY = screenH/2;
+					view.setCenter(Vector2f((int) character_tilesets[characterFace][0].getPosition().x + tilesetSize/2, centerY));
+					window.setView(view);
+				}
+			}
+			else if(animation == 2 && (characterPos.x + offset.y < 13 || characterPos.x + offset.y > mapSizeW - 14))
+			{
+				character_tilesets[characterFace][0].move(2, 0);
+				if(((int) character_tilesets[characterFace][0].getPosition().x) % tilesetSize==0)
+				{
+					animation = 0;
+				}
+			}
+			else if(animation == 2 && (characterPos.x + offset.y >= 13 && characterPos.x + offset.y <= mapSizeW - 14))
+			{
+				character_tilesets[characterFace][0].move(2, 0);
+				if(((int) character_tilesets[characterFace][0].getPosition().x) % tilesetSize==0)
+				{
+					animation = 0;
+					offset.y++;
+				}
+				else
+				{
+					view.reset(FloatRect(0, 0, screenW, screenH));
+					int centerY = characterPos.y*tilesetSize + tilesetSize/2;
+					if(offset.x == 0 || offset.x == 101) centerY = screenH/2;
+					view.setCenter(Vector2f((int) character_tilesets[characterFace][0].getPosition().x + tilesetSize/2, centerY));
+					window.setView(view);
+				}
+			}
+			else if(animation == 3 && (characterPos.y + offset.x < 10 || characterPos.y + offset.x > mapSizeH - 10))
+			{
+				character_tilesets[characterFace][0].move(0, -2);
+				if(((int) character_tilesets[characterFace][0].getPosition().y) % tilesetSize==0)
+				{
+					animation = 0;
+				}
+			}
+			else if(animation == 3 && (characterPos.y + offset.x >= 10 && characterPos.y + offset.x <= mapSizeH - 10))
+			{
+				character_tilesets[characterFace][0].move(0, -2);
+				if(((int) character_tilesets[characterFace][0].getPosition().y) % tilesetSize==0)
+				{
+					animation = 0;
+					offset.x--;
+				}
+				else
+				{
+					view.reset(FloatRect(0, 0, screenW, screenH));
+					int centerX = characterPos.x*tilesetSize + tilesetSize/2;
+					if(offset.y == 0) centerX = screenW/2;
+					view.setCenter(Vector2f(centerX, (int) character_tilesets[characterFace][0].getPosition().y +  tilesetSize/2));
+					window.setView(view);
+				}
+			}
+			else if(animation == 4 && (characterPos.y + offset.x < 9 || characterPos.y + offset.x > mapSizeH - 11))
+			{
+				character_tilesets[characterFace][0].move(0, 2);
+				if(((int) character_tilesets[characterFace][0].getPosition().y) % tilesetSize==0)
+				{
+					animation = 0;
+				}
+			}
+			else if(animation == 4 && (characterPos.y + offset.x >= 9 && characterPos.y + offset.x <= mapSizeH - 11))
+			{
+				character_tilesets[characterFace][0].move(0, 2);
+				if(((int) character_tilesets[characterFace][0].getPosition().y) % tilesetSize==0)
+				{
+					animation = 0;
+					offset.x++;
+				}
+				else
+				{
+					view.reset(FloatRect(0, 0, screenW, screenH));
+					int centerX = characterPos.x*tilesetSize + tilesetSize/2;
+					if(offset.y == 0) centerX = screenW/2;
+					view.setCenter(Vector2f(centerX, (int) character_tilesets[characterFace][0].getPosition().y +  tilesetSize/2));
+					window.setView(view);
+				}
+			}
+			else
+			{
+				animation = 0;
+			}
+		}
+
+		window.clear();
+		int limitX, limitY;
+		if(offset.x > 0 && offset.x < screenH)
+		{
+			i = offset.x - 2;
+			limitX = offset.x + screenH/tilesetSize + 2;
+		}
+		else
+		{						
+			i = offset.x;
+			limitX = offset.x + screenH/tilesetSize;
+		}
+		for(i; i < limitX; i++)
+		{
+			if(offset.y > 0 && offset.y < screenW)
+		{
+			j = offset.y - 2;
+			limitY = offset.y + screenW/tilesetSize + 2;
+		}
+		else
+		{
+			j = offset.y;
+			limitY = offset.y + screenW/tilesetSize;
+		}
+			for(j; j < limitY; j++)
 			{
 				int uvX, uvY;
 				if(muddyMap[i][j] >= 20 && muddyMap[i][j] < 70)
@@ -1581,9 +1185,29 @@ int main()
 			window.draw(mousePointer);
 
 		}
-		for(i = offset.x; i < offset.x + screenH/tilesetSize; i++)
+		if(offset.x > 0 && offset.x < screenH)
 		{
-			for(j = offset.y; j < offset.y + screenW/tilesetSize; j++)
+			i = offset.x - 1;
+			limitX = offset.x + screenH/tilesetSize + 1;
+		}
+		else
+		{						
+			i = offset.x;
+			limitX = offset.x + screenH/tilesetSize;
+		}
+		for(i; i < limitX; i++)
+		{
+			if(offset.y > 0 && offset.y < screenW)
+		{
+			j = offset.y - 1;
+			limitY = offset.y + screenW/tilesetSize + 1;
+		}
+		else
+		{
+			j = offset.y;
+			limitY = offset.y + screenW/tilesetSize;
+		}
+			for(j; j < limitY; j++)
 			{
 				int uvX, uvY;
 				int objectTypeN = abs(muddyMap2[i][j]);
@@ -1607,30 +1231,45 @@ int main()
 				}
 			}
 		}
-		int limitX, limitY;
 		if(offset.x > 0 && offset.x < screenH)
 		{
-			i = offset.x - 1;
-			limitX = offset.x + screenH/tilesetSize + 1;
+			i = offset.x - 3;
+			limitX = offset.x + screenH/tilesetSize + 3;
 		}
 		else
 		{						
 			i = offset.x;
 			limitX = offset.x + screenH/tilesetSize;
 		}
-		if(objectsMap[characterPos.y + offset.x][characterPos.x + offset.y] != 9)
-		{
-			character_tilesets[characterFace][0].setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
-			//window.draw(character_tilesets[characterFace][0]);
-		}
 		for(i; i < limitX; i++)
 		{
 			if(characterPos.y == i - offset.x)
 			{
-				character_tilesets[characterFace][0].setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
+				if(animation == 1 || animation == 2)
+				{
+					character_tilesets[characterFace][0].setPosition(character_tilesets[characterFace][0].getPosition().x, characterPos.y*tilesetSize);
+				}
+				else if(animation == 3 || animation == 4)
+				{
+					character_tilesets[characterFace][0].setPosition(characterPos.x*tilesetSize, character_tilesets[characterFace][0].getPosition().y);
+				}
+				else if(animation == 0)
+				{
+					character_tilesets[characterFace][0].setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
+				}
 				window.draw(character_tilesets[characterFace][0]);
 			}
-			for(j = offset.y - 1; j < offset.y + screenW/tilesetSize; j++)
+			if(offset.y > 0 && offset.y < screenW)
+			{
+				j = offset.y - 3;
+				limitY = offset.y + screenW/tilesetSize + 3;
+			}
+			else
+			{
+				j = offset.y;
+				limitY = offset.y + screenW/tilesetSize;
+			}
+			for(j; j < limitY; j++)
 			{
 				if(modeEdit && modeInventory < 2)
 				{
@@ -1717,7 +1356,18 @@ int main()
 
 		if(objectsMap[characterPos.y + offset.x][characterPos.x + offset.y] == 9)
 		{
-			character_tilesets[characterFace][0].setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
+				if(animation == 1 || animation == 2)
+				{
+					character_tilesets[characterFace][0].setPosition(character_tilesets[characterFace][0].getPosition().x, characterPos.y*tilesetSize);
+				}
+				else if(animation == 3 || animation == 4)
+				{
+					character_tilesets[characterFace][0].setPosition(characterPos.x*tilesetSize, character_tilesets[characterFace][0].getPosition().y);
+				}
+				else if(animation == 0)
+				{
+					character_tilesets[characterFace][0].setPosition(characterPos.x*tilesetSize, characterPos.y*tilesetSize);
+				}
 			window.draw(character_tilesets[characterFace][0]);
 		}
 		
@@ -1755,7 +1405,6 @@ int main()
 		}
 		if(modeEdit)
 		{
-			//cout<<lastTerrainUsed<<'\n';
 			if((editLocation.y-offset.y)*tilesetSize>=0)
 			{
 				leftSideClicked = (editLocation.y-offset.y)*tilesetSize < window.getSize().x/2;
@@ -1774,6 +1423,8 @@ int main()
 
 			categoryObject1.setPosition(30 + 35*2 + rightSideAddition, 30);
 			window.draw(categoryObject1);
+
+			mapEditor.setRectanlgeShapes(categoryGround, categoryGround2, categoryObject1);
 
 			if(modeInventory == INVENTORY_CATEGORY_GROUND)
 			{
