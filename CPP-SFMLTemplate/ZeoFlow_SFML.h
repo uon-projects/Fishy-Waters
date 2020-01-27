@@ -35,6 +35,7 @@
 #include <string>
 #include <list>
 
+using namespace sf;
 
 namespace zeoFlow
 {
@@ -47,6 +48,9 @@ namespace zeoFlow
 
 	public:
 		sf::Font loadFont(std::string, std::string, std::string);
+
+	public:
+		bool rectClicked(RectangleShape sprite, Vector2i mouseLocation);
 
 	};
 
@@ -68,6 +72,16 @@ namespace zeoFlow
 				system("pause");
 		}
 		return font;
+	}
+
+	bool ZeoFlow_SFML::rectClicked(RectangleShape sprite, Vector2i mouseLocation)
+	{
+		IntRect water11Btn(sprite.getPosition().x, sprite.getPosition().y, sprite.getGlobalBounds().width, sprite.getGlobalBounds().height);
+		if (water11Btn.contains(mouseLocation))
+		{
+			return true;
+		}
+		return false;
 	}
 
 }
