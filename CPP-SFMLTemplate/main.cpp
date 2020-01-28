@@ -68,10 +68,10 @@ void setGameViewOffset(Vector2i &characterPos, Vector2i &offset, int muddyMap[12
 			muddyMap2[characterPos.y + offset.x][characterPos.x + offset.y + 1],
 			objectsMap[characterPos.y + offset.x][characterPos.x + offset.y + 1]))
 		{
-			animation = 2;
+			//animation = 2;
 			if(characterPos.x + offset.y >= 13 && characterPos.x + offset.y <= mapSizeW - 15)
 			{
-				//offset.y++;
+				offset.y++;
 			}
 			else
 			{
@@ -1000,7 +1000,7 @@ int main()
 
 		if(animation)
 		{
-			if(animation == 1 && (characterPos.x + offset.y < 13 || characterPos.x + offset.y > mapSizeW - 15))
+			if(animation == 1 && (characterPos.x + offset.y < 14 || characterPos.x + offset.y > mapSizeW - 14))
 			{
 				character_tilesets[characterFace][0].move(-2, 0);
 				if(((int) character_tilesets[characterFace][0].getPosition().x) % tilesetSize==0)
@@ -1008,7 +1008,7 @@ int main()
 					animation = 0;
 				}
 			}
-			else if(animation == 1 && (characterPos.x + offset.y > 13 && characterPos.x + offset.y < mapSizeW - 15))
+			else if(animation == 1 && (characterPos.x + offset.y >= 14 && characterPos.x + offset.y <= mapSizeW - 14))
 			{
 				character_tilesets[characterFace][0].move(-2, 0);
 				if(((int) character_tilesets[characterFace][0].getPosition().x) % tilesetSize==0)
@@ -1025,7 +1025,7 @@ int main()
 					window.setView(view);
 				}
 			}
-			else if(animation == 2 && (characterPos.x + offset.y < 13 || characterPos.x + offset.y > mapSizeW - 14))
+			else if(animation == 2 && (characterPos.x + offset.y < 14 || characterPos.x + offset.y > mapSizeW - 14))
 			{
 				character_tilesets[characterFace][0].move(2, 0);
 				if(((int) character_tilesets[characterFace][0].getPosition().x) % tilesetSize==0)
