@@ -82,9 +82,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FileSync.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileSync.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MapEditor.h" />
     <ClInclude Include="ZeoFlow_SFML.h" />
   </ItemGroup>
   <ItemGroup>
