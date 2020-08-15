@@ -54,7 +54,7 @@ public:
 
         float textHeightHalf = text.getGlobalBounds().height / 2;
         float textWidthHalf = text.getGlobalBounds().width / 2;
-        text.setPosition(windowWidthHalf - textWidthHalf, windowHeightHalf - textHeightHalf + 40);
+        text.setPosition(windowWidthHalf - textWidthHalf, windowHeightHalf - textHeightHalf + 50);
         window.draw(text);
 
     }
