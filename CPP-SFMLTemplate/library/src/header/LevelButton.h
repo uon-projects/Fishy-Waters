@@ -102,14 +102,6 @@ public:
             {
                 setFillColor(hoverColor);
             }
-            Sprite mCharacter = mApp->getCharacterSprite();
-            mCharacter.setScale(-0.5f, 0.5f);
-            mCharacter.setPosition(pos.x + 60, pos.y - 180);
-            if (level > mApp->getLevelsUnlocked())
-            {
-                mCharacter.setColor(Color::Red);
-            }
-            window.draw(mCharacter);
             return clicked;
         } else
         {
@@ -158,16 +150,6 @@ public:
         this->mApp = app;
     }
 
-    void setLevel(int level)
-    {
-        this->level = level;
-    }
-
-    int getBtnLevel()
-    {
-        return this->level;
-    }
-
 private:
     Vector2f mySize;
     IntRect btnBounders;
@@ -179,7 +161,6 @@ private:
     String content;
     int characterSize;
     App *mApp;
-    int level;
     Vector2f pos;
 
 };
