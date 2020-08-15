@@ -21,7 +21,7 @@ Vector2i theGameWindow_currentDimensions(WindowX, WindowY);
 Vector2i theGameWindow_perspectiveDimensions(WindowX, WindowY);
 RenderWindow theGameWindow(
         VideoMode(theGameWindow_currentDimensions.x, theGameWindow_currentDimensions.y),
-        "Dai Makai-Mura");
+        "Fishy Waters");
 Clock inGameClock;
 
 void init();
