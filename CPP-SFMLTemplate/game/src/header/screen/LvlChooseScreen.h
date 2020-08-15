@@ -31,7 +31,7 @@ public:
         exitBtn.setText("Go Back");
         exitBtn.setCharacterSize(18);
 
-        lvlBtn1.setSize(Vector2f(120, 50));
+        lvlBtn1.setSize(Vector2f(200, 50));
         lvlBtn1.setText("Start New Game");
         lvlBtn1.setCharacterSize(24);
 
