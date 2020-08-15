@@ -22,6 +22,7 @@ public:
         mMainCharacter = new MainCharacter;
         mGameMap = new GameMap;
         mNewGameLvl = false;
+        mCoins = 0;
     }
 
     ~App()
@@ -85,6 +86,21 @@ public:
         return mLoadImage;
     }
 
+    int getCoins()
+    {
+        return mCoins;
+    }
+
+    void addCoins(int value)
+    {
+        mCoins += value;
+    }
+
+    void removeCoins(int value)
+    {
+        mCoins -= value;
+    }
+
 private:
     screen currentScreen;
     Event event;
@@ -94,5 +110,6 @@ private:
     LoadImage *mLoadImage;
     bool mNewGameLvl;
     int lives;
+    int mCoins;
 
 };
