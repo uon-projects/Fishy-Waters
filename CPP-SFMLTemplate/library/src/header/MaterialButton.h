@@ -89,8 +89,15 @@ public:
             this->text.setCharacterSize(characterSize - 2);
             this->text.setOrigin(this->text.getLocalBounds().width / 2, this->text.getLocalBounds().height / 1.3f);
 
-            Event event = this->mApp->getEvent(); // NOLINT(cppcoreguidelines-pro-type-member-init,hicpp-member-init)
-            bool clicked = (event.type == event.MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left);
+            bool clicked;
+            if (this->mApp == nullptr)
+            {
+                clicked = false;
+            } else
+            {
+                Event event = this->mApp->getEvent();
+                clicked = (event.type == event.MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left);
+            }
             if (clicked)
             {
                 setFillColor(activeColor);

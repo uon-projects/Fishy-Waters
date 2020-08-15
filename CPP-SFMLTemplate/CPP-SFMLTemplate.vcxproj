@@ -13,11 +13,31 @@
   <ItemGroup>
     <ClCompile Include="game\src\main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game\src\header\App.h" />
+    <ClInclude Include="game\src\header\game\GameMap.h" />
+    <ClInclude Include="game\src\header\game\ItemModel.h" />
+    <ClInclude Include="game\src\header\npc\NPCharacter.h" />
+    <ClInclude Include="game\src\header\player\MainCharacter.h" />
+    <ClInclude Include="game\src\header\player\MainCharacterBullet.h" />
+    <ClInclude Include="game\src\header\screen\EndScreen.h" />
+    <ClInclude Include="game\src\header\screen\GameMenuScreen.h" />
+    <ClInclude Include="game\src\header\screen\GameScreen.h" />
+    <ClInclude Include="game\src\header\screen\HowToPlayScreen.h" />
+    <ClInclude Include="game\src\header\screen\LvlChooseScreen.h" />
+    <ClInclude Include="game\src\header\screen\SplashScreen.h" />
+    <ClInclude Include="game\src\header\Utils.h" />
+    <ClInclude Include="library\src\header\FontManager.h" />
+    <ClInclude Include="library\src\header\LevelButton.h" />
+    <ClInclude Include="library\src\header\LoadImage.h" />
+    <ClInclude Include="library\src\header\MaterialButton.h" />
+    <ClInclude Include="library\src\header\RoundedRectangleShape.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E0F980AC-34FB-4BF8-A7DC-87605CFE8260}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CPPSFMLTemplate</RootNamespace>
-    <ProjectName>Fishy World</ProjectName>
+    <ProjectName>Ghouls n Ghosts</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
