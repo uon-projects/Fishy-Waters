@@ -1,14 +1,14 @@
-﻿Build started 08/08/2020 18:22:14.
-     1>Project "C:\Users\teo\Documents\Github\Dai-Makai-Mura\CPP-SFMLTemplate\CPP-SFMLTemplate.vcxproj" on node 2 (Build target(s)).
+﻿Build started 15/08/2020 07:06:08.
+     1>Project "C:\Users\teo\Documents\Github\Fishy-Waters\CPP-SFMLTemplate\CPP-SFMLTemplate.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          E:\PC Software\VS2012\VC\bin\CL.exe /c /I"C:\SFML v2.4.0 (Win32 - Visual Studio 2012)\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt game\src\main.cpp
          main.cpp
-     1>c:\users\teo\documents\github\dai-makai-mura\cpp-sfmltemplate\library\src\header\materialbutton.h(86): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\library\src\header\materialbutton.h(86): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
        Link:
-         E:\PC Software\VS2012\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\teo\Documents\Github\Dai-Makai-Mura\Debug\Ghouls n Ghosts.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML v2.4.0 (Win32 - Visual Studio 2012)\lib" "sfml-system-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" "sfml-window-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\teo\Documents\Github\Dai-Makai-Mura\Debug\Ghouls n Ghosts.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\teo\Documents\Github\Dai-Makai-Mura\Debug\Ghouls n Ghosts.lib" /MACHINE:X86 Debug\main.obj
-         CPP-SFMLTemplate.vcxproj -> C:\Users\teo\Documents\Github\Dai-Makai-Mura\Debug\Ghouls n Ghosts.exe
-     1>Done Building Project "C:\Users\teo\Documents\Github\Dai-Makai-Mura\CPP-SFMLTemplate\CPP-SFMLTemplate.vcxproj" (Build target(s)).
+         E:\PC Software\VS2012\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy World.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML v2.4.0 (Win32 - Visual Studio 2012)\lib" "sfml-system-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" "sfml-window-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy World.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy World.lib" /MACHINE:X86 Debug\main.obj
+         CPP-SFMLTemplate.vcxproj -> C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy World.exe
+     1>Done Building Project "C:\Users\teo\Documents\Github\Fishy-Waters\CPP-SFMLTemplate\CPP-SFMLTemplate.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.10
+Time Elapsed 00:00:02.80
