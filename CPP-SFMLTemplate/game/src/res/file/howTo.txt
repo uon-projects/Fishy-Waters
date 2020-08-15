@@ -1,0 +1,8 @@
+In order to move left or right press the arrow keys
+For jumping press the space button
+If you got caught by an enemy your life will decrease by one
+->you have 3 lives
+->after you lose all of them you fail
+The target is to reach the portal and end the levels
+
+!When you attempt to advance in altitude you need to move fast or you will loose
