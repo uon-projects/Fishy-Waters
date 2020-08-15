@@ -20,7 +20,7 @@ public:
         text.setFillColor(Color(88, 52, 235));
         text.setOutlineColor(sf::Color::White);
         text.setOutlineThickness(1);
-        text.setString("Dai Makai Mura");
+        text.setString("Fishy Waters");
         text.setCharacterSize(40);
 
     }
