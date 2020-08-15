@@ -33,14 +33,13 @@ public:
     }
 
     void init(Vector2f mPosition, int mType, bool isRightFaceN, int mLifesN, float mEnemyBulletSpeedN,
-              float mScaleSpriteN, Sprite mBulletSpriteN)
+              float mScaleSpriteN)
     {
         mClassType = mType;
         isRightFace = isRightFaceN;
         mLifes = mLifesN;
         mEnemyBulletSpeed = mEnemyBulletSpeedN;
         mScaleSprite = mScaleSpriteN;
-        mBulletSprite = mBulletSpriteN;
 
         mInitialPosY = mPosition.y;
         mBulletPosition = mPosition;
