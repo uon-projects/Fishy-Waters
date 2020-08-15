@@ -19,4 +19,60 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game\src\header\App.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\game\GameMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\game\ItemModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\npc\NPCharacter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\player\MainCharacter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\player\MainCharacterBullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\screen\EndScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\screen\GameMenuScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\screen\GameScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\screen\HowToPlayScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\screen\LvlChooseScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\header\screen\SplashScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\src\header\FontManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\src\header\LevelButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\src\header\LoadImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\src\header\MaterialButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\src\header\RoundedRectangleShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

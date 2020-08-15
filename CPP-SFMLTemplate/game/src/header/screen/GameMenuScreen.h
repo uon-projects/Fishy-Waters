@@ -31,6 +31,13 @@ public:
         playBtn.setText("Play");
         playBtn.setCharacterSize(24);
 
+        howToPlayBtn.setSize(Vector2f(170, 40));
+        howToPlayBtn.setColor(Color(156, 39, 176));
+        howToPlayBtn.setHoverColor(Color(123, 31, 162));
+        howToPlayBtn.setActiveColor(Color(106, 27, 154));
+        howToPlayBtn.setText("How To Play");
+        howToPlayBtn.setCharacterSize(24);
+
     }
 
     ~GameMenuScreen()
@@ -61,6 +68,14 @@ public:
         window.draw(playBtn);
         playBtn.drawText(window);
 
+        howToPlayBtn.setBtnPosition((float) window.getSize().x / 2, (float) 150);
+        if (howToPlayBtn.isClicked(window))
+        {
+            this->mApp->setCurrentScreen(how_to_play);
+        }
+        window.draw(howToPlayBtn);
+        howToPlayBtn.drawText(window);
+
     }
 
     void setApp(App *app)
@@ -68,11 +83,13 @@ public:
         this->mApp = app;
         exitBtn.setApp(this->mApp);
         playBtn.setApp(this->mApp);
+        howToPlayBtn.setApp(this->mApp);
     }
 
 private:
     MaterialButton exitBtn;
     MaterialButton playBtn;
+    MaterialButton howToPlayBtn;
     Font font;
 
 };

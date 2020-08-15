@@ -1,18 +1,22 @@
 #include <SFML/Graphics.hpp>
+#include "header/Utils.h"
 #include "header/screen/SplashScreen.h"
 #include "header/screen/GameMenuScreen.h"
 #include "header/screen/LvlChooseScreen.h"
+#include "header/screen/HowToPlayScreen.h"
+#include "header/screen/GameScreen.h"
+#include "header/screen/EndScreen.h"
 
 using namespace std;
 using namespace sf;
-
-#define WindowX 800
-#define WindowY 500
 
 App *mApp;
 SplashScreen mSplashScreen;
 GameMenuScreen mGameMenu;
 LvlChooseScreen mLvlChooseScreen;
+HowToPlayScreen mHowToPlayScreen;
+GameScreen mGameScreen;
+EndScreen mEndScreen;
 Vector2i theGameWindow_currentDimensions(WindowX, WindowY);
 Vector2i theGameWindow_perspectiveDimensions(WindowX, WindowY);
 RenderWindow theGameWindow(
@@ -62,8 +66,12 @@ void init()
     mApp = new App;
     mGameMenu.setApp(mApp);
     mLvlChooseScreen.setApp(mApp);
+    mHowToPlayScreen.setApp(mApp);
+    mGameScreen.setApp(mApp);
+    mEndScreen.setApp(mApp);
 
     theGameWindow.setFramerateLimit(60);
+    srand((int) time(0));
 
 }
 
@@ -78,6 +86,9 @@ void inputListener()
         if (event.key.code == Keyboard::Escape || event.type == Event::Closed)
         {
             theGameWindow.close();
+        } else if (event.type == sf::Event::KeyPressed && mApp->getCurrentScreen() == game)
+        {
+            mGameScreen.inputListener(event);
         }
     }
 
@@ -85,6 +96,15 @@ void inputListener()
 
 void update(float seconds)
 {
+
+    if (mApp->getCurrentScreen() == game)
+    {
+        if (mApp->isNewGame())
+        {
+            mGameScreen.initNewLvl();
+        }
+        mGameScreen.update(seconds);
+    }
 
 }
 
@@ -107,9 +127,15 @@ void draw()
     } else if (currentScreen == choose_lvl)
     {
         mLvlChooseScreen.draw(theGameWindow);
+    } else if (currentScreen == how_to_play)
+    {
+        mHowToPlayScreen.draw(theGameWindow);
     } else if (currentScreen == game)
     {
-
+        mGameScreen.draw(theGameWindow);
+    } else if (currentScreen == end_screen)
+    {
+        mEndScreen.draw(theGameWindow);
     }
 
 }
