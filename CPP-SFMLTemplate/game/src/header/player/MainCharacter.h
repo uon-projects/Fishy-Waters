@@ -59,10 +59,10 @@ public:
         this->mGameMap = mGameMap;
     }
 
-    void reset(int lvlSelected)
+    void reset()
     {
 
-        mMainCharacterPosition = mGameMap->getCharacterStartPos(lvlSelected);
+        mMainCharacterPosition = mGameMap->getCharacterStartPos();
         mGameOffsetY = getGameOffsetY();
 
         mJumpCount = 0;
@@ -132,7 +132,7 @@ public:
         return mMainCharacterPosition.y;
     }
 
-    void update(float mSpeed, int mLvlSelected)
+    void update(float mSpeed)
     {
         mMainCharacterSprite = getSprite();
         Vector2f mSpriteLocStart;
@@ -141,7 +141,7 @@ public:
         Vector2f mSpriteLocSize;
         mSpriteLocSize.x = mMainCharacterSprite.getGlobalBounds().width;
         mSpriteLocSize.y = mMainCharacterSprite.getGlobalBounds().height;
-        int mGroundLevel = mGameMap->getNearestGroundLvlCharacter(mLvlSelected, mSpriteLocStart, mSpriteLocSize,
+        int mGroundLevel = mGameMap->getNearestGroundLvlCharacter(mSpriteLocStart, mSpriteLocSize,
                                                                   mGameOffsetY);
         mMainCharacterVelocity -= mMainCharacterMass * mMainCharacterGravity * mSpeed;
         if(mMainCharacterJump || mGroundLevel > mMainCharacterPosition.y)

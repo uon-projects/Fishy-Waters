@@ -49,7 +49,7 @@ public:
     void draw(RenderWindow &window)
     {
 
-        bool showNextLvl = mApp->getLvlSelected() < mApp->getLevelsUnlocked();
+        bool showNextLvl = true;
 
         gameMenuScreenBackground.setSize(Vector2f((float) window.getSize().x, (float) window.getSize().y));
 
@@ -83,8 +83,6 @@ public:
         {
             if (mNextLvl.isClicked(window))
             {
-                mApp->resetLives();
-                mApp->setLvl(mApp->getLvlSelected() + 1);
                 this->mApp->setCurrentScreen(game);
             }
             window.draw(mNextLvl);

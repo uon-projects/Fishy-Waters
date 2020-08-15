@@ -67,7 +67,7 @@ public:
 
     }
 
-    void update(float mSpeed, int mLvlSelected = 0, int mGameOffsetY = 500)
+    void update(float mSpeed, int mGameOffsetY = 500)
     {
         this->mGameOffsetY = mGameOffsetY;
 
@@ -77,7 +77,7 @@ public:
         Vector2f mSpriteLocSize;
         mSpriteLocSize.x = mMainCharacterSprite.getGlobalBounds().width;
         mSpriteLocSize.y = mMainCharacterSprite.getGlobalBounds().height;
-        int mGroundLevel = mGameMap->getNearestGroundLvl(mLvlSelected, mSpriteLocStart, mSpriteLocSize, mGameOffsetY);
+        int mGroundLevel = mGameMap->getNearestGroundLvl(mSpriteLocStart, mSpriteLocSize, mGameOffsetY);
         mMainCharacterVelocity -= mMainCharacterMass * mMainCharacterGravity * mSpeed;
         mMainCharacterPosition.y -= mMainCharacterVelocity * mSpeed / 1.2;
 

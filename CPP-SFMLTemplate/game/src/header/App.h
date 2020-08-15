@@ -19,8 +19,6 @@ public:
     {
         mLoadImage = new LoadImage();
         currentScreen = splash;
-        lvlUnlocked = 1;
-        mCharacter = mLoadImage->loadSpriteFromTexture("c00a_01idle_00", png);
         mMainCharacter = new MainCharacter;
         mGameMap = new GameMap;
         mNewGameLvl = false;
@@ -43,43 +41,7 @@ public:
         if (screenChose == game)
         {
             mNewGameLvl = true;
-            mMainCharacter->reset(mLvlSelected);
-        }
-    }
-
-    int getCharacterLives()
-    {
-        return lives;
-    }
-
-    void decreaseLives()
-    {
-        if (lives > 0)
-        {
-            lives--;
-        }
-    }
-
-    void increaseLives()
-    {
-        lives++;
-    }
-
-    void resetLives()
-    {
-        lives = 3;
-    }
-
-    int getLevelsUnlocked()
-    {
-        return lvlUnlocked;
-    }
-
-    void increaseLevelsUnlocked()
-    {
-        if (lvlUnlocked < 4)
-        {
-            lvlUnlocked++;
+            mMainCharacter->reset();
         }
     }
 
@@ -98,16 +60,6 @@ public:
         return mMainCharacter->getGameOffsetY();
     }
 
-    void setLvl(int mLvl)
-    {
-        this->mLvlSelected = mLvl;
-    }
-
-    int getLvlSelected()
-    {
-        return mLvlSelected;
-    }
-
     Event getEvent()
     {
         return event;
@@ -116,21 +68,6 @@ public:
     void setEvent(Event eventN)
     {
         event = eventN;
-    }
-
-    Sprite getCharacterSprite()
-    {
-        return mCharacter;
-    }
-
-    Sprite getBullet1Sprite()
-    {
-        return mLoadImage->loadSpriteFromTexture("bullet1", png);
-    }
-
-    Sprite getBullet2Sprite()
-    {
-        return mLoadImage->loadSpriteFromTexture("bullet2", png);
     }
 
     MainCharacter *getMainCharacter()
@@ -152,12 +89,9 @@ private:
     screen currentScreen;
     Event event;
     int lvlUnlocked;
-    Sprite mCharacter;
     MainCharacter *mMainCharacter;
     GameMap *mGameMap;
     LoadImage *mLoadImage;
-    int mLvlSelected;
-    int mCharacterLives;
     bool mNewGameLvl;
     int lives;
 

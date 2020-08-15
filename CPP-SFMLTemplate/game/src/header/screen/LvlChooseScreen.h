@@ -61,8 +61,6 @@ public:
         lvlBtn1 = getLevelBtnColor(lvlBtn1);
         if (lvlBtn1.isClicked(window))
         {
-            mApp->resetLives();
-            mApp->setLvl(1);
             mApp->setCurrentScreen(game);
         }
         window.draw(lvlBtn1);

@@ -64,12 +64,12 @@ public:
         mNPCStartPos.push_back(mItemModel);
     }
 
-    vector<ItemModel *> getNPCByLvl(int mLvl)
+    vector<ItemModel *> getNPCByLvl()
     {
         vector < ItemModel * > npcList;
         for (ItemModel *mNPC : mNPCStartPos)
         {
-            if (mNPC->getLvl() == mLvl)
+            if (mNPC->getLvl() == 0)
             {
                 npcList.push_back(mNPC);
             }
@@ -78,12 +78,12 @@ public:
         return npcList;
     }
 
-    Vector2f getCharacterStartPos(int mLvl)
+    Vector2f getCharacterStartPos()
     {
         Vector2f mStartPosOfLvl = Vector2f(0.0f, 0.0f);
         for (ItemModel *mStartPos : mCharacterStartPos)
         {
-            if (mStartPos->getLvl() == mLvl)
+            if (mStartPos->getLvl() == 0)
             {
                 mStartPosOfLvl.x = mStartPos->getStartPos().x;
                 mStartPosOfLvl.y = mStartPos->getStartPos().y;
@@ -107,12 +107,12 @@ public:
         mItems.push_back(mItemModel);
     }
 
-    vector<ItemModel *> getItemsByLvl(int mLvl)
+    vector<ItemModel *> getItemsByLvl()
     {
         vector < ItemModel * > lvlItems;
         for (ItemModel *mItem : mItems)
         {
-            if (mItem->getLvl() == mLvl && (mItem->getType() == 0))
+            if (mItem->getLvl() == 0 && (mItem->getType() == 0))
             {
                 lvlItems.push_back(mItem);
             }
@@ -121,13 +121,13 @@ public:
         return lvlItems;
     }
 
-    vector<ItemModel *> getEndPortalByLvl(int mLvl)
+    vector<ItemModel *> getEndPortalByLvl()
     {
         vector < ItemModel * > endPortals;
 
         for (ItemModel *mItem : mItems)
         {
-            if (mItem->getLvl() == mLvl && mItem->getType() == 1)
+            if (mItem->getLvl() == 0 && mItem->getType() == 1)
             {
                 endPortals.push_back(mItem);
             }
@@ -136,14 +136,14 @@ public:
         return endPortals;
     }
 
-    int getNearestGroundLvl(int mLvl, Vector2f mSpriteLocStart, Vector2f mSpriteLocSize, int mGameOffsetY = 0)
+    int getNearestGroundLvl(Vector2f mSpriteLocStart, Vector2f mSpriteLocSize, int mGameOffsetY = 0)
     {
         int mNearestGroundLvl = 0;
         int characterPosY = mSpriteLocStart.y;
         int characterPosSX = mSpriteLocStart.x + 64;
         int characterPosEX = mSpriteLocStart.x + mSpriteLocSize.x - 64;
 
-        vector < ItemModel * > mLvlItems = getItemsByLvl(mLvl);
+        vector < ItemModel * > mLvlItems = getItemsByLvl();
         for (ItemModel *mItem : mLvlItems)
         {
             int itemPosSX = mItem->getStartPos().x - 30;
@@ -166,7 +166,7 @@ public:
         return mNearestGroundLvl;
     }
 
-    int getNearestGroundLvlCharacter(int mLvl, Vector2f mSpriteLocStart, Vector2f mSpriteLocSize, int mGameOffsetY = 0)
+    int getNearestGroundLvlCharacter(Vector2f mSpriteLocStart, Vector2f mSpriteLocSize, int mGameOffsetY = 0)
     {
 
         int mNearestGroundLvl = 0;
@@ -174,7 +174,7 @@ public:
         int characterPosSX = mSpriteLocStart.x + 64;
         int characterPosEX = mSpriteLocStart.x + mSpriteLocSize.x - 64;
 
-        vector < ItemModel * > mLvlItems = getItemsByLvl(mLvl);
+        vector < ItemModel * > mLvlItems = getItemsByLvl();
         for (ItemModel *mItem : mLvlItems)
         {
             int itemPosSX = mItem->getStartPos().x - 30;

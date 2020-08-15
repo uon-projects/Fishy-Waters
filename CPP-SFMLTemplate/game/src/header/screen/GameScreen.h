@@ -83,7 +83,7 @@ public:
         gameMenuScreenBackground.setSize(Vector2f((float) window.getSize().x, (float) window.getSize().y));
         window.draw(gameMenuScreenBackground);
 
-        vector < ItemModel * > mLvlItems = mGameMap->getItemsByLvl(mApp->getLvlSelected());
+        vector < ItemModel * > mLvlItems = mGameMap->getItemsByLvl();
         for (ItemModel *mItem : mLvlItems)
         {
             item.setFillColor(Color(168, 12, 147, 150));
@@ -92,7 +92,7 @@ public:
             window.draw(item);
         }
 
-        vector < ItemModel * > mEndPortals = mGameMap->getEndPortalByLvl(mApp->getLvlSelected());
+        vector < ItemModel * > mEndPortals = mGameMap->getEndPortalByLvl();
         for (ItemModel *mEndPortalItem : mEndPortals)
         {
             mEndPortal.setFillColor(Color(232, 21, mColorEndPortal));
@@ -129,18 +129,11 @@ public:
             window.draw(mMainCharacterBullet->getSprite(mGameOffsetY));
         }
 
-        for (i = 0; i < mApp->getCharacterLives(); i++)
-        {
-            Sprite mHeart = mApp->getImageLoader()->loadSpriteFromTexture("heart", png);
-            mHeart.setPosition(Vector2f(36 * i + 10, 10));
-            window.draw(mHeart);
-        }
-
     }
 
     void initNPCs()
     {
-        vector < ItemModel * > mNPCs = mGameMap->getNPCByLvl(mApp->getLvlSelected());
+        vector < ItemModel * > mNPCs = mGameMap->getNPCByLvl();
         NPCharacter *mNPCharacter;
         for (ItemModel *mNPC : mNPCs)
         {
@@ -187,8 +180,7 @@ public:
                     mMainCharacter->faceRight(),
                     1,
                     4.0f * 1.4f,
-                    0.3f,
-                    mApp->getBullet1Sprite()
+                    0.3f
             );
         } else if (type == 2)
         {
@@ -206,8 +198,7 @@ public:
                     mMainCharacter->faceRight(),
                     2,
                     4.0f * 0.8f,
-                    0.4f,
-                    mApp->getBullet2Sprite()
+                    0.4f
             );
         }
         mMainCharacterBullets.push_back(mMainCharacterBullet);
@@ -247,74 +238,7 @@ public:
         RectangleShape mEndPortal;
         mGameOffsetY = mMainCharacter->getGameOffsetY();
 
-        mMainCharacter->update(speed, mApp->getLvlSelected());
-
-        for (i = 0; i < mMainCharacterBullets.size(); i++)
-        {
-            MainCharacterBullet *mMainCharacterBullet = mMainCharacterBullets[i];
-            mMainCharacterBullet->update();
-            if ((mMainCharacterBullet->getSprite(mGameOffsetY).getPosition().x) > WindowX)
-            {
-                mMainCharacterBullets.erase(mMainCharacterBullets.begin() + i);
-                delete (mMainCharacterBullet);
-            }
-        }
-
-        for (NPCharacter *mNPCharacter : mNPCharacters)
-        {
-            mNPCharacter->update(speed, mApp->getLvlSelected(), mMainCharacter->getGameOffsetY());
-            if (mNPCharacter->getSprite().getGlobalBounds().intersects(mMainCharacter->getSprite().getGlobalBounds()))
-            {
-                mApp->decreaseLives();
-                if (mApp->getCharacterLives() == 0)
-                {
-                    mApp->setCurrentScreen(end_screen);
-                } else
-                {
-                    mApp->setLvl(mApp->getLvlSelected());
-                    mApp->setCurrentScreen(game);
-                }
-            }
-        }
-
-        for (i = 0; i < mNPCharacters.size(); i++)
-        {
-            NPCharacter *mNPCharacter = mNPCharacters[i];
-            bool killed = false;
-            for (j = 0; j < mMainCharacterBullets.size(); j++)
-            {
-                MainCharacterBullet *mMainCharacterBullet = mMainCharacterBullets[j];
-                if (mNPCharacter->getSprite().getGlobalBounds().intersects(
-                        mMainCharacterBullet->getSprite(mApp->getGameOffsetY()).getGlobalBounds()))
-                {
-                    killed = true;
-                    if (mMainCharacterBullet->decreaseLife())
-                    {
-                        mMainCharacterBullets.erase(mMainCharacterBullets.begin() + j);
-                        delete (mMainCharacterBullet);
-                        break;
-                    }
-                }
-            }
-            if (killed)
-            {
-                mNPCharacters.erase(mNPCharacters.begin() + i);
-                delete (mNPCharacter);
-            }
-        }
-
-        vector < ItemModel * > mEndPortals = mGameMap->getEndPortalByLvl(mApp->getLvlSelected());
-        for (ItemModel *mEndPortalItem : mEndPortals)
-        {
-            mEndPortal.setPosition(Vector2f((float) mEndPortalItem->getStartPos().x,
-                                            (float) mEndPortalItem->getStartPos().y + mGameOffsetY));
-            mEndPortal.setSize(Vector2f((float) mEndPortalItem->getSize().x, (float) mEndPortalItem->getSize().y));
-            if (mEndPortal.getGlobalBounds().intersects(mMainCharacter->getSprite().getGlobalBounds()))
-            {
-                mApp->increaseLevelsUnlocked();
-                mApp->setCurrentScreen(end_screen);
-            }
-        }
+        mMainCharacter->update(speed);
 
     }
 
@@ -322,7 +246,7 @@ public:
     {
         mMainCharacterBullets.clear();
         mNPCharacters.clear();
-        mMainCharacter->reset(mApp->getLvlSelected());
+        mMainCharacter->reset();
 
         mColorEndPortal = 77;
         mColorAscending = true;
