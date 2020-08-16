@@ -26,8 +26,6 @@ private:
     vector<NPCharacter *> mNPCharacters;
     int mColorEndPortal;
     bool mColorAscending;
-    int mBgRI, mBgGI, mBgBI;
-    int mBgRE, mBgGE, mBgBE;
     int mBackgroundR, mBackgroundG, mBackgroundB;
 
 public:
@@ -37,13 +35,9 @@ public:
         mColorEndPortal = 77;
         mColorAscending = true;
 
-        mBgRI = 32;
-        mBgGI = 165;
-        mBgBI = 227;
-
-        mBgRE = 0;
-        mBgGE = 0;
-        mBgBE = 0;
+        mBackgroundR = 32;
+        mBackgroundG = 165;
+        mBackgroundB = 227;
 
     }
 
@@ -53,25 +47,9 @@ public:
     }
 
 public:
-    int getPercentColor(int mMaxHeight, int mColorMin, int mColorMax)
-    {
-        int mCharacterProgress = mMainCharacter->getGameHeight() * (-1);
-        int mPercentProgress = (int) mCharacterProgress * 100 / mMaxHeight;
-        int mColorArea = (abs)(mColorMin - mColorMax);
-        if (mPercentProgress > 100)
-        {
-            mPercentProgress = 100;
-        }
-        int mColor = (100 - mPercentProgress) * mColorArea / 100;
-        return mColor;
-    }
 
     void draw(RenderWindow &window)
     {
-
-        mBackgroundR = getPercentColor(1000, mBgRI, mBgRE);
-        mBackgroundG = getPercentColor(1400, mBgGI, mBgGE);
-        mBackgroundB = getPercentColor(2000, mBgBI, mBgBE);
 
         int i, j, mGameOffsetY;
         RectangleShape item;
@@ -250,10 +228,6 @@ public:
 
         mColorEndPortal = 77;
         mColorAscending = true;
-
-        mBackgroundR = mBgRI;
-        mBackgroundG = mBgGI;
-        mBackgroundB = mBgBI;
 
         initNPCs();
     }

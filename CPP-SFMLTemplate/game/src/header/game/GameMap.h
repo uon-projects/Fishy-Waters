@@ -81,15 +81,6 @@ public:
     Vector2f getCharacterStartPos()
     {
         Vector2f mStartPosOfLvl = Vector2f(0.0f, 0.0f);
-        for (ItemModel *mStartPos : mCharacterStartPos)
-        {
-            if (mStartPos->getLvl() == 0)
-            {
-                mStartPosOfLvl.x = mStartPos->getStartPos().x;
-                mStartPosOfLvl.y = mStartPos->getStartPos().y;
-            }
-        }
-
         return mStartPosOfLvl;
     }
 

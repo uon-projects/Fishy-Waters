@@ -46,7 +46,7 @@ public:
 
         mCurrentMoved = 0;
 
-        mMainCharacterTexture.loadFromFile("game/src/res/drawable/e003a_01idle_00.png");
+//        mMainCharacterTexture.loadFromFile("game/src/res/drawable/e003a_01idle_00.png");
         mTextureMainCharacterSize = mMainCharacterTexture.getSize();
         mTextureMainCharacterSize.x /= 1;
         mTextureMainCharacterSize.y /= 1;
