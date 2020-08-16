@@ -1,4 +1,4 @@
-﻿Build started 15/08/2020 22:02:55.
+﻿Build started 16/08/2020 11:16:53.
      1>Project "C:\Users\teo\Documents\Github\Fishy-Waters\CPP-SFMLTemplate\CPP-SFMLTemplate.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          E:\PC Software\VS2012\VC\bin\CL.exe /c /I"C:\SFML v2.4.0 (Win32 - Visual Studio 2012)\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt game\src\main.cpp
@@ -10,25 +10,31 @@
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\game\gamemap.h(165): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\game\gamemap.h(166): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\game\gamemap.h(436): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(83): error C2664: 'sf::Sprite::setTexture' : cannot convert parameter 1 from 'const sf::Texture *' to 'const sf::Texture &'
-                 Reason: cannot convert from 'const sf::Texture *' to 'const sf::Texture'
-                 No constructor could take the source type, or constructor overload resolution was ambiguous
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(86): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(101): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(133): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(135): warning C4244: 'return' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(152): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(172): warning C4305: '/=' : truncation from 'double' to 'float'
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(86): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(98): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(130): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(132): warning C4244: 'return' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(149): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(156): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(160): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacter.h(169): warning C4305: '/=' : truncation from 'double' to 'float'
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\library\src\header\materialbutton.h(86): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\library\src\header\levelbutton.h(83): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacterbullet.h(44): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\player\maincharacterbullet.h(60): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\npc\npcharacter.h(61): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\npc\npcharacter.h(82): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(147): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(166): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>Done Building Project "C:\Users\teo\Documents\Github\Fishy-Waters\CPP-SFMLTemplate\CPP-SFMLTemplate.vcxproj" (Build target(s)) -- FAILED.
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(54): warning C4101: 'i' : unreferenced local variable
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(54): warning C4101: 'j' : unreferenced local variable
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(125): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(144): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(215): warning C4101: 'i' : unreferenced local variable
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(215): warning C4101: 'j' : unreferenced local variable
+       Link:
+         E:\PC Software\VS2012\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy Waters.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML v2.4.0 (Win32 - Visual Studio 2012)\lib" "sfml-system-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" "sfml-window-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy Waters.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy Waters.lib" /MACHINE:X86 Debug\main.obj
+         CPP-SFMLTemplate.vcxproj -> C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy Waters.exe
+     1>Done Building Project "C:\Users\teo\Documents\Github\Fishy-Waters\CPP-SFMLTemplate\CPP-SFMLTemplate.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:01.11
+Time Elapsed 00:00:04.48
