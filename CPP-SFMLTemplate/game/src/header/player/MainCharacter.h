@@ -25,7 +25,7 @@ private:
     float mMainCharacterVelocityMove;
     float mMainCharacterGravity; //The Average Value At Earth's Surface (Standard Gravity) is, by definition, 9.80665 m/s^2 (9.80f).
     bool mMainCharacterJump;
-    bool mMainCharacterOnMove;
+    int mMainCharacterOnMove;
     bool isFacingEast;
     bool isFacingNorth;
     GameMap *mGameMap;
@@ -44,7 +44,7 @@ public:
 
         mMainCharacterMass = 200.0f;
         mMainCharacterJump = false;
-        mMainCharacterOnMove = false;
+        mMainCharacterOnMove = 0;
 
         isFacingEast = true;
         isFacingNorth = true;
@@ -73,7 +73,7 @@ public:
 
         mMainCharacterMass = 200.0f;
         mMainCharacterJump = false;
-        mMainCharacterOnMove = false;
+        mMainCharacterOnMove = 0;
 
         mMainCharacterTexture.loadFromFile("game/src/res/drawable/heart.png");
         mTextureMainCharacterSize = mMainCharacterTexture.getSize();
@@ -120,6 +120,14 @@ public:
         return mGameOffset;
     }
 
+    Vector2i getGameOffsetMoving()
+    {
+        Vector2i mGameOffset;
+        mGameOffset.x = (int) mMainCharacterPosition.x % 40;
+        mGameOffset.y = (int) mMainCharacterPosition.y % 40;
+        return mGameOffset;
+    }
+
     int getGameHeight()
     {
         int gameHeight = 0;
@@ -133,16 +141,83 @@ public:
         return mMainCharacterPosition.y;
     }
 
+    int mMovementPF;
+
     void update(float mSpeed)
     {
-
+        mMovementPF = 10;
+        if (mMainCharacterOnMove != 0)
+        {
+            if (mMainCharacterOnMove == 1)
+            {
+                mMainCharacterPosition.x -= mMovementPF;
+                mMovesCount++;
+                if (mMovesCount == 40 / mMovementPF)
+                {
+                    mMainCharacterOnMove = 0;
+                }
+            } else if (mMainCharacterOnMove == 2)
+            {
+                mMainCharacterPosition.y -= mMovementPF;
+                mMovesCount++;
+                if (mMovesCount == 40 / mMovementPF)
+                {
+                    mMainCharacterOnMove = 0;
+                }
+            } else if (mMainCharacterOnMove == 3)
+            {
+                mMainCharacterPosition.x += mMovementPF;
+                mMovesCount++;
+                if (mMovesCount == 40 / mMovementPF)
+                {
+                    mMainCharacterOnMove = 0;
+                }
+            } else if (mMainCharacterOnMove == 4)
+            {
+                mMainCharacterPosition.y += mMovementPF;
+                mMovesCount++;
+                if (mMovesCount == 40 / mMovementPF)
+                {
+                    mMainCharacterOnMove = 0;
+                }
+            }
+        }
     }
 
-    void move(float mVelocity)
+    void moveLeft()
     {
-        mMainCharacterVelocityMove = mVelocity;
-        mMainCharacterOnMove = true;
-        mMovesCount = 0;
+        if (mMainCharacterOnMove == 0)
+        {
+            mMainCharacterOnMove = 1;
+            mMovesCount = 0;
+        }
+    }
+
+    void moveRight()
+    {
+        if (mMainCharacterOnMove == 0)
+        {
+            mMainCharacterOnMove = 3;
+            mMovesCount = 0;
+        }
+    }
+
+    void moveNorth()
+    {
+        if (mMainCharacterOnMove == 0)
+        {
+            mMainCharacterOnMove = 2;
+            mMovesCount = 0;
+        }
+    }
+
+    void moveSouth()
+    {
+        if (mMainCharacterOnMove == 0)
+        {
+            mMainCharacterOnMove = 4;
+            mMovesCount = 0;
+        }
     }
 
 };

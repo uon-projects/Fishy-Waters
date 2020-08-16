@@ -52,69 +52,158 @@ public:
     void draw(RenderWindow &window)
     {
 
-        int i, j, mGameOffsetY;
+        int i, j;
+        Vector2i mStartPos;
+        Vector2i mEndPos;
+        Vector2i mGameOffsetMoving;
+        Vector2f mWindowSize;
+        Vector2f mGameOffset;
+        Vector2i mGridOnSurface;
+        Vector2i mLoc;
         RectangleShape item;
         RectangleShape mEndPortal;
 
-        mGameOffsetY = mApp->getGameOffsetY();
+        mWindowSize.x = (float) window.getSize().x;
+        mWindowSize.y = (float) window.getSize().y;
+        mGameOffset = mMainCharacter->getGameOffset(window);
+        mGameOffsetMoving = mMainCharacter->getGameOffsetMoving();
+        mGridOnSurface.x = mWindowSize.x / 40;
+        mGridOnSurface.y = mWindowSize.y / 40;
+
+        mStartPos.x = mGameOffset.x / 40;
+        mStartPos.y = mGameOffset.y / 40;
+        if (mStartPos.x < 0)
+        {
+            mStartPos.x = mGridOnSurface.x + mStartPos.x;
+        }
+        if (mStartPos.y < 0)
+        {
+            mStartPos.y = mGridOnSurface.y + mStartPos.y;
+        }
+
+        mEndPos.x = mStartPos.x + 20;
+        mEndPos.y = mStartPos.y + 14;
+//        cout << mGameOffset.x << ' ' << mGameOffset.y << ' ';
+//        cout << mGameOffset.x / 40 << ' ' << mGameOffset.y / 40 << ' ';
+//        cout << (mGameOffset.x + mWindowSize.x) / 40 << ' ' << (mGameOffset.y + mWindowSize.y) / 40 << '\n';
+//        cout << mStartPos.x << ' ' << mEndPos.x << '\n';
+//        cout << mStartPos.y << ' ' << mEndPos.y << '\n';
+
+        Vector2f mCharacterPosGrid;
+        mCharacterPosGrid.x = mMainCharacter->getCharacterPosition().x / 40;
+        mCharacterPosGrid.y = mMainCharacter->getCharacterPosition().y / 40;
+        Vector2i mGridAreaSurface;
+        mGridAreaSurface.x = mWindowSize.x / 40 + 2;
+        mGridAreaSurface.y = mWindowSize.y / 40 + 2;
+        Vector2i mStartGridArea;
+        mStartGridArea.x = mCharacterPosGrid.x - mGridAreaSurface.x / 2;
+        mStartGridArea.y = mCharacterPosGrid.y - mGridAreaSurface.y / 2;
+//        cout << " >> Character Pos: " << mCharacterPosGrid.x << ' ' << mCharacterPosGrid.y << '\n';
+//        cout << "   >> Window Size: " << mWindowSize.x << ' ' << mWindowSize.y << '\n';
+//        cout << "   >> Window Area: " << mGridAreaSurface.x << ' ' << mGridAreaSurface.y << '\n';
+//        cout << "   >> Start Area: " << mStartGridArea.x << ' ' << mStartGridArea.y << '\n';
+        if (mStartGridArea.x < 0)
+        {
+            mStartGridArea.x = 40 + mStartGridArea.x;
+        }
+        if (mStartGridArea.y < 0)
+        {
+            mStartGridArea.y = 40 + mStartGridArea.y;
+        }
+        mStartGridArea.x = mStartGridArea.x % 40;
+        cout << mStartGridArea.y << "<>";
+        mStartGridArea.y = mStartGridArea.y % 40;
+        if (mGameOffsetMoving.x > 0)
+        {
+            mStartGridArea.x--;
+            if (mStartGridArea.x < 0)
+            {
+                mStartGridArea.x = 40 + mStartGridArea.x;
+            }
+        }
+        if (mGameOffsetMoving.y > 0)
+        {
+            mStartGridArea.y--;
+            if (mStartGridArea.y < 0)
+            {
+                mStartGridArea.y = 40 + mStartGridArea.y % 40;
+            }
+            cout << "<>";
+        }
+        Vector2i mEndArea;
+        mEndArea.x = mStartGridArea.x + mGridAreaSurface.x;
+        mEndArea.y = mStartGridArea.y + mGridAreaSurface.y;
+
+        cout << mStartGridArea.y << '\n';
 
         gameMenuScreenBackground.setFillColor(Color(mBackgroundR, mBackgroundG, mBackgroundB));
         gameMenuScreenBackground.setSize(Vector2f((float) window.getSize().x, (float) window.getSize().y));
         window.draw(gameMenuScreenBackground);
 
-        for (i = 0; i < 40; i++)
+        mLoc.x = -1;
+        for (i = mStartGridArea.x; i <= mEndArea.x; i++)
         {
-            for (j = 0; j < 40; j++)
+            mLoc.y = -1;
+            for (j = mStartGridArea.y; j <= mEndArea.y; j++)
             {
-                int mTileType = mWaterMap[i][j];
-                item.setFillColor(Color(168, 12, 147));
+                int mTileType = mWaterMap[j % 40][i % 40];
+                if (mTileType == 0)
+                {
+                    item.setFillColor(Color(3, 90, 252));
+                } else if (mTileType == 1)
+                {
+                    item.setFillColor(Color(252, 240, 3));
+                }
                 item.setPosition(
                         Vector2f(
-                                (float) i*40,
-                                (float) j*40
+                                (float) mLoc.x * 40 - mGameOffsetMoving.x,
+                                (float) mLoc.y * 40 - mGameOffsetMoving.y
                         )
                 );
                 item.setSize(Vector2f(40.0f, 40.0f));
                 window.draw(item);
+                mLoc.y++;
             }
+            mLoc.x++;
         }
 
-        vector < ItemModel * > mEndPortals = mGameMap->getEndPortalByLvl();
-        for (ItemModel *mEndPortalItem : mEndPortals)
-        {
-            mEndPortal.setFillColor(Color(232, 21, mColorEndPortal));
-            if (mColorAscending)
-            {
-                mColorEndPortal++;
-                if (mColorEndPortal == 155)
-                {
-                    mColorAscending = false;
-                }
-            } else
-            {
-                mColorEndPortal--;
-                if (mColorEndPortal == 77)
-                {
-                    mColorAscending = true;
-                }
-            }
-            mEndPortal.setPosition(Vector2f((float) mEndPortalItem->getStartPos().x,
-                                            (float) mEndPortalItem->getStartPos().y + mGameOffsetY));
-            mEndPortal.setSize(Vector2f((float) mEndPortalItem->getSize().x, (float) mEndPortalItem->getSize().y));
-            window.draw(mEndPortal);
-        }
-
-        for (NPCharacter *mNPCharacter : mNPCharacters)
-        {
-            window.draw(mNPCharacter->getSprite());
-        }
-
-        window.draw(mMainCharacter->getSprite(window));
-
-        for (MainCharacterBullet *mMainCharacterBullet : mMainCharacterBullets)
-        {
-            window.draw(mMainCharacterBullet->getSprite(mGameOffsetY));
-        }
+//        mLoc.x = 0;
+//        for (i = mStartPos.x; i < mEndPos.x; i++)
+//        {
+//            mLoc.y = 0;
+//            for (j = mStartPos.y; j < mEndPos.y; j++)
+//            {
+//                int posX = i, posY = j;
+//                if (i < 0)
+//                {
+//                    posX = 40 + i;
+//                }
+//                if (j < 0)
+//                {
+//                    posY = 40 + j;
+//                }
+//                int mTileType = mWaterMap[posY][posX];
+//                if (mTileType == 0)
+//                {
+//                    item.setFillColor(Color(3, 90, 252));
+//                } else if (mTileType == 1)
+//                {
+//                    item.setFillColor(Color(252, 240, 3));
+//                }
+//                cout << mTileType << ' ';
+//                item.setPosition(
+//                        Vector2f(
+//                                (float) mLoc.x * 40 - mGameOffsetMoving.x,
+//                                (float) mLoc.y * 40 - mGameOffsetMoving.y
+//                        )
+//                );
+//                item.setSize(Vector2f(40.0f, 40.0f));
+//                window.draw(item);
+//                mLoc.y++;
+//            }
+//            mLoc.x++;
+//            cout << endl;
+//        }
 
     }
 
@@ -153,19 +242,21 @@ public:
         }
         if (event.key.code == Keyboard::Left || event.key.code == Keyboard::A)
         {
-            mMainCharacter->move(-20.0f);
+            mMainCharacter->moveLeft();
         } else if (event.key.code == Keyboard::Right || event.key.code == Keyboard::D)
         {
-            mMainCharacter->move(20.0f);
+            mMainCharacter->moveRight();
+        } else if (event.key.code == Keyboard::Up || event.key.code == Keyboard::W)
+        {
+            mMainCharacter->moveNorth();
+        } else if (event.key.code == Keyboard::Down || event.key.code == Keyboard::S)
+        {
+            mMainCharacter->moveSouth();
         }
     }
 
     void update(float speed)
     {
-
-        int i, j, mGameOffsetY;
-        RectangleShape mEndPortal;
-        mGameOffsetY = mMainCharacter->getGameOffsetY();
 
         mMainCharacter->update(speed);
 
