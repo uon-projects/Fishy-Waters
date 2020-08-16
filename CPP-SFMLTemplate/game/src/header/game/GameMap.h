@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include "./ItemModel.h"
 
 using namespace std;
@@ -525,6 +526,31 @@ public:
                 }
             }
         }
+
+    }
+
+    int **getGameMap()
+    {
+
+        int **fishyWorld;
+        int height = 40;
+        int width = 40;
+        ifstream fishyMap("game/src/res/file/water.map");
+        int h, w;
+
+        fishyWorld = new int *[height];
+        srand((unsigned) time(NULL));
+
+        for (h = 0; h < height; h++)
+        {
+            fishyWorld[h] = new int[width];
+            for (w = 0; w < width; w++)
+            {
+                fishyMap >> fishyWorld[h][w];
+            }
+        }
+
+        return fishyWorld;
 
     }
 
