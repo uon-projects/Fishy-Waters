@@ -33,6 +33,7 @@ private:
     int mMiniGameTimer;
     int mMiniGameKeys;
     Vector2i mMiniGameFish;
+    MaterialButton exitBtn;
 
 public:
     GameScreen()
@@ -44,6 +45,14 @@ public:
         srand((unsigned) time(NULL));
         mNearFish = false;
         mFont = FontManager().loadFont();
+
+        exitBtn.setBtnPosition((float) 45, (float) 25);
+        exitBtn.setSize(Vector2f(70, 30));
+        exitBtn.setColor(Color(244, 67, 54));
+        exitBtn.setHoverColor(Color(211, 47, 47));
+        exitBtn.setActiveColor(Color(198, 40, 40));
+        exitBtn.setText("Go Back");
+        exitBtn.setCharacterSize(17);
 
     }
 
@@ -177,7 +186,6 @@ public:
             }
             if (mAvailableLocations.size() != 0)
             {
-                cout << "Spawn!\n";
                 Vector2i mBoatPos = mAvailableLocations[rand() % mAvailableLocations.size()]->getPosition();
                 mWaterMap[mBoatPos.x][mBoatPos.y] = 4;
             }
@@ -225,7 +233,7 @@ public:
             mMiniGameKeySelected = false;
             if (mMiniGameKeys == 0)
             {
-                cout << "Won!\n";
+                mApp->addCoins(rand() % 4 + 3);
                 mMoveCharacter();
             }
         }
@@ -249,6 +257,30 @@ public:
         }
         mText.setPosition(Vector2f(mWindowSize.x / 2, mWindowSize.y / 2));
         mText.setOrigin(mText.getLocalBounds().width / 2, mText.getLocalBounds().height / 1.3f);
+        window.draw(mText);
+    }
+
+    void drawCoins(RenderWindow &window)
+    {
+        RectangleShape mMiniGameSprite;
+        Vector2f mWindowSize;
+        Text mText;
+
+        mWindowSize.x = (float) window.getSize().x;
+        mWindowSize.y = (float) window.getSize().y;
+
+        mMiniGameSprite.setOutlineColor(Color(255, 255, 255, 200));
+        mMiniGameSprite.setOutlineThickness(2);
+        mMiniGameSprite.setFillColor(Color(255, 255, 255, 100));
+        mMiniGameSprite.setSize(Vector2f(100.0f, 36.0f));
+        mMiniGameSprite.setPosition(Vector2f(mWindowSize.x - mMiniGameSprite.getLocalBounds().width - 8, 10));
+        window.draw(mMiniGameSprite);
+
+        mText.setFont(mFont);
+        mText.setFillColor(Color(0, 0, 0, 200));
+        mText.setCharacterSize(20);
+        mText.setString("Coins: " + to_string(mApp->getCoins()));
+        mText.setPosition(Vector2f(mWindowSize.x - mMiniGameSprite.getLocalBounds().width + 2, 14));
         window.draw(mText);
     }
 
@@ -509,6 +541,20 @@ public:
         {
             showFishMiniGame(window);
         }
+        if (mIsNearHarbor)
+        {
+            //show harbor shopscreen
+        } else
+        {
+            drawCoins(window);
+            
+            if (exitBtn.isClicked(window))
+            {
+                mApp->setCurrentScreen(choose_lvl);
+            }
+            window.draw(exitBtn);
+            exitBtn.drawText(window);
+        }
 
     }
 
@@ -519,6 +565,7 @@ public:
         mGameMap = mApp->getGameMap();
         mMainCharacter->setGameMap(mApp->getGameMap());
         mWaterMap = mGameMap->getGameMap();
+        exitBtn.setApp(mApp);
     }
 
     int getTileType(int nextX, int nextY)
@@ -684,16 +731,14 @@ public:
         }
     }
 
+    bool mIsNearHarbor;
+
     void update()
     {
 
-        bool isNearHarbor = getTileType(0, -1) == 3;
-        if (isNearHarbor)
-        {
-            // show harbor sho screen
-        }
         if (mMainCharacter->isCharacterMoving())
         {
+            mIsNearHarbor = getTileType(0, -1) == 3;
             if (getTileType(0, -1) == 4)
             {
                 mMiniGameInteracted = true;
@@ -727,6 +772,7 @@ public:
     {
 
         mMiniGameKeySelected = false;
+        mIsNearHarbor = false;
         mFishList.clear();
         mMainCharacter->reset();
         mMiniGameKeys = 0;
