@@ -56,8 +56,9 @@ public:
 
     void mMoveCharacter()
     {
-        cout << "move";
-        mMiniGameKeys = 5;
+        mMiniGameKeys = 0;
+        mMiniGameKeySelected = false;
+        mNearFish = false;
         mWaterMap[mMiniGameFish.x][mMiniGameFish.y] = 0;
     }
 
@@ -132,35 +133,38 @@ public:
         window.draw(mBoatSprite);
     }
 
-    int getNumberFish(Vector2i mAreaX, Vector2i mAreaY)
+    int getNumberSquares(Vector2i mAreaLines, Vector2i mAreaColumns, int type)
     {
-        if (mFishList.size() != 0)
+        int i, j;
+        int mSize = 0;
+        int mMapLines = mGameMap->getMapLines();
+        int mMapColumns = mGameMap->getMapColumns();
+        for (i = mAreaLines.x; i <= mAreaLines.y; i++)
         {
-            int mSize = 0;
-            for (NPCharacter *mFish : mFishList)
+            for (j = mAreaColumns.x; j <= mAreaColumns.y; j++)
             {
-                if (!mFish->isInArea(mAreaX, mAreaY))
+                int mTileType = mWaterMap[j % mMapLines][i % mMapColumns];
+                if (mTileType == type)
                 {
                     mSize++;
                 }
             }
-            return mSize;
         }
-        return 0;
+        return mSize;
     }
 
-    void spawnFish(Vector2i mAreaX, Vector2i mAreaY)
+    void spawnFish(Vector2i mAreaLines, Vector2i mAreaColumns)
     {
         int i, j;
         int mMapLines = mGameMap->getMapLines();
         int mMapColumns = mGameMap->getMapColumns();
-        if (getNumberFish(mAreaX, mAreaY) < 5)
+        if (getNumberSquares(mAreaLines, mAreaColumns, 4) < getNumberSquares(mAreaLines, mAreaColumns, 0) / 20)
         {
             vector < LocationModel * > mAvailableLocations;
             LocationModel *mLocationModel;
-            for (i = mAreaX.x; i <= mAreaX.y; i++)
+            for (i = mAreaLines.x; i <= mAreaLines.y; i++)
             {
-                for (j = mAreaY.y; j <= mAreaY.y; j++)
+                for (j = mAreaColumns.x; j <= mAreaColumns.y; j++)
                 {
 
                     int mTileType = mWaterMap[j % mMapLines][i % mMapColumns];
@@ -173,12 +177,14 @@ public:
             }
             if (mAvailableLocations.size() != 0)
             {
-                NPCharacter *mNPCharacter;
-                mNPCharacter = new NPCharacter(mAvailableLocations[rand() % mAvailableLocations.size()]->getPosition());
-                mFishList.push_back(mNPCharacter);
+                cout << "Spawn!\n";
+                Vector2i mBoatPos = mAvailableLocations[rand() % mAvailableLocations.size()]->getPosition();
+                mWaterMap[mBoatPos.x][mBoatPos.y] = 4;
             }
         }
     }
+
+    bool mMiniGameInteracted;
 
     void showFishMiniGame(RenderWindow &window)
     {
@@ -199,9 +205,18 @@ public:
 
         if (!mMiniGameKeySelected)
         {
+            if (!mMiniGameInteracted)
+            {
+                mMoveCharacter();
+            }
             mMiniGameKey = rand() % 4;
             mMiniGameKeySelected = true;
+            mMiniGameInteracted = false;
             mMiniGameTimer = rand() % 20 + 40;
+            if (mMiniGameKeys == 0)
+            {
+                mMiniGameKeys = 5;
+            }
             mMiniGameKeys--;
         }
         mMiniGameTimer--;
@@ -210,9 +225,8 @@ public:
             mMiniGameKeySelected = false;
             if (mMiniGameKeys == 0)
             {
-                cout << "won";
+                cout << "Won!\n";
                 mMoveCharacter();
-
             }
         }
 
@@ -605,6 +619,7 @@ public:
             {
                 if (mMiniGameKey == 0)
                 {
+                    mMiniGameInteracted = true;
                     mMiniGameTimer = 0;
                 } else
                 {
@@ -621,6 +636,7 @@ public:
             {
                 if (mMiniGameKey == 2)
                 {
+                    mMiniGameInteracted = true;
                     mMiniGameTimer = 0;
                 } else
                 {
@@ -637,6 +653,7 @@ public:
             {
                 if (mMiniGameKey == 1)
                 {
+                    mMiniGameInteracted = true;
                     mMiniGameTimer = 0;
                 } else
                 {
@@ -653,6 +670,7 @@ public:
             {
                 if (mMiniGameKey == 3)
                 {
+                    mMiniGameInteracted = true;
                     mMiniGameTimer = 0;
                 } else
                 {
@@ -674,25 +692,32 @@ public:
         {
             // show harbor sho screen
         }
-        if (getTileType(0, -1) == 4)
+        if (mMainCharacter->isCharacterMoving())
         {
-            mNearFish = true;
-            storeFishPos(0, -1);
-        } else if (getTileType(0, 1) == 4)
-        {
-            mNearFish = true;
-            storeFishPos(0, 1);
-        } else if (getTileType(-1, 0) == 4)
-        {
-            mNearFish = true;
-            storeFishPos(-1, 0);
-        } else if (getTileType(1, 0) == 4)
-        {
-            mNearFish = true;
-            storeFishPos(1, 0);
-        } else
-        {
-            mNearFish = false;
+            if (getTileType(0, -1) == 4)
+            {
+                mMiniGameInteracted = true;
+                mNearFish = true;
+                storeFishPos(0, -1);
+            } else if (getTileType(0, 1) == 4)
+            {
+                mMiniGameInteracted = true;
+                mNearFish = true;
+                storeFishPos(0, 1);
+            } else if (getTileType(-1, 0) == 4)
+            {
+                mMiniGameInteracted = true;
+                mNearFish = true;
+                storeFishPos(-1, 0);
+            } else if (getTileType(1, 0) == 4)
+            {
+                mMiniGameInteracted = true;
+                mNearFish = true;
+                storeFishPos(1, 0);
+            } else
+            {
+                mNearFish = false;
+            }
         }
         mMainCharacter->update();
 

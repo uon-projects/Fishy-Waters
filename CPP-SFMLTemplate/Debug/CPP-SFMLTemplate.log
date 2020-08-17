@@ -1,4 +1,4 @@
-﻿Build started 17/08/2020 19:34:14.
+﻿Build started 17/08/2020 23:44:15.
      1>Project "C:\Users\teo\Documents\Github\Fishy-Waters\CPP-SFMLTemplate\CPP-SFMLTemplate.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          E:\PC Software\VS2012\VC\bin\CL.exe /c /I"C:\SFML v2.4.0 (Win32 - Visual Studio 2012)\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt game\src\main.cpp
@@ -7,22 +7,22 @@
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\library\src\header\levelbutton.h(83): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\npc\npcharacter.h(28): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\npc\npcharacter.h(29): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(102): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(262): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(263): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(273): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(278): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(280): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(281): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(284): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(288): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(291): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(292): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(487): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(521): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(526): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(551): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(556): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(103): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(276): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(277): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(287): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(292): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(294): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(295): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(298): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(302): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(305): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(306): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(501): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(535): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(540): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(565): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\teo\documents\github\fishy-waters\cpp-sfmltemplate\game\src\header\screen\gamescreen.h(570): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
        Link:
          E:\PC Software\VS2012\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy Waters.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML v2.4.0 (Win32 - Visual Studio 2012)\lib" "sfml-system-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" "sfml-window-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy Waters.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy Waters.lib" /MACHINE:X86 Debug\main.obj
          CPP-SFMLTemplate.vcxproj -> C:\Users\teo\Documents\Github\Fishy-Waters\Debug\Fishy Waters.exe
@@ -30,4 +30,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.28
+Time Elapsed 00:00:04.49
