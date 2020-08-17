@@ -54,7 +54,31 @@ public:
         mMovesCount = 0;
         mMainCharacterOnMove = 0;
         mFacingNow = 2;
+        mMovementPF = 1;
 
+    }
+
+    void increaseMovementSpeed()
+    {
+        if (mMovementPF == 1)
+        {
+            mMovementPF = 2;
+        } else if (mMovementPF == 2)
+        {
+            mMovementPF = 4;
+        } else if (mMovementPF == 4)
+        {
+            mMovementPF = 5;
+        } else if (mMovementPF == 5)
+        {
+            mMovementPF = 8;
+        } else if (mMovementPF == 8)
+        {
+            mMovementPF = 10;
+        } else if (mMovementPF == 10)
+        {
+            mMovementPF = 20;
+        }
     }
 
     Vector2f getSpriteLocation(RenderWindow &window)
@@ -108,7 +132,6 @@ public:
 
     void update()
     {
-        mMovementPF = 1;
         if (mMainCharacterOnMove != 0)
         {
             if (mMainCharacterOnMove == 1)
