@@ -3,13 +3,14 @@
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
-#include "../player/MainCharacterBullet.h"
 #include <SFML/Graphics.hpp>
 #include "../../../../library/src/header/MaterialButton.h"
+#include "../../../../library/src/header/FontManager.h"
 #include "../App.h"
 #include "../npc/NPCharacter.h"
 #include "../player/MainCharacter.h"
 #include "../game/GameMap.h"
+#include "../npc/LocationModel.h"
 
 using namespace std;
 using namespace sf;
@@ -20,10 +21,18 @@ class GameScreen
 private:
     RectangleShape gameMenuScreenBackground;
     App *mApp;
+    Font mFont;
     MainCharacter *mMainCharacter;
+    vector<NPCharacter *> mFishList;
     GameMap *mGameMap;
     int mBackgroundR, mBackgroundG, mBackgroundB;
     int **mWaterMap;
+    bool mNearFish;
+    bool mMiniGameKeySelected;
+    int mMiniGameKey;
+    int mMiniGameTimer;
+    int mMiniGameKeys;
+    Vector2i mMiniGameFish;
 
 public:
     GameScreen()
@@ -32,6 +41,9 @@ public:
         mBackgroundR = 32;
         mBackgroundG = 165;
         mBackgroundB = 227;
+        srand((unsigned) time(NULL));
+        mNearFish = false;
+        mFont = FontManager().loadFont();
 
     }
 
@@ -41,6 +53,13 @@ public:
     }
 
 public:
+
+    void mMoveCharacter()
+    {
+        cout << "move";
+        mMiniGameKeys = 5;
+        mWaterMap[mMiniGameFish.x][mMiniGameFish.y] = 0;
+    }
 
     void drawStone(RenderWindow &window, Vector2f mPosition)
     {
@@ -113,9 +132,114 @@ public:
         window.draw(mBoatSprite);
     }
 
+    int getNumberFish(Vector2i mAreaX, Vector2i mAreaY)
+    {
+        if (mFishList.size() != 0)
+        {
+            int mSize = 0;
+            for (NPCharacter *mFish : mFishList)
+            {
+                if (!mFish->isInArea(mAreaX, mAreaY))
+                {
+                    mSize++;
+                }
+            }
+            return mSize;
+        }
+        return 0;
+    }
+
+    void spawnFish(Vector2i mAreaX, Vector2i mAreaY)
+    {
+        int i, j;
+        int mMapLines = mGameMap->getMapLines();
+        int mMapColumns = mGameMap->getMapColumns();
+        if (getNumberFish(mAreaX, mAreaY) < 5)
+        {
+            vector < LocationModel * > mAvailableLocations;
+            LocationModel *mLocationModel;
+            for (i = mAreaX.x; i <= mAreaX.y; i++)
+            {
+                for (j = mAreaY.y; j <= mAreaY.y; j++)
+                {
+
+                    int mTileType = mWaterMap[j % mMapLines][i % mMapColumns];
+                    if (mTileType == 0)
+                    {
+                        mLocationModel = new LocationModel(Vector2i(j % mMapLines, i % mMapColumns));
+                        mAvailableLocations.push_back(mLocationModel);
+                    }
+                }
+            }
+            if (mAvailableLocations.size() != 0)
+            {
+                NPCharacter *mNPCharacter;
+                mNPCharacter = new NPCharacter(mAvailableLocations[rand() % mAvailableLocations.size()]->getPosition());
+                mFishList.push_back(mNPCharacter);
+            }
+        }
+    }
+
+    void showFishMiniGame(RenderWindow &window)
+    {
+        RectangleShape mMiniGameSprite;
+        Vector2f mWindowSize;
+        Text mText;
+
+        mWindowSize.x = (float) window.getSize().x;
+        mWindowSize.y = (float) window.getSize().y;
+
+        mMiniGameSprite.setOutlineColor(Color(0, 0, 0));
+        mMiniGameSprite.setOutlineThickness(3);
+        mMiniGameSprite.setFillColor(Color(74, 74, 74, 240));
+        mMiniGameSprite.setPosition(Vector2f(mWindowSize.x / 2, mWindowSize.y / 2));
+        mMiniGameSprite.setSize(Vector2f(90.0f, 56.0f));
+        mMiniGameSprite.setOrigin(Vector2f(45.0f, 28.0f));
+        window.draw(mMiniGameSprite);
+
+        if (!mMiniGameKeySelected)
+        {
+            mMiniGameKey = rand() % 4;
+            mMiniGameKeySelected = true;
+            mMiniGameTimer = rand() % 20 + 40;
+            mMiniGameKeys--;
+        }
+        mMiniGameTimer--;
+        if (mMiniGameTimer <= 0)
+        {
+            mMiniGameKeySelected = false;
+            if (mMiniGameKeys == 0)
+            {
+                cout << "won";
+                mMoveCharacter();
+
+            }
+        }
+
+        mText.setFont(mFont);
+        mText.setFillColor(Color(0, 0, 0, 100));
+        mText.setCharacterSize(22);
+        mText.setFillColor(Color::Black);
+        if (mMiniGameKey == 0)
+        {
+            mText.setString("Left");
+        } else if (mMiniGameKey == 1)
+        {
+            mText.setString("Up");
+        } else if (mMiniGameKey == 2)
+        {
+            mText.setString("Right");
+        } else if (mMiniGameKey == 3)
+        {
+            mText.setString("Down");
+        }
+        mText.setPosition(Vector2f(mWindowSize.x / 2, mWindowSize.y / 2));
+        mText.setOrigin(mText.getLocalBounds().width / 2, mText.getLocalBounds().height / 1.3f);
+        window.draw(mText);
+    }
+
     void draw(RenderWindow &window)
     {
-
         int i, j;
         int mMapLines = mGameMap->getMapLines();
         int mMapColumns = mGameMap->getMapColumns();
@@ -207,9 +331,17 @@ public:
         mEndArea.y = mStartGridArea.y + mGridAreaSurface.y;
 
         mLoc.x = -1;
-        cout<<">>Spawn Fish Area\n";
-        cout<<" >> x: "<<mStartGridArea.x<<"-"<<mEndArea.x<<'\n';
-        cout<<" >> y: "<<mStartGridArea.y<<"-"<<mEndArea.y<<'\n';
+        spawnFish(
+                Vector2i(
+                        mStartGridArea.x,
+                        mEndArea.x
+                ),
+                Vector2i(
+                        mStartGridArea.y,
+                        mEndArea.y
+                )
+        );
+
         for (i = mStartGridArea.x; i <= mEndArea.x; i++)
         {
             mLoc.y = -1;
@@ -234,6 +366,26 @@ public:
                     item.setSize(Vector2f(40.0f, 40.0f));
                     window.draw(item);
                 } else if (mTileType == 2)
+                {
+                    item.setOrigin(Vector2f(0.0f, 0.0f));
+                    item.setFillColor(Color(3, 90, 252));
+                    item.setPosition(
+                            Vector2f(
+                                    (float) mLoc.x * 40 - mGameOffsetMoving.x - 20,
+                                    (float) mLoc.y * 40 - mGameOffsetMoving.y - 10
+                            )
+                    );
+                    item.setSize(Vector2f(40.0f, 40.0f));
+                    window.draw(item);
+
+                    drawStone(
+                            window,
+                            Vector2f(
+                                    (float) mLoc.x * 40 - mGameOffsetMoving.x - 20,
+                                    (float) mLoc.y * 40 - mGameOffsetMoving.y - 10
+                            )
+                    );
+                } else if (mTileType == 4)
                 {
                     item.setOrigin(Vector2f(0.0f, 0.0f));
                     item.setFillColor(Color(3, 90, 252));
@@ -339,6 +491,11 @@ public:
             }
         }
 
+        if (mNearFish)
+        {
+            showFishMiniGame(window);
+        }
+
     }
 
     void setApp(App *app)
@@ -380,6 +537,36 @@ public:
         return mTileType;
     }
 
+    void storeFishPos(int nextX, int nextY)
+    {
+        int mMapLines = mGameMap->getMapLines();
+        int mMapColumns = mGameMap->getMapColumns();
+        Vector2f mCharacterPosGrid;
+        mCharacterPosGrid.x = mMainCharacter->getCharacterPosition().x / mMapColumns + nextX;
+        mCharacterPosGrid.y = mMainCharacter->getCharacterPosition().y / mMapLines + nextY;
+        if (mCharacterPosGrid.x > 0)
+        {
+            mCharacterPosGrid.x = mMapColumns - mCharacterPosGrid.x * -1;
+        }
+        mCharacterPosGrid.x = (int) mCharacterPosGrid.x % mMapColumns;
+        if (mCharacterPosGrid.y > 0)
+        {
+            mCharacterPosGrid.y = mMapLines - mCharacterPosGrid.y * -1;
+        }
+        mCharacterPosGrid.y = (int) mCharacterPosGrid.y % mMapLines;
+        if (mCharacterPosGrid.x < 0)
+        {
+            mCharacterPosGrid.x = mMapColumns + mCharacterPosGrid.x;
+        }
+        if (mCharacterPosGrid.y < 0)
+        {
+            mCharacterPosGrid.y = mMapLines + mCharacterPosGrid.y;
+        }
+
+        mMiniGameFish.x = (int) mCharacterPosGrid.y % mMapLines;
+        mMiniGameFish.y = (int) mCharacterPosGrid.x % mMapColumns;
+    }
+
     bool canMove(int nextX, int nextY)
     {
         return 0 == getTileType(nextX, nextY);
@@ -414,25 +601,65 @@ public:
         }
         if (event.key.code == Keyboard::Left || event.key.code == Keyboard::A)
         {
-            if (canMoveWest())
+            if (mNearFish)
+            {
+                if (mMiniGameKey == 0)
+                {
+                    mMiniGameTimer = 0;
+                } else
+                {
+                    mMiniGameTimer = 0;
+                    mMoveCharacter();
+                }
+            } else if (canMoveWest())
             {
                 mMainCharacter->moveWest();
             }
         } else if (event.key.code == Keyboard::Right || event.key.code == Keyboard::D)
         {
-            if (canMoveEast())
+            if (mNearFish)
+            {
+                if (mMiniGameKey == 2)
+                {
+                    mMiniGameTimer = 0;
+                } else
+                {
+                    mMiniGameTimer = 0;
+                    mMoveCharacter();
+                }
+            } else if (canMoveEast())
             {
                 mMainCharacter->moveEast();
             }
         } else if (event.key.code == Keyboard::Up || event.key.code == Keyboard::W)
         {
-            if (canMoveNorth())
+            if (mNearFish)
+            {
+                if (mMiniGameKey == 1)
+                {
+                    mMiniGameTimer = 0;
+                } else
+                {
+                    mMiniGameTimer = 0;
+                    mMoveCharacter();
+                }
+            } else if (canMoveNorth())
             {
                 mMainCharacter->moveNorth();
             }
         } else if (event.key.code == Keyboard::Down || event.key.code == Keyboard::S)
         {
-            if (canMoveSouth())
+            if (mNearFish)
+            {
+                if (mMiniGameKey == 3)
+                {
+                    mMiniGameTimer = 0;
+                } else
+                {
+                    mMiniGameTimer = 0;
+                    mMoveCharacter();
+                }
+            } else if (canMoveSouth())
             {
                 mMainCharacter->moveSouth();
             }
@@ -447,6 +674,26 @@ public:
         {
             // show harbor sho screen
         }
+        if (getTileType(0, -1) == 4)
+        {
+            mNearFish = true;
+            storeFishPos(0, -1);
+        } else if (getTileType(0, 1) == 4)
+        {
+            mNearFish = true;
+            storeFishPos(0, 1);
+        } else if (getTileType(-1, 0) == 4)
+        {
+            mNearFish = true;
+            storeFishPos(-1, 0);
+        } else if (getTileType(1, 0) == 4)
+        {
+            mNearFish = true;
+            storeFishPos(1, 0);
+        } else
+        {
+            mNearFish = false;
+        }
         mMainCharacter->update();
 
     }
@@ -454,7 +701,10 @@ public:
     void initNewLvl()
     {
 
+        mMiniGameKeySelected = false;
+        mFishList.clear();
         mMainCharacter->reset();
+        mMiniGameKeys = 0;
 
     }
 
