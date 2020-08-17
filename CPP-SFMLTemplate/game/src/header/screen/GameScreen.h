@@ -33,6 +33,7 @@ private:
     int mMiniGameTimer;
     int mMiniGameKeys;
     Vector2i mMiniGameFish;
+    MaterialButton exitBtn;
 
 public:
     GameScreen()
@@ -44,6 +45,14 @@ public:
         srand((unsigned) time(NULL));
         mNearFish = false;
         mFont = FontManager().loadFont();
+
+        exitBtn.setBtnPosition((float) 45, (float) 25);
+        exitBtn.setSize(Vector2f(70, 30));
+        exitBtn.setColor(Color(244, 67, 54));
+        exitBtn.setHoverColor(Color(211, 47, 47));
+        exitBtn.setActiveColor(Color(198, 40, 40));
+        exitBtn.setText("Go Back");
+        exitBtn.setCharacterSize(17);
 
     }
 
@@ -538,6 +547,13 @@ public:
         } else
         {
             drawCoins(window);
+            
+            if (exitBtn.isClicked(window))
+            {
+                mApp->setCurrentScreen(choose_lvl);
+            }
+            window.draw(exitBtn);
+            exitBtn.drawText(window);
         }
 
     }
@@ -549,6 +565,7 @@ public:
         mGameMap = mApp->getGameMap();
         mMainCharacter->setGameMap(mApp->getGameMap());
         mWaterMap = mGameMap->getGameMap();
+        exitBtn.setApp(mApp);
     }
 
     int getTileType(int nextX, int nextY)
