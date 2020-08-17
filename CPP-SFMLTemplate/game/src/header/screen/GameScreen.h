@@ -59,6 +59,8 @@ public:
         Vector2i mLoc;
         Vector2i mGridAreaSurface;
         Vector2f mCharacterPosGrid;
+        Vector2i mStartGridArea;
+        Vector2i mCharacterPosOnGrid;
         RectangleShape item;
 
         gameMenuScreenBackground.setFillColor(Color(mBackgroundR, mBackgroundG, mBackgroundB));
@@ -68,7 +70,7 @@ public:
         mWindowSize.x = (float) window.getSize().x;
         mWindowSize.y = (float) window.getSize().y;
         mGridAreaSurface.x = mWindowSize.x / 40 + 2;
-        mGridAreaSurface.y = mWindowSize.y / 40 + 2;
+        mGridAreaSurface.y = mWindowSize.y / 40 + 3;
         mGameOffset = mMainCharacter->getGameOffset(window);
         mGameOffsetMoving = mMainCharacter->getGameOffsetMoving();
 
@@ -84,7 +86,18 @@ public:
             mCharacterPosGrid.y = 40 - mCharacterPosGrid.y * -1;
         }
         mCharacterPosGrid.y = (int) mCharacterPosGrid.y % 40;
-        Vector2i mStartGridArea;
+
+        mCharacterPosOnGrid.x = mCharacterPosGrid.x;
+        mCharacterPosOnGrid.y = mCharacterPosGrid.y;
+        if (mCharacterPosOnGrid.x < 0)
+        {
+            mCharacterPosOnGrid.x = 40 + mCharacterPosGrid.x;
+        }
+        if (mCharacterPosOnGrid.y < 0)
+        {
+            mCharacterPosOnGrid.y = 40 + mCharacterPosGrid.y;
+        }
+
         mStartGridArea.x = mCharacterPosGrid.x - mGridAreaSurface.x / 2;
         mStartGridArea.y = mCharacterPosGrid.y - mGridAreaSurface.y / 2;
         if (mStartGridArea.x < 0)
@@ -133,18 +146,47 @@ public:
             mLoc.y = -1;
             for (j = mStartGridArea.y; j <= mEndArea.y; j++)
             {
+
                 int mTileType = mWaterMap[j % 40][i % 40];
+                int mTileN, mTileE, mTileS, mTileW;
+                int mTileNE, mTileNW, mTileSE, mTileSW;
+                int mPosN, mPosE, mPosS, mPosW;
+
                 if (mTileType == 0)
                 {
                     item.setFillColor(Color(3, 90, 252));
                 } else if (mTileType == 1)
                 {
-                    item.setFillColor(Color(252, 240, 3));
+                    Vector2i mItemPos(i % 40, j % 40);
+                    mPosS = (mItemPos.y + 1) % 40;
+                    mPosE = (mItemPos.x + 1) % 40;
+                    mPosN = mItemPos.y - 1 < 0 ? (40 - mItemPos.y - 1) % 40 : (mItemPos.y - 1) % 40;
+                    mPosW = mItemPos.x - 1 < 0 ? (40 - mItemPos.x - 1) % 40 : (mItemPos.x - 1) % 40;
+
+                    mTileN = mWaterMap[mPosN][mItemPos.x];
+                    mTileS = mWaterMap[mPosS][mItemPos.x];
+                    mTileE = mWaterMap[mItemPos.y][mPosE];
+                    mTileW = mWaterMap[mItemPos.y][mPosW];
+                    mTileNE = mWaterMap[mPosN][mPosE];
+                    mTileNW = mWaterMap[mPosN][mPosW];
+                    mTileSE = mWaterMap[mPosS][mPosE];
+                    mTileSW = mWaterMap[mPosS][mPosW];
+
+                    if (mTileN == 0 || mTileE == 0 || mTileS == 0 || mTileW == 0)
+                    {
+                        item.setFillColor(Color(152, 219, 18));
+                    } else if (mTileNE == 0 || mTileNW == 0 || mTileSE == 0 || mTileSW == 0)
+                    {
+                        item.setFillColor(Color(152, 219, 18));
+                    } else
+                    {
+                        item.setFillColor(Color(124, 181, 9));
+                    }
                 }
                 item.setPosition(
                         Vector2f(
-                                (float) mLoc.x * 40 - mGameOffsetMoving.x,
-                                (float) mLoc.y * 40 - mGameOffsetMoving.y
+                                (float) mLoc.x * 40 - mGameOffsetMoving.x - 20,
+                                (float) mLoc.y * 40 - mGameOffsetMoving.y - 10
                         )
                 );
                 item.setSize(Vector2f(40.0f, 40.0f));
@@ -152,6 +194,26 @@ public:
                 mLoc.y++;
             }
             mLoc.x++;
+        }
+
+        window.draw(mMainCharacter->getSprite(window));
+
+        for (i = -1; i < mWindowSize.x / 40 + 2; i++)
+        {
+            for (j = -1; j < mWindowSize.y / 40 + 3; j++)
+            {
+                item.setOutlineColor(Color::Black);
+                item.setOutlineThickness(1);
+                item.setFillColor(Color(3, 252, 32, 0));
+                item.setPosition(
+                        Vector2f(
+                                i * 40 - 20,
+                                j * 40 - 10
+                        )
+                );
+                item.setSize(Vector2f(40.0f, 40.0f));
+//                window.draw(item);
+            }
         }
 
     }
@@ -183,24 +245,85 @@ public:
         mWaterMap = mGameMap->getGameMap();
     }
 
+    bool canMove(int nextX, int nextY)
+    {
+        Vector2f mCharacterPosGrid;
+        mCharacterPosGrid.x = mMainCharacter->getCharacterPosition().x / 40 + nextX;
+        mCharacterPosGrid.y = mMainCharacter->getCharacterPosition().y / 40 + nextY;
+        if (mCharacterPosGrid.x > 0)
+        {
+            mCharacterPosGrid.x = 40 - mCharacterPosGrid.x * -1;
+        }
+        mCharacterPosGrid.x = (int) mCharacterPosGrid.x % 40;
+        if (mCharacterPosGrid.y > 0)
+        {
+            mCharacterPosGrid.y = 40 - mCharacterPosGrid.y * -1;
+        }
+        mCharacterPosGrid.y = (int) mCharacterPosGrid.y % 40;
+        if (mCharacterPosGrid.x < 0)
+        {
+            mCharacterPosGrid.x = 40 + mCharacterPosGrid.x;
+        }
+        if (mCharacterPosGrid.y < 0)
+        {
+            mCharacterPosGrid.y = 40 + mCharacterPosGrid.y;
+        }
+
+        int mTileType = mWaterMap[(int) mCharacterPosGrid.y % 40][(int) mCharacterPosGrid.x % 40];
+        return mTileType == 0;
+    }
+
+    bool canMoveNorth()
+    {
+        return canMove(0, -1);
+    }
+
+    bool canMoveEast()
+    {
+        return canMove(1, 0);
+    }
+
+    bool canMoveSouth()
+    {
+        return canMove(0, 1);
+    }
+
+    bool canMoveWest()
+    {
+        return canMove(-1, 0);
+    }
+
     void inputListener(Event event)
     {
+
         if (event.key.code == Keyboard::X)
         {
             system("pause");
         }
         if (event.key.code == Keyboard::Left || event.key.code == Keyboard::A)
         {
-            mMainCharacter->moveLeft();
+            if (canMoveWest())
+            {
+                mMainCharacter->moveWest();
+            }
         } else if (event.key.code == Keyboard::Right || event.key.code == Keyboard::D)
         {
-            mMainCharacter->moveRight();
+            if (canMoveEast())
+            {
+                mMainCharacter->moveEast();
+            }
         } else if (event.key.code == Keyboard::Up || event.key.code == Keyboard::W)
         {
-            mMainCharacter->moveNorth();
+            if (canMoveNorth())
+            {
+                mMainCharacter->moveNorth();
+            }
         } else if (event.key.code == Keyboard::Down || event.key.code == Keyboard::S)
         {
-            mMainCharacter->moveSouth();
+            if (canMoveSouth())
+            {
+                mMainCharacter->moveSouth();
+            }
         }
     }
 

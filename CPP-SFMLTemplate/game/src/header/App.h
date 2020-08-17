@@ -56,11 +56,6 @@ public:
         return isNewGame;
     }
 
-    int getGameOffsetY()
-    {
-        return mMainCharacter->getGameOffsetY();
-    }
-
     Event getEvent()
     {
         return event;
