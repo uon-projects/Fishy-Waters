@@ -74,6 +74,16 @@ public:
 
         mCharacterPosGrid.x = mMainCharacter->getCharacterPosition().x / 40;
         mCharacterPosGrid.y = mMainCharacter->getCharacterPosition().y / 40;
+        if (mCharacterPosGrid.x > 0)
+        {
+            mCharacterPosGrid.x = 40 - mCharacterPosGrid.x * -1;
+        }
+        mCharacterPosGrid.x = (int) mCharacterPosGrid.x % 40;
+        if (mCharacterPosGrid.y > 0)
+        {
+            mCharacterPosGrid.y = 40 - mCharacterPosGrid.y * -1;
+        }
+        mCharacterPosGrid.y = (int) mCharacterPosGrid.y % 40;
         Vector2i mStartGridArea;
         mStartGridArea.x = mCharacterPosGrid.x - mGridAreaSurface.x / 2;
         mStartGridArea.y = mCharacterPosGrid.y - mGridAreaSurface.y / 2;
@@ -103,11 +113,19 @@ public:
         {
             mStartGridArea.y = 40 + mStartGridArea.y % 40;
         }
+
+        if (mCharacterPosGrid.x >= 0 && mGameOffsetMoving.x > 0)
+        {
+            mStartGridArea.x++;
+        }
+        if (mCharacterPosGrid.y >= 0 && mGameOffsetMoving.y > 0)
+        {
+            mStartGridArea.y++;
+        }
+
         Vector2i mEndArea;
         mEndArea.x = mStartGridArea.x + mGridAreaSurface.x;
         mEndArea.y = mStartGridArea.y + mGridAreaSurface.y;
-
-        cout << mStartGridArea.x << ' ' << mCharacterPosGrid.x << '\n';
 
         mLoc.x = -1;
         for (i = mStartGridArea.x; i <= mEndArea.x; i++)

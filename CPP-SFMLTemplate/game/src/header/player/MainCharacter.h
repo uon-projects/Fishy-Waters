@@ -145,7 +145,7 @@ public:
 
     void update(float mSpeed)
     {
-        mMovementPF = 10;
+        mMovementPF = 2;
         if (mMainCharacterOnMove != 0)
         {
             if (mMainCharacterOnMove == 1)
