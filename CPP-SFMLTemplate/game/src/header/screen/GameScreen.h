@@ -33,6 +33,11 @@ private:
     int mMiniGameTimer;
     int mMiniGameKeys;
     Vector2i mMiniGameFish;
+    MaterialButton exitBtn;
+    MaterialButton returnButton;
+    MaterialButton mBuyMap;
+    MaterialButton mBuySpeed;
+    MaterialButton mBuyBoat;
 
 public:
     GameScreen()
@@ -44,6 +49,27 @@ public:
         srand((unsigned) time(NULL));
         mNearFish = false;
         mFont = FontManager().loadFont();
+
+        exitBtn.setBtnPosition((float) 45, (float) 25);
+        exitBtn.setSize(Vector2f(70, 30));
+        exitBtn.setColor(Color(244, 67, 54));
+        exitBtn.setHoverColor(Color(211, 47, 47));
+        exitBtn.setActiveColor(Color(198, 40, 40));
+        exitBtn.setText("Go Back");
+        exitBtn.setCharacterSize(17);
+
+        returnButton.setSize(Vector2f(70, 30));
+        returnButton.setColor(Color(244, 67, 54));
+        returnButton.setHoverColor(Color(211, 47, 47));
+        returnButton.setActiveColor(Color(198, 40, 40));
+        returnButton.setText("Return");
+        returnButton.setCharacterSize(17);
+
+        mBuyMap.setSize(Vector2f(50, 30));
+        mBuyMap.setText("Buy");
+        mBuyMap.setCharacterSize(17);
+
+        mBuySpeed = mBuyBoat = mBuyMap;
 
     }
 
@@ -77,6 +103,29 @@ public:
         mStoneSprite.setPosition(mPosition);
         mStoneSprite.setSize(Vector2f(20.0f, 10.0f));
         window.draw(mStoneSprite);
+
+        mStoneSprite.setOrigin(Vector2f(-14.0f, -17.0f));
+        mStoneSprite.setFillColor(Color(255, 255, 255, 40));
+        mStoneSprite.setPosition(mPosition);
+        mStoneSprite.setSize(Vector2f(12.0f, 6.0f));
+        window.draw(mStoneSprite);
+    }
+
+    void drawFish(RenderWindow &window, Vector2f mPosition)
+    {
+        RectangleShape mStoneSprite;
+
+//        mStoneSprite.setOrigin(Vector2f(-5.0f, -10.0f));
+//        mStoneSprite.setFillColor(Color(74, 74, 74));
+//        mStoneSprite.setPosition(mPosition);
+//        mStoneSprite.setSize(Vector2f(30.0f, 20.0f));
+//        window.draw(mStoneSprite);
+//
+//        mStoneSprite.setOrigin(Vector2f(-10.0f, -15.0f));
+//        mStoneSprite.setFillColor(Color(255, 255, 255, 30));
+//        mStoneSprite.setPosition(mPosition);
+//        mStoneSprite.setSize(Vector2f(20.0f, 10.0f));
+//        window.draw(mStoneSprite);
 
         mStoneSprite.setOrigin(Vector2f(-14.0f, -17.0f));
         mStoneSprite.setFillColor(Color(255, 255, 255, 40));
@@ -177,7 +226,6 @@ public:
             }
             if (mAvailableLocations.size() != 0)
             {
-                cout << "Spawn!\n";
                 Vector2i mBoatPos = mAvailableLocations[rand() % mAvailableLocations.size()]->getPosition();
                 mWaterMap[mBoatPos.x][mBoatPos.y] = 4;
             }
@@ -225,7 +273,7 @@ public:
             mMiniGameKeySelected = false;
             if (mMiniGameKeys == 0)
             {
-                cout << "Won!\n";
+                mApp->addCoins(rand() % 4 + 3);
                 mMoveCharacter();
             }
         }
@@ -250,6 +298,152 @@ public:
         mText.setPosition(Vector2f(mWindowSize.x / 2, mWindowSize.y / 2));
         mText.setOrigin(mText.getLocalBounds().width / 2, mText.getLocalBounds().height / 1.3f);
         window.draw(mText);
+    }
+
+    void drawCoins(RenderWindow &window)
+    {
+        RectangleShape mMiniGameSprite;
+        Vector2f mWindowSize;
+        Text mText;
+
+        mWindowSize.x = (float) window.getSize().x;
+        mWindowSize.y = (float) window.getSize().y;
+
+        mMiniGameSprite.setOutlineColor(Color(255, 255, 255, 200));
+        mMiniGameSprite.setOutlineThickness(2);
+        mMiniGameSprite.setFillColor(Color(255, 255, 255, 100));
+        mMiniGameSprite.setSize(Vector2f(100.0f, 36.0f));
+        mMiniGameSprite.setPosition(Vector2f(mWindowSize.x - mMiniGameSprite.getLocalBounds().width - 8, 10));
+        window.draw(mMiniGameSprite);
+
+        mText.setFont(mFont);
+        mText.setFillColor(Color(0, 0, 0, 200));
+        mText.setCharacterSize(20);
+        mText.setString("Coins: " + to_string(mApp->getCoins()));
+        mText.setPosition(Vector2f(mWindowSize.x - mMiniGameSprite.getLocalBounds().width + 2, 14));
+        window.draw(mText);
+    }
+
+    void drawHarborShop(RenderWindow &window)
+    {
+        RectangleShape mHarborShopSprite;
+        Vector2f mWindowSize;
+        Text mText;
+        int i, j;
+        mText.setFont(mFont);
+
+        mWindowSize.x = (float) window.getSize().x;
+        mWindowSize.y = (float) window.getSize().y;
+
+        mHarborShopSprite.setOutlineColor(Color(245, 165, 15, 255));
+        mHarborShopSprite.setOutlineThickness(10);
+        mHarborShopSprite.setFillColor(Color(245, 165, 15, 220));
+        mHarborShopSprite.setSize(Vector2f(mWindowSize.x - 50, mWindowSize.y - 50));
+        mHarborShopSprite.setPosition(Vector2f(25, 25));
+        window.draw(mHarborShopSprite);
+
+        mText.setFillColor(Color(0, 0, 0, 200));
+        mText.setCharacterSize(20);
+        mText.setString("Coins: " + to_string(mApp->getCoins()));
+        mText.setPosition(Vector2f(mWindowSize.x - mHarborShopSprite.getLocalBounds().width + 20, 40));
+        window.draw(mText);
+
+        mText.setFillColor(Color(0, 0, 0, 200));
+        mText.setCharacterSize(18);
+        mText.setString("Unlock entire map: 20 coins");
+        mText.setPosition(Vector2f(mWindowSize.x - mHarborShopSprite.getLocalBounds().width + 20, 80));
+        window.draw(mText);
+
+        mBuyMap.setBtnPosition(300, 90);
+        if (mApp->getCoins() >= 20)
+        {
+            mBuyMap.setColor(Color(5, 240, 83));
+            mBuyMap.setHoverColor(Color(4, 194, 67));
+            mBuyMap.setActiveColor(Color(4, 194, 67));
+        } else
+        {
+            mBuyMap.setColor(Color(244, 67, 54));
+            mBuyMap.setHoverColor(Color(211, 47, 47));
+            mBuyMap.setActiveColor(Color(198, 40, 40));
+        }
+        if (mBuyMap.isClicked(window))
+        {
+            if (mApp->getCoins() >= 20)
+            {
+                mApp->removeCoins(20);
+                for (i = 0; i < 40; i++)
+                {
+                    for (j = 0; j < 40; j++)
+                    {
+                        int mTileType = mWaterMap[j][i];
+                        if (mTileType == 2)
+                        {
+                            mWaterMap[j][i] = 0;
+                        }
+                    }
+                }
+            }
+        }
+        window.draw(mBuyMap);
+        mBuyMap.drawText(window);
+
+        mText.setFillColor(Color(0, 0, 0, 200));
+        mText.setCharacterSize(18);
+        mText.setString("Increase speed: 12 coins");
+        mText.setPosition(Vector2f(mWindowSize.x - mHarborShopSprite.getLocalBounds().width + 20, 110));
+        window.draw(mText);
+
+        mBuySpeed.setBtnPosition(300, 120);
+        if (mApp->getCoins() >= 12)
+        {
+            mBuySpeed.setColor(Color(5, 240, 83));
+            mBuySpeed.setHoverColor(Color(4, 194, 67));
+            mBuySpeed.setActiveColor(Color(4, 194, 67));
+        } else
+        {
+            mBuySpeed.setColor(Color(244, 67, 54));
+            mBuySpeed.setHoverColor(Color(211, 47, 47));
+            mBuySpeed.setActiveColor(Color(198, 40, 40));
+        }
+        if (mBuySpeed.isClicked(window))
+        {
+            if (mApp->getCoins() >= 12)
+            {
+                mApp->removeCoins(12);
+                mMainCharacter->increaseMovementSpeed();
+            }
+        }
+        window.draw(mBuySpeed);
+        mBuySpeed.drawText(window);
+
+        mText.setFillColor(Color(0, 0, 0, 200));
+        mText.setCharacterSize(18);
+        mText.setString("Buy new boat: 50 coins");
+        mText.setPosition(Vector2f(mWindowSize.x - mHarborShopSprite.getLocalBounds().width + 20, 140));
+        window.draw(mText);
+
+        mBuyBoat.setBtnPosition(300, 150);
+        if (mApp->getCoins() >= 50)
+        {
+            mBuyBoat.setColor(Color(5, 240, 83));
+            mBuyBoat.setHoverColor(Color(4, 194, 67));
+            mBuyBoat.setActiveColor(Color(4, 194, 67));
+        } else
+        {
+            mBuyBoat.setColor(Color(244, 67, 54));
+            mBuyBoat.setHoverColor(Color(211, 47, 47));
+            mBuyBoat.setActiveColor(Color(198, 40, 40));
+        }
+        if (mBuyBoat.isClicked(window))
+        {
+            if (mApp->getCoins() >= 50)
+            {
+                mApp->removeCoins(50);
+            }
+        }
+        window.draw(mBuyBoat);
+        mBuyBoat.drawText(window);
+
     }
 
     void draw(RenderWindow &window)
@@ -412,7 +606,7 @@ public:
                     item.setSize(Vector2f(40.0f, 40.0f));
                     window.draw(item);
 
-                    drawStone(
+                    drawFish(
                             window,
                             Vector2f(
                                     (float) mLoc.x * 40 - mGameOffsetMoving.x - 20,
@@ -509,6 +703,29 @@ public:
         {
             showFishMiniGame(window);
         }
+        if (mIsNearHarbor)
+        {
+            //show harbor shopscreen
+            drawHarborShop(window);
+
+            returnButton.setBtnPosition(mWindowSize.x / 2, mWindowSize.y - 60);
+            if (returnButton.isClicked(window))
+            {
+                mIsNearHarbor = false;
+            }
+            window.draw(returnButton);
+            returnButton.drawText(window);
+        } else
+        {
+            drawCoins(window);
+
+            if (exitBtn.isClicked(window))
+            {
+                mApp->setCurrentScreen(choose_lvl);
+            }
+            window.draw(exitBtn);
+            exitBtn.drawText(window);
+        }
 
     }
 
@@ -519,6 +736,11 @@ public:
         mGameMap = mApp->getGameMap();
         mMainCharacter->setGameMap(mApp->getGameMap());
         mWaterMap = mGameMap->getGameMap();
+        exitBtn.setApp(mApp);
+        returnButton.setApp(mApp);
+        mBuyMap.setApp(mApp);
+        mBuySpeed.setApp(mApp);
+        mBuyBoat.setApp(mApp);
     }
 
     int getTileType(int nextX, int nextY)
@@ -628,6 +850,7 @@ public:
                 }
             } else if (canMoveWest())
             {
+                mIsNearHarbor = false;
                 mMainCharacter->moveWest();
             }
         } else if (event.key.code == Keyboard::Right || event.key.code == Keyboard::D)
@@ -645,6 +868,7 @@ public:
                 }
             } else if (canMoveEast())
             {
+                mIsNearHarbor = false;
                 mMainCharacter->moveEast();
             }
         } else if (event.key.code == Keyboard::Up || event.key.code == Keyboard::W)
@@ -662,6 +886,7 @@ public:
                 }
             } else if (canMoveNorth())
             {
+                mIsNearHarbor = false;
                 mMainCharacter->moveNorth();
             }
         } else if (event.key.code == Keyboard::Down || event.key.code == Keyboard::S)
@@ -679,21 +904,20 @@ public:
                 }
             } else if (canMoveSouth())
             {
+                mIsNearHarbor = false;
                 mMainCharacter->moveSouth();
             }
         }
     }
 
+    bool mIsNearHarbor;
+
     void update()
     {
 
-        bool isNearHarbor = getTileType(0, -1) == 3;
-        if (isNearHarbor)
-        {
-            // show harbor sho screen
-        }
         if (mMainCharacter->isCharacterMoving())
         {
+            mIsNearHarbor = getTileType(0, -1) == 3;
             if (getTileType(0, -1) == 4)
             {
                 mMiniGameInteracted = true;
@@ -727,6 +951,7 @@ public:
     {
 
         mMiniGameKeySelected = false;
+        mIsNearHarbor = false;
         mFishList.clear();
         mMainCharacter->reset();
         mMiniGameKeys = 0;
