@@ -154,6 +154,8 @@ public:
             mLoc.x++;
         }
 
+        window.draw(mMainCharacter->getSprite(window));
+
     }
 
     void initNPCs()

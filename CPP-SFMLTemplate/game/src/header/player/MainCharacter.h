@@ -65,7 +65,6 @@ public:
     {
 
         mMainCharacterPosition = mGameMap->getCharacterStartPos();
-        mGameOffsetY = getGameOffsetY();
 
         mJumpCount = 0;
         mMovesCount = 0;
@@ -75,7 +74,7 @@ public:
         mMainCharacterJump = false;
         mMainCharacterOnMove = 0;
 
-        mMainCharacterTexture.loadFromFile("game/src/res/drawable/heart.png");
+        mMainCharacterTexture.loadFromFile("game/src/res/drawable/boat.png");
         mTextureMainCharacterSize = mMainCharacterTexture.getSize();
         mTextureMainCharacterSize.x /= 1;
         mTextureMainCharacterSize.y /= 1;
@@ -83,27 +82,17 @@ public:
         mMainCharacterSprite.setTextureRect(
                 IntRect(mTextureMainCharacterSize.x * 0, mTextureMainCharacterSize.y * 0, mTextureMainCharacterSize.x,
                         mTextureMainCharacterSize.y));
-        mCharacterScale = 1.5f;
+        mCharacterScale = 0.2f;
         mMainCharacterSprite.setScale(Vector2f(mCharacterScale, mCharacterScale));
-        mMainCharacterSprite.setOrigin(Vector2f(mTextureMainCharacterSize.x / 2, mTextureMainCharacterSize.y / 2));
 
-    }
-
-    int getGameOffsetY()
-    {
-        if (mMainCharacterPosition.y > -220)
-        {
-            mGameOffsetY = 500;
-        } else
-        {
-            mGameOffsetY = 500 - mMainCharacterPosition.y - 220;
-        }
-        return mGameOffsetY;
     }
 
     Sprite getSprite(RenderWindow &window)
     {
-        mMainCharacterSprite.setPosition(Vector2f((float) window.getSize().x / 2, (float) window.getSize().y / 2));
+        mMainCharacterSprite.setPosition(Vector2f(
+                (float) window.getSize().x / 2 - 20,
+                (float) window.getSize().y / 2 - 20
+        ));
         return mMainCharacterSprite;
     }
 
