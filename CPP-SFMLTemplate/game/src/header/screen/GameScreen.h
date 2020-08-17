@@ -68,7 +68,7 @@ public:
         mWindowSize.x = (float) window.getSize().x;
         mWindowSize.y = (float) window.getSize().y;
         mGridAreaSurface.x = mWindowSize.x / 40 + 2;
-        mGridAreaSurface.y = mWindowSize.y / 40 + 2;
+        mGridAreaSurface.y = mWindowSize.y / 40 + 3;
         mGameOffset = mMainCharacter->getGameOffset(window);
         mGameOffsetMoving = mMainCharacter->getGameOffsetMoving();
 
@@ -143,8 +143,8 @@ public:
                 }
                 item.setPosition(
                         Vector2f(
-                                (float) mLoc.x * 40 - mGameOffsetMoving.x,
-                                (float) mLoc.y * 40 - mGameOffsetMoving.y
+                                (float) mLoc.x * 40 - mGameOffsetMoving.x - 20,
+                                (float) mLoc.y * 40 - mGameOffsetMoving.y - 10
                         )
                 );
                 item.setSize(Vector2f(40.0f, 40.0f));
@@ -155,6 +155,25 @@ public:
         }
 
         window.draw(mMainCharacter->getSprite(window));
+
+        cout<<mWindowSize.x/40<<' '<<mWindowSize.y/40<<'\n';
+        for(i=-1; i<mWindowSize.x/40 + 2; i++)
+        {
+            for(j=-1; j<mWindowSize.y/40 + 3; j++)
+            {
+				item.setOutlineColor(Color::Black);
+				item.setOutlineThickness(1);
+                item.setFillColor(Color(3, 252, 32, 0));
+                item.setPosition(
+                        Vector2f(
+                                i*40 - 20,
+                                j*40 - 10
+                        )
+                );
+                item.setSize(Vector2f(40.0f, 40.0f));
+                window.draw(item);
+            }
+        }
 
     }
 
