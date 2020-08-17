@@ -77,7 +77,7 @@ public:
         Vector2f mSpriteLocSize;
         mSpriteLocSize.x = mMainCharacterSprite.getGlobalBounds().width;
         mSpriteLocSize.y = mMainCharacterSprite.getGlobalBounds().height;
-        int mGroundLevel = mGameMap->getNearestGroundLvl(mSpriteLocStart, mSpriteLocSize, mGameOffsetY);
+        int mGroundLevel = 0;
         mMainCharacterVelocity -= mMainCharacterMass * mMainCharacterGravity * mSpeed;
         mMainCharacterPosition.y -= mMainCharacterVelocity * mSpeed / 1.2;
 

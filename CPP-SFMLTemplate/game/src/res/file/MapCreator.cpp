@@ -11,7 +11,7 @@ int main()
     {
         for (int j = 0; j < 40; j++)
         {
-            mWaterMap << 0;
+            mWaterMap << 1;
             mWaterMap << ' ';
         }
         mWaterMap << '\n';
