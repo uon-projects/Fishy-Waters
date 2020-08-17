@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../game/GameMap.h"
-#include "../../../../library/src/header/LoadImage.h"
 
 using namespace std;
 using namespace sf;
@@ -13,53 +12,29 @@ class NPCharacter
 {
 
 private:
+    Vector2f mNPCharacterPosition;
+    int mMovesCount;
+    int mNPCharacterOnMove;
+    bool isFacingEast;
+    bool isFacingNorth;
     GameMap *mGameMap;
-    Texture mMainCharacterTexture;
-    Sprite mMainCharacterSprite;
-    Vector2u mTextureMainCharacterSize;
-    bool isRightFace;
-    float mMainCharacterGravity; //The Average Value At Earth's Surface (Standard Gravity) is, by definition, 9.80665 m/s^2 (9.80f).
-    float mMainCharacterMass;
-    float mMainCharacterVelocity;
-    Vector2f mMainCharacterPosition;
-    int mMovingRange;
-    int mCurrentMoved;
-    int mGameOffsetY;
-	LoadImage *mLoadImage;
-    float mMainCharacterVelocityMove;
-    float mNPCScale;
+    int mMovementPF;
+    int mFacingNow;
 
 public:
-    NPCharacter(GameMap *mGameMap, bool isRightFace, float startX, float startY, int range, LoadImage *mLoadImage)
+    NPCharacter(Vector2i mStartPos)
     {
-        this->mGameMap = mGameMap;
-        this->isRightFace = isRightFace;
-        this->mMovingRange = range;
-        this->mMainCharacterPosition.x = startX;
-        this->mMainCharacterPosition.y = startY;
-        this->mGameOffsetY = 500;
-        this->mLoadImage = mLoadImage;
 
-        mMainCharacterMass = 200.0f;
-        mMainCharacterVelocity = 650.0f;
-        mMainCharacterGravity = 8.0f;
+        mNPCharacterPosition.x = mStartPos.x;
+        mNPCharacterPosition.y = mStartPos.y;
 
-        mCurrentMoved = 0;
+        mMovesCount = 0;
+        mNPCharacterOnMove = 0;
 
-//        mMainCharacterTexture.loadFromFile("game/src/res/drawable/e003a_01idle_00.png");
-        mTextureMainCharacterSize = mMainCharacterTexture.getSize();
-        mTextureMainCharacterSize.x /= 1;
-        mTextureMainCharacterSize.y /= 1;
-        mMainCharacterVelocity = 20.0f;
+        isFacingEast = false;
+        isFacingNorth = false;
+        mFacingNow = 0;
 
-        mNPCScale = 0.4f;
-        mMainCharacterSprite.setTexture(mMainCharacterTexture);
-        mMainCharacterSprite.setTextureRect(
-                IntRect(mTextureMainCharacterSize.x * 0, mTextureMainCharacterSize.y * 0, mTextureMainCharacterSize.x,
-                        mTextureMainCharacterSize.y));
-        mMainCharacterSprite.setScale(Vector2f(mNPCScale, mNPCScale));
-        mMainCharacterSprite.setOrigin(mTextureMainCharacterSize.x / 2, -110);
-        mMainCharacterSprite.setPosition(mMainCharacterPosition);
     }
 
     ~NPCharacter()
@@ -67,46 +42,154 @@ public:
 
     }
 
-    void update(float mSpeed, int mGameOffsetY = 500)
+    void setGameMap(GameMap *mGameMap)
     {
-        this->mGameOffsetY = mGameOffsetY;
+        this->mGameMap = mGameMap;
+    }
 
-        Vector2f mSpriteLocStart;
-        mSpriteLocStart.x = mMainCharacterSprite.getGlobalBounds().left;
-        mSpriteLocStart.y = mMainCharacterPosition.y;
-        Vector2f mSpriteLocSize;
-        mSpriteLocSize.x = mMainCharacterSprite.getGlobalBounds().width;
-        mSpriteLocSize.y = mMainCharacterSprite.getGlobalBounds().height;
-        int mGroundLevel = 0;
-        mMainCharacterVelocity -= mMainCharacterMass * mMainCharacterGravity * mSpeed;
-        mMainCharacterPosition.y -= mMainCharacterVelocity * mSpeed / 1.2;
+    void reset()
+    {
 
-        isRightFace ? (mMainCharacterSprite.setScale(Vector2f(-mNPCScale, mNPCScale))) : (mMainCharacterSprite.setScale(
-                Vector2f(mNPCScale, mNPCScale)));
-        isRightFace ? (mMainCharacterPosition.x += 1) : (mMainCharacterPosition.x -= 1);
+        mNPCharacterPosition = mGameMap->getCharacterStartPos();
 
-        mCurrentMoved += 1;
-        if (mCurrentMoved >= mMovingRange)
+        mMovesCount = 0;
+        mNPCharacterOnMove = 0;
+        mFacingNow = 2;
+
+    }
+
+    Vector2f getSpriteLocation(RenderWindow &window)
+    {
+        Vector2f mSpriteLocation;
+        if (mFacingNow == 0)
         {
-            mCurrentMoved = 0;
-            isRightFace = !isRightFace;
+            mSpriteLocation.x = (float) window.getSize().x / 2 - 20;
+            mSpriteLocation.y = (float) window.getSize().y / 2 - 20;
+        } else if (mFacingNow == 1)
+        {
+            mSpriteLocation.x = (float) window.getSize().x / 2 + 20;
+            mSpriteLocation.y = (float) window.getSize().y / 2 - 20;
+        } else if (mFacingNow == 2)
+        {
+            mSpriteLocation.x = (float) window.getSize().x / 2 + 20;
+            mSpriteLocation.y = (float) window.getSize().y / 2 + 20;
+        } else if (mFacingNow == 3)
+        {
+            mSpriteLocation.x = (float) window.getSize().x / 2 - 20;
+            mSpriteLocation.y = (float) window.getSize().y / 2 + 20;
         }
-        if (mMainCharacterPosition.y >= mGroundLevel)
+        return mSpriteLocation;
+    }
+
+    int getBoatRotation()
+    {
+        return mFacingNow * 90;
+    }
+
+    Vector2f getCharacterPosition()
+    {
+        return mNPCharacterPosition;
+    }
+
+    Vector2i getGameOffsetMoving()
+    {
+        Vector2i mGameOffset;
+        mGameOffset.x = (int) mNPCharacterPosition.x % 40;
+        mGameOffset.y = (int) mNPCharacterPosition.y % 40;
+        return mGameOffset;
+    }
+
+    void update()
+    {
+        mMovementPF = 1;
+        if (mNPCharacterOnMove != 0)
         {
-            mMainCharacterPosition.y = (float) mGroundLevel;
+            if (mNPCharacterOnMove == 1)
+            {
+                mNPCharacterPosition.x -= mMovementPF;
+                mMovesCount++;
+                if (mMovesCount == 40 / mMovementPF)
+                {
+                    mNPCharacterOnMove = 0;
+                }
+            } else if (mNPCharacterOnMove == 2)
+            {
+                mNPCharacterPosition.y -= mMovementPF;
+                mMovesCount++;
+                if (mMovesCount == 40 / mMovementPF)
+                {
+                    mNPCharacterOnMove = 0;
+                }
+            } else if (mNPCharacterOnMove == 3)
+            {
+                mNPCharacterPosition.x += mMovementPF;
+                mMovesCount++;
+                if (mMovesCount == 40 / mMovementPF)
+                {
+                    mNPCharacterOnMove = 0;
+                }
+            } else if (mNPCharacterOnMove == 4)
+            {
+                mNPCharacterPosition.y += mMovementPF;
+                mMovesCount++;
+                if (mMovesCount == 40 / mMovementPF)
+                {
+                    mNPCharacterOnMove = 0;
+                }
+            }
         }
     }
 
-    Sprite getSprite()
+    void moveWest()
     {
-        mMainCharacterPosition.y += mGameOffsetY;
-        mMainCharacterPosition.y -= mMainCharacterSprite.getGlobalBounds().height;
-        mMainCharacterSprite.setPosition(mMainCharacterPosition);
-        mMainCharacterPosition.y -= mGameOffsetY;
-        mMainCharacterPosition.y += mMainCharacterSprite.getGlobalBounds().height;
-        return mMainCharacterSprite;
+        if (mNPCharacterOnMove == 0)
+        {
+            mNPCharacterOnMove = 1;
+            mMovesCount = 0;
+            isFacingEast = false;
+            mFacingNow = 1;
+        }
+    }
+
+    void moveEast()
+    {
+        if (mNPCharacterOnMove == 0)
+        {
+            mNPCharacterOnMove = 3;
+            mMovesCount = 0;
+            isFacingEast = true;
+            mFacingNow = 3;
+        }
+    }
+
+    void moveNorth()
+    {
+        if (mNPCharacterOnMove == 0)
+        {
+            mNPCharacterOnMove = 2;
+            mMovesCount = 0;
+            isFacingNorth = true;
+            mFacingNow = 2;
+        }
+    }
+
+    void moveSouth()
+    {
+        if (mNPCharacterOnMove == 0)
+        {
+            mNPCharacterOnMove = 4;
+            mMovesCount = 0;
+            isFacingNorth = false;
+            mFacingNow = 0;
+        }
+    }
+
+    bool isInArea(Vector2i mAreaX, Vector2i mAreaY)
+    {
+        return false;
     }
 
 };
 
 #endif //DAI_MAKAI_MURA_NPCHARACTER_H
+

@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../game/GameMap.h"
-#include "../../../../library/src/header/LoadImage.h"
 
 using namespace std;
 using namespace sf;
@@ -21,12 +20,11 @@ private:
     GameMap *mGameMap;
     int mMovementPF;
     int mFacingNow;
-    LoadImage *mLoadImage;
+    bool mMovementFinished;
 
 public:
     MainCharacter()
     {
-        mLoadImage = new LoadImage();
 
         mMovesCount = 0;
         mMainCharacterOnMove = 0;
@@ -34,6 +32,7 @@ public:
         isFacingEast = false;
         isFacingNorth = false;
         mFacingNow = 0;
+        mMovementFinished = true;
 
     }
 
@@ -119,6 +118,7 @@ public:
                 if (mMovesCount == 40 / mMovementPF)
                 {
                     mMainCharacterOnMove = 0;
+                    mMovementFinished = true;
                 }
             } else if (mMainCharacterOnMove == 2)
             {
@@ -127,6 +127,7 @@ public:
                 if (mMovesCount == 40 / mMovementPF)
                 {
                     mMainCharacterOnMove = 0;
+                    mMovementFinished = true;
                 }
             } else if (mMainCharacterOnMove == 3)
             {
@@ -135,6 +136,7 @@ public:
                 if (mMovesCount == 40 / mMovementPF)
                 {
                     mMainCharacterOnMove = 0;
+                    mMovementFinished = true;
                 }
             } else if (mMainCharacterOnMove == 4)
             {
@@ -143,9 +145,17 @@ public:
                 if (mMovesCount == 40 / mMovementPF)
                 {
                     mMainCharacterOnMove = 0;
+                    mMovementFinished = true;
                 }
             }
         }
+    }
+
+    bool isCharacterMoving()
+    {
+        bool isMoving = mMovementFinished;
+        mMovementFinished = false;
+        return isMoving;
     }
 
     void moveWest()
