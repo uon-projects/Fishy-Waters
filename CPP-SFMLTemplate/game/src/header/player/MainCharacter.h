@@ -13,23 +13,14 @@ class MainCharacter
 {
 
 private:
-    Sprite mMainCharacterSprite;
-    Texture mMainCharacterTexture;
-    float mCharacterScale;
     Vector2f mMainCharacterPosition;
-    int mJumpCount;
     int mMovesCount;
-    Vector2u mTextureMainCharacterSize;
-    float mMainCharacterMass;
-    float mMainCharacterVelocity;
-    float mMainCharacterVelocityMove;
-    float mMainCharacterGravity; //The Average Value At Earth's Surface (Standard Gravity) is, by definition, 9.80665 m/s^2 (9.80f).
-    bool mMainCharacterJump;
     int mMainCharacterOnMove;
     bool isFacingEast;
     bool isFacingNorth;
     GameMap *mGameMap;
-    int mGameOffsetY;
+    int mMovementPF;
+    int mFacingNow;
     LoadImage *mLoadImage;
 
 public:
@@ -37,17 +28,12 @@ public:
     {
         mLoadImage = new LoadImage();
 
-        mJumpCount = 0;
         mMovesCount = 0;
-        mMainCharacterGravity = 8.0f;
-        mMainCharacterVelocity = 0.0f;
-
-        mMainCharacterMass = 200.0f;
-        mMainCharacterJump = false;
         mMainCharacterOnMove = 0;
 
-        isFacingEast = true;
-        isFacingNorth = true;
+        isFacingEast = false;
+        isFacingNorth = false;
+        mFacingNow = 0;
 
     }
 
@@ -66,34 +52,38 @@ public:
 
         mMainCharacterPosition = mGameMap->getCharacterStartPos();
 
-        mJumpCount = 0;
         mMovesCount = 0;
-        mMainCharacterGravity = 8.0f;
-
-        mMainCharacterMass = 200.0f;
-        mMainCharacterJump = false;
         mMainCharacterOnMove = 0;
-
-        mMainCharacterTexture.loadFromFile("game/src/res/drawable/boat.png");
-        mTextureMainCharacterSize = mMainCharacterTexture.getSize();
-        mTextureMainCharacterSize.x /= 1;
-        mTextureMainCharacterSize.y /= 1;
-        mMainCharacterSprite.setTexture(mMainCharacterTexture);
-        mMainCharacterSprite.setTextureRect(
-                IntRect(mTextureMainCharacterSize.x * 0, mTextureMainCharacterSize.y * 0, mTextureMainCharacterSize.x,
-                        mTextureMainCharacterSize.y));
-        mCharacterScale = 0.2f;
-        mMainCharacterSprite.setScale(Vector2f(mCharacterScale, mCharacterScale));
+        mFacingNow = 0;
 
     }
 
-    Sprite getSprite(RenderWindow &window)
+    Vector2f getSpriteLocation(RenderWindow &window)
     {
-        mMainCharacterSprite.setPosition(Vector2f(
-                (float) window.getSize().x / 2 - 20,
-                (float) window.getSize().y / 2 - 20
-        ));
-        return mMainCharacterSprite;
+        Vector2f mSpriteLocation;
+        if (mFacingNow == 0)
+        {
+            mSpriteLocation.x = (float) window.getSize().x / 2 - 20;
+            mSpriteLocation.y = (float) window.getSize().y / 2 - 20;
+        } else if (mFacingNow == 1)
+        {
+            mSpriteLocation.x = (float) window.getSize().x / 2 + 20;
+            mSpriteLocation.y = (float) window.getSize().y / 2 - 20;
+        } else if (mFacingNow == 2)
+        {
+            mSpriteLocation.x = (float) window.getSize().x / 2 + 20;
+            mSpriteLocation.y = (float) window.getSize().y / 2 + 20;
+        } else if (mFacingNow == 3)
+        {
+            mSpriteLocation.x = (float) window.getSize().x / 2 - 20;
+            mSpriteLocation.y = (float) window.getSize().y / 2 + 20;
+        }
+        return mSpriteLocation;
+    }
+
+    int getBoatRotation()
+    {
+        return mFacingNow * 90;
     }
 
     Vector2f getCharacterPosition()
@@ -117,22 +107,7 @@ public:
         return mGameOffset;
     }
 
-    int getGameHeight()
-    {
-        int gameHeight = 0;
-        if (mMainCharacterPosition.y > -170)
-        {
-            mGameOffsetY = 500;
-        } else
-        {
-            mGameOffsetY = 500 - mMainCharacterPosition.y - 170;
-        }
-        return mMainCharacterPosition.y;
-    }
-
-    int mMovementPF;
-
-    void update(float mSpeed)
+    void update()
     {
         mMovementPF = 5;
         if (mMainCharacterOnMove != 0)
@@ -179,6 +154,8 @@ public:
         {
             mMainCharacterOnMove = 1;
             mMovesCount = 0;
+            isFacingEast = false;
+            mFacingNow = 1;
         }
     }
 
@@ -188,6 +165,8 @@ public:
         {
             mMainCharacterOnMove = 3;
             mMovesCount = 0;
+            isFacingEast = true;
+            mFacingNow = 3;
         }
     }
 
@@ -197,6 +176,8 @@ public:
         {
             mMainCharacterOnMove = 2;
             mMovesCount = 0;
+            isFacingNorth = true;
+            mFacingNow = 2;
         }
     }
 
@@ -206,6 +187,8 @@ public:
         {
             mMainCharacterOnMove = 4;
             mMovesCount = 0;
+            isFacingNorth = false;
+            mFacingNow = 0;
         }
     }
 

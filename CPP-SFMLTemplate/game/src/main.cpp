@@ -103,7 +103,7 @@ void update(float seconds)
         {
             mGameScreen.initNewLvl();
         }
-        mGameScreen.update(seconds);
+        mGameScreen.update();
     }
 
 }
