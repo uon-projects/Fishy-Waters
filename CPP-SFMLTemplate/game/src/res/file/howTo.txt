@@ -1,0 +1,5 @@
+> Press the arrow keys to move into one direction
+> When you are near a harbor the shop screen will open
+> When you are near a fish a mini game will appear
+> To catch the fish you need to press the relevant arrow keys basedon the minigame
+> To unlock the entire map you need to buy it from the shop

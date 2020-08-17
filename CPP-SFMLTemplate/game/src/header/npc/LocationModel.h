@@ -13,7 +13,7 @@ private:
 public:
     LocationModel(Vector2i mPositionN)
     {
-		mPosition = mPositionN;
+        mPosition = mPositionN;
     }
 
     ~LocationModel()
