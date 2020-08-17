@@ -134,7 +134,7 @@ public:
 
     void update(float mSpeed)
     {
-        mMovementPF = 2;
+        mMovementPF = 5;
         if (mMainCharacterOnMove != 0)
         {
             if (mMainCharacterOnMove == 1)
@@ -173,7 +173,7 @@ public:
         }
     }
 
-    void moveLeft()
+    void moveWest()
     {
         if (mMainCharacterOnMove == 0)
         {
@@ -182,7 +182,7 @@ public:
         }
     }
 
-    void moveRight()
+    void moveEast()
     {
         if (mMainCharacterOnMove == 0)
         {
