@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../game/GameMap.h"
-#include "../../../../library/src/header/LoadImage.h"
 
 using namespace std;
 using namespace sf;
@@ -21,12 +20,10 @@ private:
     GameMap *mGameMap;
     int mMovementPF;
     int mFacingNow;
-    LoadImage *mLoadImage;
 
 public:
     MainCharacter()
     {
-        mLoadImage = new LoadImage();
 
         mMovesCount = 0;
         mMainCharacterOnMove = 0;
