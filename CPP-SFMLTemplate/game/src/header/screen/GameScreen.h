@@ -263,7 +263,7 @@ public:
             mMiniGameTimer = rand() % 20 + 40;
             if (mMiniGameKeys == 0)
             {
-                mMiniGameKeys = 5;
+                mMiniGameKeys = rand() % 3 + 3;
             }
             mMiniGameKeys--;
         }
