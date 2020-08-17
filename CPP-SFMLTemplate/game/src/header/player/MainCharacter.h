@@ -20,6 +20,7 @@ private:
     GameMap *mGameMap;
     int mMovementPF;
     int mFacingNow;
+    bool mMovementFinished;
 
 public:
     MainCharacter()
@@ -31,6 +32,7 @@ public:
         isFacingEast = false;
         isFacingNorth = false;
         mFacingNow = 0;
+        mMovementFinished = true;
 
     }
 
@@ -116,6 +118,7 @@ public:
                 if (mMovesCount == 40 / mMovementPF)
                 {
                     mMainCharacterOnMove = 0;
+                    mMovementFinished = true;
                 }
             } else if (mMainCharacterOnMove == 2)
             {
@@ -124,6 +127,7 @@ public:
                 if (mMovesCount == 40 / mMovementPF)
                 {
                     mMainCharacterOnMove = 0;
+                    mMovementFinished = true;
                 }
             } else if (mMainCharacterOnMove == 3)
             {
@@ -132,6 +136,7 @@ public:
                 if (mMovesCount == 40 / mMovementPF)
                 {
                     mMainCharacterOnMove = 0;
+                    mMovementFinished = true;
                 }
             } else if (mMainCharacterOnMove == 4)
             {
@@ -140,9 +145,17 @@ public:
                 if (mMovesCount == 40 / mMovementPF)
                 {
                     mMainCharacterOnMove = 0;
+                    mMovementFinished = true;
                 }
             }
         }
+    }
+
+    bool isCharacterMoving()
+    {
+        bool isMoving = mMovementFinished;
+        mMovementFinished = false;
+        return isMoving;
     }
 
     void moveWest()
