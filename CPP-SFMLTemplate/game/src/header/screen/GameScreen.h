@@ -65,6 +65,17 @@ public:
         window.draw(mStoneSprite);
     }
 
+    void drawHarbor(RenderWindow &window, Vector2f mPosition)
+    {
+        RectangleShape mHarborSprite;
+
+        mHarborSprite.setOrigin(Vector2f(0.0f, -15.0f));
+        mHarborSprite.setFillColor(Color(245, 195, 15));
+        mHarborSprite.setPosition(mPosition);
+        mHarborSprite.setSize(Vector2f(50.0f, 25.0f));
+        window.draw(mHarborSprite);
+    }
+
     void drawBoat(RenderWindow &window)
     {
         RectangleShape mBoatSprite;
@@ -196,6 +207,9 @@ public:
         mEndArea.y = mStartGridArea.y + mGridAreaSurface.y;
 
         mLoc.x = -1;
+        cout<<">>Spawn Fish Area\n";
+        cout<<" >> x: "<<mStartGridArea.x<<"-"<<mEndArea.x<<'\n';
+        cout<<" >> y: "<<mStartGridArea.y<<"-"<<mEndArea.y<<'\n';
         for (i = mStartGridArea.x; i <= mEndArea.x; i++)
         {
             mLoc.y = -1;
@@ -233,6 +247,26 @@ public:
                     window.draw(item);
 
                     drawStone(
+                            window,
+                            Vector2f(
+                                    (float) mLoc.x * 40 - mGameOffsetMoving.x - 20,
+                                    (float) mLoc.y * 40 - mGameOffsetMoving.y - 10
+                            )
+                    );
+                } else if (mTileType == 3)
+                {
+                    item.setOrigin(Vector2f(0.0f, 0.0f));
+                    item.setFillColor(Color(152, 219, 18));
+                    item.setPosition(
+                            Vector2f(
+                                    (float) mLoc.x * 40 - mGameOffsetMoving.x - 20,
+                                    (float) mLoc.y * 40 - mGameOffsetMoving.y - 10
+                            )
+                    );
+                    item.setSize(Vector2f(40.0f, 40.0f));
+                    window.draw(item);
+
+                    drawHarbor(
                             window,
                             Vector2f(
                                     (float) mLoc.x * 40 - mGameOffsetMoving.x - 20,
@@ -316,7 +350,7 @@ public:
         mWaterMap = mGameMap->getGameMap();
     }
 
-    bool canMove(int nextX, int nextY)
+    int getTileType(int nextX, int nextY)
     {
         int mMapLines = mGameMap->getMapLines();
         int mMapColumns = mGameMap->getMapColumns();
@@ -343,7 +377,12 @@ public:
         }
 
         int mTileType = mWaterMap[(int) mCharacterPosGrid.y % mMapLines][(int) mCharacterPosGrid.x % mMapColumns];
-        return mTileType == 0;
+        return mTileType;
+    }
+
+    bool canMove(int nextX, int nextY)
+    {
+        return 0 == getTileType(nextX, nextY);
     }
 
     bool canMoveNorth()
@@ -403,6 +442,11 @@ public:
     void update()
     {
 
+        bool isNearHarbor = getTileType(0, -1) == 3;
+        if (isNearHarbor)
+        {
+            // show harbor sho screen
+        }
         mMainCharacter->update();
 
     }

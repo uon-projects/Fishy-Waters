@@ -54,7 +54,7 @@ public:
 
         mMovesCount = 0;
         mMainCharacterOnMove = 0;
-        mFacingNow = 0;
+        mFacingNow = 2;
 
     }
 
@@ -109,7 +109,7 @@ public:
 
     void update()
     {
-        mMovementPF = 5;
+        mMovementPF = 1;
         if (mMainCharacterOnMove != 0)
         {
             if (mMainCharacterOnMove == 1)
